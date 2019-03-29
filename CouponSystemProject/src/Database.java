@@ -5,7 +5,7 @@ import java.sql.Statement;
 
 public class Database {
 
-	
+
 	public static String getDriverData() {
 		return "com.mysql.jdbc.Driver";
 	}
