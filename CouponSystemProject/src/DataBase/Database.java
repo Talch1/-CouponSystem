@@ -5,9 +5,6 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import javax.swing.table.TableStringConverter;
-import javax.swing.text.AttributeSet.CharacterAttribute;
-
 public class Database {
 
 	static final String sql = "jdbc:mysql://localhost:3306/couponsystem?autoReconnect=true&useSSL=false";
@@ -17,7 +14,7 @@ public class Database {
 	public static String getDriverData() {
 		return "com.mysql.jdbc.Driver";
 	}
-
+    //Create all Tables
 	public static void createAllTables() throws SQLException {
 		createCompany();
 		createCostomer();

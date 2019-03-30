@@ -6,8 +6,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class ConnectionPool {
-
-	static int max_conection = 1;
+  static Connection connection;  
+	static int max_conection = 0;
 	private static ArrayList<Connection> con = new ArrayList<>();
 
 	// singeltone Connection pool
@@ -32,12 +32,9 @@ public class ConnectionPool {
 	// get connection
 	public static void getCon() throws SQLException, WaitNotify {
 
-		Connection connection = DriverManager.getConnection(Database.sql, Database.user, Database.pasword);
-		if (con.size() <= max_conection) {
-			con.add(connection);
-		} else {
-			throw new WaitNotify("Please Wait");
-		}
+		connection = DriverManager.getConnection(Database.sql, Database.user, Database.pasword);
+        con.add(connection);
+		
 
 	}
 
