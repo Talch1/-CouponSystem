@@ -11,7 +11,7 @@ public class Database {
 	public static void main(String[] args) throws SQLException, ClassNotFoundException {
 		Class.forName(getDriverData());
 		
-		CreateJoinCompany_Coupon();
+		createCompany();
 	}
 
 	public static String getDriverData() {
@@ -20,7 +20,7 @@ public class Database {
 
 	public static void createCompany() throws SQLException {
 		Connection connection = DriverManager
-				.getConnection("jdbc:mysql://localhost:3306/CouponSystem?autoReconnect=true&useSSL=false", "root", "root");
+				.getConnection("jdbc:mysql://localhost:3306/couponsystem?autoReconnect=true&useSSL=false", "root", "root");
 		String sql = "create table Company  (" + "ID bigint  primary key, " + "COMP_NAME varchar(50) , "
 				+ "PASSWORD varchar(50) , " + "EMAIL varchar(50)  )";
 
@@ -32,7 +32,7 @@ public class Database {
 
 	public static void createCostomer() throws SQLException {
 		Connection connection = DriverManager
-				.getConnection("jdbc:mysql://localhost:3306/CouponSystem?autoReconnect=true&useSSL=false", "root", "root");
+				.getConnection("jdbc:mysql://localhost:3306/couponsystem?autoReconnect=true&useSSL=false", "root", "root");
 		String sql = "create table Costumer  (" + "ID bigint  primary key, " + "COST_NAME varchar(50) , "
 				+ "PASSWORD varchar(50) )";
 
@@ -44,7 +44,7 @@ public class Database {
 
 	public static void createCupon() throws SQLException {
 		Connection connection = DriverManager
-				.getConnection("jdbc:mysql://localhost:3306/CouponSystem?autoReconnect=true&useSSL=false", "root", "root");
+				.getConnection("jdbc:mysql://localhost:3306/couponsystem?autoReconnect=true&useSSL=false", "root", "root");
 		String sql = "create table Coupon  (" + "ID bigint  primary key, " + "TITLE varchar(50) , "
 				+ "START_DATA datetime ," + "END_DATA datetime ," + "AMOUNT int , " + "TYPE varchar(50) ,"
 				+ "MESSAGE varchar(50) ," + "PRICE double ," + "IMAGE varchar(50))";
@@ -58,7 +58,7 @@ public class Database {
 	}
 	public static void CreateJoinCostumer_Coupon() throws SQLException {
 		Connection connection = DriverManager
-				.getConnection("jdbc:mysql://localhost:3306/CouponSystem?autoReconnect=true&useSSL=false", "root", "root");
+				.getConnection("jdbc:mysql://localhost:3306/couponsystem?autoReconnect=true&useSSL=false", "root", "root");
 		String sql ="create table JOIN_COSTUMER_COUPON  (" + "COST_ID Bigint, " + "COUPON_ID Bigint, primary key(COST_ID,COUPON_ID ))";
 		Statement statement = connection.createStatement();
 		statement.executeUpdate(sql);
@@ -68,7 +68,7 @@ public class Database {
 	
 	public static void CreateJoinCompany_Coupon() throws SQLException {
 		Connection connection = DriverManager
-				.getConnection("jdbc:mysql://localhost:3306/CouponSystem?autoReconnect=true&useSSL=false", "root", "root");
+				.getConnection("jdbc:mysql://localhost:3306/couponsystem?autoReconnect=true&useSSL=false", "root", "root");
 		String sql ="create table JOIN_COSTUMER_COUPON  (" + "COMP_ID Bigint, " + "COUPON_ID Bigint, primary key(COMP_ID,COUPON_ID ))";
 		Statement statement = connection.createStatement();
 		statement.executeUpdate(sql);
