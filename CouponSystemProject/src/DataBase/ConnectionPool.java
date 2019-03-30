@@ -5,14 +5,11 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-
-
 public class ConnectionPool {
-	
-	
+
 	static int max_conection = 1;
 	private static ArrayList<Connection> con = new ArrayList<>();
-	
+
 	// singeltone Connection pool
 	private static ConnectionPool instance = new ConnectionPool(con);
 
@@ -33,17 +30,15 @@ public class ConnectionPool {
 	}
 
 	// get connection
-	public static void getCon() throws SQLException,WaitNotify {
+	public static void getCon() throws SQLException, WaitNotify {
 
-		Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/CouponSystem?autoReconnect=true&useSSL=false", "root", "root");
-		if (con.size()<=  max_conection) {
+		Connection connection = DriverManager.getConnection(Database.sql, Database.user, Database.pasword);
+		if (con.size() <= max_conection) {
 			con.add(connection);
-		}else {
+		} else {
 			throw new WaitNotify("Please Wait");
 		}
-			
 
 	}
-		
-		}
 
+}
