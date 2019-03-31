@@ -5,15 +5,15 @@ import java.sql.Date;
 
 public class Coupon {
 	
-	int id;
-	String title;
-	Date startDate;
-	Date endDate;
-	int amount;
-	String CouponTipe ;
-	String message;
-	double price;
-	String immage;
+	private int id;
+	private String title;
+	private Date startDate;
+	private Date endDate;
+	private int amount;
+	private CouponType type;
+	private String message;
+	private double price;
+	private String immage;
 	public Coupon(int id, String title, Date startDate, Date endDate, int amount, String couponTipe, String message,
 			double price, String immage) {
 		super();
@@ -22,7 +22,7 @@ public class Coupon {
 		setStartDate(startDate);
 		setEndDate(endDate);
 		setAmount(amount);
-		setCouponTipe(couponTipe);
+		setType(type);
 		setMessage(message);
 		setPrice(price);
 		setImmage(immage);
@@ -57,11 +57,13 @@ public class Coupon {
 	public void setAmount(int amount) {
 		this.amount = amount;
 	}
-	public String getCouponTipe() {
-		return CouponTipe;
+	
+	
+	public CouponType getType() {
+		return type;
 	}
-	public void setCouponTipe(String couponTipe) {
-		CouponTipe = couponTipe;
+	public void setType(CouponType type) {
+		this.type = type;
 	}
 	public String getMessage() {
 		return message;
@@ -84,9 +86,10 @@ public class Coupon {
 	@Override
 	public String toString() {
 		return "Coupon [id=" + id + ", title=" + title + ", startDate=" + startDate + ", endDate=" + endDate
-				+ ", amount=" + amount + ", CouponTipe=" + CouponTipe + ", message=" + message + ", price=" + price
-				+ ", immage=" + immage + "]";
+				+ ", amount=" + amount + ", type=" + type + ", message=" + message + ", price=" + price + ", immage="
+				+ immage + "]";
 	}
+
 	
 	
 	

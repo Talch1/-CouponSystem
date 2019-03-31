@@ -5,11 +5,11 @@ import java.util.ArrayList;
 import Coupon.Coupon;
 
 public class Company {
-	long id;
-	String compName;
-	String password;
-	String eamil;
-	ArrayList<Coupon> cupons;
+	private long id;
+	private String compName;
+	private String password;
+	private String eamil;
+	private ArrayList<Coupon> cupons;
 
 	public Company(long id, String compName, String password, String eamil, ArrayList<Coupon> cupons) {
 

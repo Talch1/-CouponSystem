@@ -4,10 +4,10 @@ import java.sql.Connection;
 import java.util.ArrayList;
 
 public class Custumer {
-	int id;
-	String custName;
-	String password;
-	ArrayList<Connection> connections;
+	private int id;
+	private String custName;
+	private String password;
+	private ArrayList<Connection> connections;
 	public Custumer(int id, String custName, String password, ArrayList<Connection> connections) {
 		
 		setId(id);
