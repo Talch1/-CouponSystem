@@ -6,11 +6,11 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class ConnectionPool {
-  static Connection connection;  
+	static Connection connection;
 	static int max_conection = 0;
 	private static ArrayList<Connection> con = new ArrayList<>();
 
-	// singeltone Connection pool
+	// Singleton Connection pool
 	private static ConnectionPool instance = new ConnectionPool(con);
 
 	private ConnectionPool(ArrayList<Connection> con) {
@@ -33,9 +33,7 @@ public class ConnectionPool {
 	public static void getCon() throws SQLException, WaitNotify {
 
 		connection = DriverManager.getConnection(Database.sql, Database.user, Database.pasword);
-        con.add(connection);
-		
-        
+		con.add(connection);
 
 	}
 

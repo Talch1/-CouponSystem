@@ -7,17 +7,26 @@ import java.sql.Statement;
 
 public class Database {
 
-	static final String sql = "jdbc:mysql://localhost:3306/couponsystem?autoReconnect=true&useSSL=false";
-	static final String user = "root";
-	static final String pasword = "root";
+	static  String sql = "jdbc:mysql://localhost:3306/couponsystem?autoReconnect=true&useSSL=false";
+	static  String user = "root";
+	static  String pasword = "root";
 
 	public static String getDriverData() {
 		return "com.mysql.jdbc.Driver";
 	}
-    //Create all Tables
+
+	public static String getUser() {
+		return user;
+	}
+
+	public static String getPasword() {
+		return pasword;
+	}
+
+	// Create all Tables
 	public static void createAllTables() throws SQLException {
 		createCompany();
-		createCostomer();
+		createCustomer();
 		createCoupon();
 		CreateJoinCostumer_Coupon();
 		CreateJoinCompany_Coupon();
@@ -36,7 +45,7 @@ public class Database {
 	}
 
 	// Create table costumer
-	public static void createCostomer() throws SQLException {
+	public static void createCustomer() throws SQLException {
 		Connection connection = DriverManager.getConnection(sql, user, pasword);
 		String sql = "create table Costumer  (" + "ID bigint  primary key, " + "COST_NAME varchar(50) , "
 				+ "PASSWORD varchar(50) )";
@@ -80,5 +89,10 @@ public class Database {
 		statement.executeUpdate(sql);
 		System.out.println("Created table Company_Coupon");
 		connection.close();
+	}
+
+	public static String getSql() {
+
+		return sql;
 	}
 }
