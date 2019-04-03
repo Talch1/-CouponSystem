@@ -3,7 +3,9 @@ package DataBase;
 
 import java.sql.SQLException;
 
-import Coupon.CouponDBDAO;
+
+import Company.CompanyDBDAO;
+
 
 
 public class Test {
@@ -12,7 +14,7 @@ public class Test {
 
 
 	public static void main(String[] args) throws SQLException {
-		CouponDBDAO.updateCouponAmount(5, id);
+		CompanyDBDAO.updateCompanyEmail("talch", 55);
 	
 		
 	}

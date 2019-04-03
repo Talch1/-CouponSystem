@@ -43,8 +43,9 @@ public class CouponDBDAO implements CouponDAO {
 	public static void removeCoupon(long id) throws SQLException {
 		Connection connection = DriverManager.getConnection(Database.getSql(), Database.getUser(),
 				Database.getPasword());
-		String sql = String.format("delete from  Coupon where id = %d", id);
+		String sql = "delete from  Coupon where id = ?";
 		PreparedStatement preparedStatement = connection.prepareStatement(sql);
+		preparedStatement.setLong(1, id);
 		preparedStatement.executeUpdate();
 		System.out.println("deleted from Coupon");
 
@@ -54,8 +55,12 @@ public class CouponDBDAO implements CouponDAO {
 
 		Connection connection = DriverManager.getConnection(Database.getSql(), Database.getUser(),
 				Database.getPasword());
-		String sql = String.format("update coupon set TITLE = \"%s\" where id = 5 ", title, id);
+		String sql = "update coupon set TITLE = ? where id =  ?";
 		PreparedStatement preparedStatement = connection.prepareStatement(sql);
+		preparedStatement.setString(1, title);
+		preparedStatement.setLong(2, id);
+
+
 		preparedStatement.executeUpdate();
 		System.out.println("Coupon Title Updated");
 
@@ -65,9 +70,11 @@ public class CouponDBDAO implements CouponDAO {
 
 		Connection connection = DriverManager.getConnection(Database.getSql(), Database.getUser(),
 				Database.getPasword());
-		String sql = "update coupon set START_DATE = " + START_DATE + " where id = " + idCoupon;
+		String sql = "update coupon set START_DATE =  ?  where id =  ?";
 
 		PreparedStatement preparedStatement = connection.prepareStatement(sql);
+		preparedStatement.setDate(1, START_DATE);
+		preparedStatement.setLong(2, idCoupon);
 		preparedStatement.executeUpdate();
 		System.out.println("Coupon StartDate Updated");
 	}
@@ -76,9 +83,11 @@ public class CouponDBDAO implements CouponDAO {
 
 		Connection connection = DriverManager.getConnection(Database.getSql(), Database.getUser(),
 				Database.getPasword());
-		String sql = "update coupon set End_DATE = " + END_DATE + " where id =  " + idCoupon;
+		String sql = "update coupon set End_DATE = ? where id = ?";
 
 		PreparedStatement preparedStatement = connection.prepareStatement(sql);
+		preparedStatement.setDate(1, END_DATE);
+		preparedStatement.setLong(2, idCoupon);
 		preparedStatement.executeUpdate();
 		System.out.println("Coupon EndDate Updated");
 	}
@@ -87,8 +96,10 @@ public class CouponDBDAO implements CouponDAO {
 
 		Connection connection = DriverManager.getConnection(Database.getSql(), Database.getUser(),
 				Database.getPasword());
-		String sql = String.format("update coupon set amount = \"%d\" where id = %d ", amount, id);
+		String sql = String.format("update coupon set amount = ? where id = ? ");
 		PreparedStatement preparedStatement = connection.prepareStatement(sql);
+		preparedStatement.setInt(1, amount);
+		preparedStatement.setLong(2, id);
 		preparedStatement.executeUpdate();
 		System.out.println("Coupon Amount Updated");
 
@@ -97,8 +108,11 @@ public class CouponDBDAO implements CouponDAO {
 
 		Connection connection = DriverManager.getConnection(Database.getSql(), Database.getUser(),
 				Database.getPasword());
-		String sql = String.format("update coupon set type = \"%s\" where id = 5 ", type, id);
+		String sql = String.format("update coupon set type = ? where id = ? ");
+		
 		PreparedStatement preparedStatement = connection.prepareStatement(sql);
+		preparedStatement.setString(1, type);
+		preparedStatement.setLong(2, id);
 		preparedStatement.executeUpdate();
 		System.out.println("Coupon type Updated");
 	}
@@ -107,10 +121,34 @@ public class CouponDBDAO implements CouponDAO {
 
 		Connection connection = DriverManager.getConnection(Database.getSql(), Database.getUser(),
 				Database.getPasword());
-		String sql = String.format("update coupon set type = \"%s\" where id = 5 ", message, id);
+		String sql ="update coupon set type = ? where id = ? ";
 		PreparedStatement preparedStatement = connection.prepareStatement(sql);
+		preparedStatement.setString(1,message);
+		preparedStatement.setLong(2, id);
 		preparedStatement.executeUpdate();
-		System.out.println("Coupon type Message");
+		System.out.println("Coupon Message Updated");
+	}
+		public static void updateCouponPrice(double price, long id) throws SQLException {
+
+			Connection connection = DriverManager.getConnection(Database.getSql(), Database.getUser(),
+					Database.getPasword());
+			String sql ="update coupon set price = ? where id = ? ";
+			PreparedStatement preparedStatement = connection.prepareStatement(sql);
+			preparedStatement.setDouble(1,price);
+			preparedStatement.setLong(2, id);
+			preparedStatement.executeUpdate();
+			System.out.println("Coupon price Updated");
+		}
+			public static void updateCoupon(String image, long id) throws SQLException {
+
+				Connection connection = DriverManager.getConnection(Database.getSql(), Database.getUser(),
+						Database.getPasword());
+				String sql ="update coupon set image = ? where id = ? ";
+				PreparedStatement preparedStatement = connection.prepareStatement(sql);
+				preparedStatement.setString(1,image);
+				preparedStatement.setLong(2, id);
+				preparedStatement.executeUpdate();
+				System.out.println("Coupon image Updated");
 	}
 	@Override
 	public Coupon getCustumer() {

@@ -1,6 +1,7 @@
 package Company;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -37,16 +38,49 @@ public class CompanyDBDAO implements CompanyDAO {
 
 		Connection connection = DriverManager.getConnection(Database.getSql(), Database.getUser(),
 				Database.getPasword());
-		String sql = String.format("delete from  Company where id = %d", id);
+		String sql = String.format("delete from  Company where id = ?");
 		PreparedStatement preparedStatement = connection.prepareStatement(sql);
+		preparedStatement.setLong(1, id);
 		preparedStatement.executeUpdate();
 		System.out.println("deleted from Company");
 
 	}
 
-	public static void updateCompany() {
-		// TODO Auto-generated method stub
+	public static void updateCompanyName(String name,long id) throws SQLException {
 
+		Connection connection = DriverManager.getConnection(Database.getSql(), Database.getUser(),
+				Database.getPasword());
+		String sql = "update company set COMP_NAME =  ?  where id =  ?";
+
+		PreparedStatement preparedStatement = connection.prepareStatement(sql);
+		preparedStatement.setString(1, name);
+		preparedStatement.setLong(2, id);
+		preparedStatement.executeUpdate();
+		System.out.println("Company name Updated");
+	}
+	public static void updateCompanyPass(String pass, long id) throws SQLException {
+
+		Connection connection = DriverManager.getConnection(Database.getSql(), Database.getUser(),
+				Database.getPasword());
+		String sql = "update company set PASSWORD = ? where id = ? ";
+		PreparedStatement preparedStatement = connection.prepareStatement(sql);
+		preparedStatement.setString(1, pass);
+		preparedStatement.setLong(2, id);
+		preparedStatement.executeUpdate();
+		System.out.println("Password Company Updatet");
+		connection.close();
+	}
+
+	public static void updateCompanyEmail(String email, long id) throws SQLException {
+
+		Connection connection = DriverManager.getConnection(Database.getSql(), Database.getUser(),
+				Database.getPasword());
+		String sql = "update company set EMAIL = ? where id = ? ";
+		PreparedStatement preparedStatement = connection.prepareStatement(sql);
+		preparedStatement.setString(1, email);
+		preparedStatement.setLong(2, id);
+		preparedStatement.executeUpdate();
+		System.out.println("Email Company Updatet");
 	}
 
 	public Company getCompany() {

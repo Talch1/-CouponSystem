@@ -35,16 +35,39 @@ public class CustumerDBDAO implements CustumerDAO {
 
 		Connection connection = DriverManager.getConnection(Database.getSql(), Database.getUser(),
 				Database.getPasword());
-		String sql = String.format("delete from  Custumer where id = %d", id);
+		String sql = "delete from  Custumer where id = ?";
 		PreparedStatement preparedStatement = connection.prepareStatement(sql);
+		preparedStatement.setLong(1, id);
 		preparedStatement.executeUpdate();
 		System.out.println("deleted from Custumer");
 
 	}
 
-	public static void updateCustumer() {
-		// TODO Auto-generated method stub
+	public static void updateCompanyName(String name, long id) throws SQLException {
 
+		Connection connection = DriverManager.getConnection(Database.getSql(), Database.getUser(),
+				Database.getPasword());
+		String sql = "update Custumer set CUST_NAME = ? where id = ? ";
+		PreparedStatement preparedStatement = connection.prepareStatement(sql);
+		preparedStatement.setString(1, name);
+		preparedStatement.setLong(2, id);
+		preparedStatement.executeUpdate();
+
+		System.out.println("COMP_NAME Custumer Updatet");
+
+	}
+
+	public static void updateCompanyPass(String pass, long id) throws SQLException {
+
+		Connection connection = DriverManager.getConnection(Database.getSql(), Database.getUser(),
+				Database.getPasword());
+		String sql = "update Custumer set pass = ? where id = ? ";
+		PreparedStatement preparedStatement = connection.prepareStatement(sql);
+		preparedStatement.setString(1, pass);
+		preparedStatement.setLong(2, id);
+		preparedStatement.executeUpdate();
+
+		System.out.println("Password Custumer Updatet");
 	}
 
 	@Override

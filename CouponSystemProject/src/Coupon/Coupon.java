@@ -9,7 +9,7 @@ public class Coupon {
 	private Date startDate;
 	private Date endDate;
 	private int amount;
-	private String type;
+	private CouponType type;
 	private String message;
 	private double price;
 	private String image;
@@ -36,8 +36,6 @@ public class Coupon {
 		return image;
 	}
 
-	
-
 	public void setImage(String image) {
 		this.image = image;
 	}
@@ -46,7 +44,7 @@ public class Coupon {
 		this.id = id;
 	}
 
-	public  String getTitle() {
+	public String getTitle() {
 		return title;
 	}
 
@@ -54,7 +52,7 @@ public class Coupon {
 		this.title = title;
 	}
 
-	public  Date getStartDate() {
+	public Date getStartDate() {
 		return startDate;
 	}
 
@@ -78,15 +76,15 @@ public class Coupon {
 		this.amount = amount;
 	}
 
-	public  String getType() {
+	public CouponType getType() {
 		return type;
 	}
 
-	public void setType(String type) {
+	public void setType(CouponType type) {
 		this.type = type;
 	}
 
-	public  String getMessage() {
+	public String getMessage() {
 		return message;
 	}
 
