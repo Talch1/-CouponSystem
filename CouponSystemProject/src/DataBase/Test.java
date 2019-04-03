@@ -1,18 +1,21 @@
 package DataBase;
 
-import java.sql.Date;
-import java.sql.SQLException;
-import java.util.Calendar;
 
-import Company.CompanyDBDAO;
+import java.sql.SQLException;
+
 import Coupon.CouponDBDAO;
-import Custumer.CustumerDBDAO;
+
 
 public class Test {
 
-	public static void main(String[] args) throws SQLException {
+	static int id = 2;
 
-CompanyDBDAO.removeCompany(5);
+
+	public static void main(String[] args) throws SQLException {
+		CouponDBDAO.updateCouponAmount(5, id);
+	
+		
 	}
+
 
 }

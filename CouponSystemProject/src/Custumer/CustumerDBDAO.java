@@ -10,7 +10,7 @@ import Coupon.Coupon;
 import DataBase.Database;
 
 public class CustumerDBDAO implements CustumerDAO {
-    public static void createCustumer(long id,String name,String pass) throws SQLException {
+	public static void createCustumer(long id, String name, String pass) throws SQLException {
 
 		Connection connection = DriverManager.getConnection(Database.getSql(), Database.getUser(),
 				Database.getPasword());
@@ -21,7 +21,7 @@ public class CustumerDBDAO implements CustumerDAO {
 		PreparedStatement preparedStmt = connection.prepareStatement(query);
 		preparedStmt.setLong(1, id);
 		preparedStmt.setString(2, name);
-		preparedStmt.setString(3,pass);
+		preparedStmt.setString(3, pass);
 
 		// execute the preparedstatement
 		preparedStmt.execute();
@@ -31,7 +31,6 @@ public class CustumerDBDAO implements CustumerDAO {
 
 	}
 
-	
 	public static void removeCustumer(long id) throws SQLException {
 
 		Connection connection = DriverManager.getConnection(Database.getSql(), Database.getUser(),
@@ -43,7 +42,6 @@ public class CustumerDBDAO implements CustumerDAO {
 
 	}
 
-	
 	public static void updateCustumer() {
 		// TODO Auto-generated method stub
 

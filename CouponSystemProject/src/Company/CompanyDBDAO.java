@@ -9,10 +9,9 @@ import java.util.Collection;
 import Coupon.Coupon;
 import DataBase.Database;
 
-
 public class CompanyDBDAO implements CompanyDAO {
 	// create table company
-	public static void createCompany(long id,String name,String passs,String email) throws SQLException {
+	public static void createCompany(long id, String name, String passs, String email) throws SQLException {
 
 		Connection connection = DriverManager.getConnection(Database.getSql(), Database.getUser(),
 				Database.getPasword());
@@ -24,7 +23,7 @@ public class CompanyDBDAO implements CompanyDAO {
 		preparedStmt.setLong(1, id);
 		preparedStmt.setString(2, name);
 		preparedStmt.setString(3, passs);
-		preparedStmt.setString(4,email);
+		preparedStmt.setString(4, email);
 
 		// execute the preparedstatement
 		preparedStmt.execute();
@@ -34,15 +33,14 @@ public class CompanyDBDAO implements CompanyDAO {
 
 	}
 
-	public static void  removeCompany(long id) throws SQLException {
-		
-			Connection connection = DriverManager.getConnection(Database.getSql(), Database.getUser(),
-					Database.getPasword());
-			String sql = String.format("delete from  Company where id = %d",id);
-			PreparedStatement preparedStatement = connection.prepareStatement(sql);
-			preparedStatement.executeUpdate();
-			System.out.println("deleted from Company");
+	public static void removeCompany(long id) throws SQLException {
 
+		Connection connection = DriverManager.getConnection(Database.getSql(), Database.getUser(),
+				Database.getPasword());
+		String sql = String.format("delete from  Company where id = %d", id);
+		PreparedStatement preparedStatement = connection.prepareStatement(sql);
+		preparedStatement.executeUpdate();
+		System.out.println("deleted from Company");
 
 	}
 

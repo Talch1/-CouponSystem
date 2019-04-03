@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 public class ConnectionPool {
 	static Connection connection;
-	static int max_conection = 0;
+
 	private static ArrayList<Connection> con = new ArrayList<>();
 
 	// Singleton Connection pool
@@ -30,11 +30,22 @@ public class ConnectionPool {
 	}
 
 	// get connection
-	public static void getCon() throws SQLException, WaitNotify {
+	public static void getCon()  {
 
-		connection = DriverManager.getConnection(Database.sql, Database.user, Database.pasword);
-		con.add(connection);
 
 	}
 
+	public static Connection returnConnection(Connection connection) throws SQLException {
+		connection = DriverManager.getConnection(Database.sql, Database.user, Database.pasword);
+
+		return connection;
+
+	}
+
+	private static void CloseAllConnections() throws SQLException {
+		for (int i = 0; i < con.size(); i++) {
+			connection.close();
+		}
+
+	}
 }
