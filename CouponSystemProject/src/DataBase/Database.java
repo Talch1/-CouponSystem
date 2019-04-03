@@ -7,7 +7,7 @@ import java.sql.Statement;
 
 public class Database {
 
-	static  String sql = "jdbc:mysql://localhost:3306/couponsystem?autoReconnect=true&useSSL=false";
+	static  String sql = "jdbc:mysql://localhost:3306/new?autoReconnect=true&useSSL=false";
 	static  String user = "root";
 	static  String pasword = "root";
 

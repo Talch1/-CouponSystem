@@ -4,15 +4,15 @@ import java.sql.Date;
 
 public class Coupon {
 
-	private int id;
-	private String title;
-	private Date startDate;
-	private Date endDate;
-	private int amount;
-	private CouponType type;
-	private String message;
-	private double price;
-	private String image;
+	private static int id;
+	private static String title;
+	private static Date startDate;
+	private static Date endDate;
+	private static int amount;
+	private static String type;
+	private static String message;
+	private static double price;
+	private static String image;
 
 	public Coupon(int id, String title, Date startDate, Date endDate, int amount, String couponTipe, String message,
 			double price, String immage) {
@@ -25,18 +25,26 @@ public class Coupon {
 		setType(type);
 		setMessage(message);
 		setPrice(price);
-		setImmage(immage);
+		setImage(immage);
 	}
 
-	public int getId() {
+	public static int getId() {
 		return id;
+	}
+
+	public static String getImage() {
+		return image;
+	}
+
+	public static void setImage(String image) {
+		Coupon.image = image;
 	}
 
 	public void setId(int id) {
 		this.id = id;
 	}
 
-	public String getTitle() {
+	public static String getTitle() {
 		return title;
 	}
 
@@ -44,7 +52,7 @@ public class Coupon {
 		this.title = title;
 	}
 
-	public Date getStartDate() {
+	public static Date getStartDate() {
 		return startDate;
 	}
 
@@ -52,7 +60,7 @@ public class Coupon {
 		this.startDate = startDate;
 	}
 
-	public Date getEndDate() {
+	public static  Date getEndDate() {
 		return endDate;
 	}
 
@@ -60,7 +68,7 @@ public class Coupon {
 		this.endDate = endDate;
 	}
 
-	public int getAmount() {
+	public static int getAmount() {
 		return amount;
 	}
 
@@ -68,15 +76,15 @@ public class Coupon {
 		this.amount = amount;
 	}
 
-	public CouponType getType() {
+	public static String getType() {
 		return type;
 	}
 
-	public void setType(CouponType type) {
+	public void setType(String type) {
 		this.type = type;
 	}
 
-	public String getMessage() {
+	public static String getMessage() {
 		return message;
 	}
 
@@ -84,7 +92,7 @@ public class Coupon {
 		this.message = message;
 	}
 
-	public double getPrice() {
+	public static double getPrice() {
 		return price;
 	}
 
@@ -92,13 +100,7 @@ public class Coupon {
 		this.price = price;
 	}
 
-	public String getImmage() {
-		return image;
-	}
 
-	public void setImmage(String immage) {
-		this.image = immage;
-	}
 
 	@Override
 	public String toString() {

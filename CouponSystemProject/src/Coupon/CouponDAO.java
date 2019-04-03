@@ -6,9 +6,9 @@ import java.util.Collection;
 public interface CouponDAO {
 	public void createCoupon() throws SQLException;
 
-	public void removeCoupon();
+	public void removeCoupon() throws SQLException;
 
-	public void updateCoupon();
+	public void updateCoupon() throws SQLException;;
 
 	public Coupon getCustumer();
 

@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.Calendar;
 import java.util.Collection;
 
+import Company.Company;
 import DataBase.Database;
 
 public class CouponDBDAO implements CouponDAO {
@@ -29,15 +30,15 @@ public class CouponDBDAO implements CouponDAO {
 
 		// create the mysql insert preparedstatement
 		PreparedStatement preparedStmt = connection.prepareStatement(query);
-		preparedStmt.setLong(1, 1);
-		preparedStmt.setString(2, "1+1");
-		preparedStmt.setDate(3, startDate);
-		preparedStmt.setDate(4, endDate);
-		preparedStmt.setInt(5, 5);
-		preparedStmt.setString(6, "FOOD");
-		preparedStmt.setString(7, "new");
-		preparedStmt.setString(8, "223");
-		preparedStmt.setString(9, "Hamburger");
+		preparedStmt.setLong(1, Coupon.getId());
+		preparedStmt.setString(2,Coupon.getTitle());
+		preparedStmt.setDate(3, Coupon.getStartDate());
+		preparedStmt.setDate(4, Coupon.getEndDate());
+		preparedStmt.setInt(5, Coupon.getAmount());
+		preparedStmt.setString(6, Coupon.getType());
+		preparedStmt.setString(7,Coupon.getMessage() );
+		preparedStmt.setDouble(8, Coupon.getPrice());
+		preparedStmt.setString(9,Coupon.getImage());
 
 		// execute the preparedstatement
 		preparedStmt.execute();
@@ -46,10 +47,18 @@ public class CouponDBDAO implements CouponDAO {
 	}
 
 	@Override
-	public void removeCoupon() {
-		// TODO Auto-generated method stub
+	public void removeCoupon() throws SQLException {
+		Connection connection = DriverManager.getConnection(Database.getSql(), Database.getUser(),
+				Database.getPasword());
+		String sql = String.format("delete from  Coupon where id = %d",Coupon.getId());
+		PreparedStatement preparedStatement = connection.prepareStatement(sql);
+		preparedStatement.executeUpdate();
+		System.out.println("deleted from Coupon");
 
-	}
+
+}
+
+	
 
 	@Override
 	public void updateCoupon() {

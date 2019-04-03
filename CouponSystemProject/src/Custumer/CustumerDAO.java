@@ -8,9 +8,9 @@ import Coupon.Coupon;
 public interface CustumerDAO {
 	public void createCustumer() throws SQLException;
 
-	public void removeCustumer();
+	public void removeCustumer() throws SQLException;
 
-	public void updateCustumer();
+	public void updateCustumer() throws SQLException;
 
 	public Custumer getCustumer();
 

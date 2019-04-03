@@ -5,10 +5,10 @@ import java.util.ArrayList;
 import Coupon.Coupon;
 
 public class Company {
-	private long id;
-	private String compName;
-	private String password;
-	private String eamil;
+	private static  long id;
+	private static String compName;
+	private static String password;
+	private static String eamil;
 	private ArrayList<Coupon> cupons;
 
 	public Company(long id, String compName, String password, String eamil, ArrayList<Coupon> cupons) {
@@ -20,7 +20,7 @@ public class Company {
 		setCupons(cupons);
 	}
 
-	public long getId() {
+	public static long getId() {
 		return id;
 	}
 
@@ -28,7 +28,7 @@ public class Company {
 		this.id = id;
 	}
 
-	public String getCompName() {
+	public static String getCompName() {
 		return compName;
 	}
 
@@ -36,7 +36,7 @@ public class Company {
 		this.compName = compName;
 	}
 
-	public String getPassword() {
+	public static String getPassword() {
 		return password;
 	}
 
@@ -44,7 +44,7 @@ public class Company {
 		this.password = password;
 	}
 
-	public String getEamil() {
+	public static String getEamil() {
 		return eamil;
 	}
 

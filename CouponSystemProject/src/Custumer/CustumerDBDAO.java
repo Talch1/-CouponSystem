@@ -21,9 +21,9 @@ public class CustumerDBDAO implements CustumerDAO {
 
 		// create the mysql insert preparedstatement
 		PreparedStatement preparedStmt = connection.prepareStatement(query);
-		preparedStmt.setLong(1, 1);
-		preparedStmt.setString(2, "Vasya");
-		preparedStmt.setString(3, "passsss");
+		preparedStmt.setLong(1, Custumer.getId());
+		preparedStmt.setString(2, Custumer.getCustName());
+		preparedStmt.setString(3, Custumer.getPassword());
 
 		// execute the preparedstatement
 		preparedStmt.execute();
@@ -33,8 +33,15 @@ public class CustumerDBDAO implements CustumerDAO {
 	}
 
 	@Override
-	public void removeCustumer() {
-		// TODO Auto-generated method stub
+	public void removeCustumer() throws SQLException {
+
+		Connection connection = DriverManager.getConnection(Database.getSql(), Database.getUser(),
+				Database.getPasword());
+		String sql = String.format("delete from  Custumer where id = %d",Custumer.getId());
+		PreparedStatement preparedStatement = connection.prepareStatement(sql);
+		preparedStatement.executeUpdate();
+		System.out.println("deleted from Custumer");
+
 
 	}
 

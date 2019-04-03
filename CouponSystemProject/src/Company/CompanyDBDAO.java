@@ -12,41 +12,45 @@ import DataBase.Database;
 
 public class CompanyDBDAO implements CompanyDAO {
 	// create table company
-	@Override
-	public void createCompany() throws SQLException {
+	public static void createCompany() throws SQLException {
 
 		Connection connection = DriverManager.getConnection(Database.getSql(), Database.getUser(),
 				Database.getPasword());
 
-		String query = " insert into users (id ,compName ,password , eamil)" + " values (?, ?, ?, ?)";
+		String query = " insert into company (id ,COMP_NAME ,password , email)" + " values (?, ?, ?, ?)";
 
 		// create the mysql insert preparedstatement
 		PreparedStatement preparedStmt = connection.prepareStatement(query);
-		preparedStmt.setLong(1, 1);
-		preparedStmt.setString(2, "Roshen");
-		preparedStmt.setString(3, "pass");
-		preparedStmt.setString(4, "Roshen@gmail.com");
+		preparedStmt.setLong(1, Company.getId());
+		preparedStmt.setString(2, Company.getCompName());
+		preparedStmt.setString(3, Company.getPassword());
+		preparedStmt.setString(4, Company.getEamil());
 
 		// execute the preparedstatement
 		preparedStmt.execute();
 
+		System.out.printf("added to Company");
 		connection.close();
 
 	}
 
-	@Override
-	public void removeCompany() {
-		// TODO Auto-generated method stub
+	public void removeCompany() throws SQLException {
+		
+			Connection connection = DriverManager.getConnection(Database.getSql(), Database.getUser(),
+					Database.getPasword());
+			String sql = String.format("delete from  Company where id = %d",Company.getId());
+			PreparedStatement preparedStatement = connection.prepareStatement(sql);
+			preparedStatement.executeUpdate();
+			System.out.println("deleted from Company");
+
 
 	}
 
-	@Override
 	public void updateCompany() {
 		// TODO Auto-generated method stub
 
 	}
 
-	@Override
 	public Company getCompany() {
 		// TODO Auto-generated method stub
 		return null;

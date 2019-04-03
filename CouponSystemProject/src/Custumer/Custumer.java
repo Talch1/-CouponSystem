@@ -4,9 +4,9 @@ import java.sql.Connection;
 import java.util.ArrayList;
 
 public class Custumer {
-	private int id;
-	private String custName;
-	private String password;
+	private static int id;
+	private static String custName;
+	private static String password;
 	private ArrayList<Connection> connections;
 
 	public Custumer(int id, String custName, String password, ArrayList<Connection> connections) {
@@ -17,7 +17,7 @@ public class Custumer {
 		setConnections(connections);
 	}
 
-	public int getId() {
+	public static int getId() {
 		return id;
 	}
 
@@ -25,7 +25,7 @@ public class Custumer {
 		this.id = id;
 	}
 
-	public String getCustName() {
+	public static String getCustName() {
 		return custName;
 	}
 
@@ -33,7 +33,7 @@ public class Custumer {
 		this.custName = custName;
 	}
 
-	public String getPassword() {
+	public static String getPassword() {
 		return password;
 	}
 
