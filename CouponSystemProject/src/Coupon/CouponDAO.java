@@ -4,11 +4,14 @@ import java.sql.SQLException;
 import java.util.Collection;
 
 public interface CouponDAO {
-	public void createCoupon() throws SQLException;
+	public static void createCoupon() throws SQLException {
+	}
 
-	public void removeCoupon() throws SQLException;
+	public static void removeCoupon() throws SQLException {
+	}
 
-	public void updateCoupon() throws SQLException;;
+	public static void updateCoupon() throws SQLException {
+	};
 
 	public Coupon getCustumer();
 

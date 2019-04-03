@@ -1,6 +1,8 @@
 package Coupon;
 
+import java.awt.Window.Type;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -12,13 +14,12 @@ import DataBase.Database;
 
 public class CouponDBDAO implements CouponDAO {
 
-	@Override
-	public void createCoupon() throws SQLException {
+	public static void createCoupon(long id,String title,Date startc,Date endc,double amount,String type,String message,double price,String image) throws SQLException {
 
 		Connection connection = DriverManager.getConnection(Database.getSql(), Database.getUser(),
 				Database.getPasword());
 
-		String query = " insert into users (id ,title ,startDate , endDate, amount ,type , message , price, image)"
+		String query = " insert into coupon (id ,title ,START_DATE , END_DATE, amount ,type , message , price, image)"
 				+ " values (?, ?, ?, ?, ?, ?, ?, ? ,?)";
 
 		// create a sql date object so we can use it in our INSERT statement
@@ -30,38 +31,34 @@ public class CouponDBDAO implements CouponDAO {
 
 		// create the mysql insert preparedstatement
 		PreparedStatement preparedStmt = connection.prepareStatement(query);
-		preparedStmt.setLong(1, Coupon.getId());
-		preparedStmt.setString(2,Coupon.getTitle());
-		preparedStmt.setDate(3, Coupon.getStartDate());
-		preparedStmt.setDate(4, Coupon.getEndDate());
-		preparedStmt.setInt(5, Coupon.getAmount());
-		preparedStmt.setString(6, Coupon.getType());
-		preparedStmt.setString(7,Coupon.getMessage() );
-		preparedStmt.setDouble(8, Coupon.getPrice());
-		preparedStmt.setString(9,Coupon.getImage());
+		preparedStmt.setLong(1, id);
+		preparedStmt.setString(2, title);
+		preparedStmt.setDate(3, startc);
+		preparedStmt.setDate(4, endc);
+		preparedStmt.setDouble(5, amount);
+		preparedStmt.setString(6, type);
+		preparedStmt.setString(7, message);
+		preparedStmt.setDouble(8, price);
+		preparedStmt.setString(9, image);
 
 		// execute the preparedstatement
 		preparedStmt.execute();
+		System.out.println("insreted to Coupon");
 
 		connection.close();
 	}
 
-	@Override
-	public void removeCoupon() throws SQLException {
+	public static void removeCoupon(long id) throws SQLException {
 		Connection connection = DriverManager.getConnection(Database.getSql(), Database.getUser(),
 				Database.getPasword());
-		String sql = String.format("delete from  Coupon where id = %d",Coupon.getId());
+		String sql = String.format("delete from  Coupon where id = %d", id);
 		PreparedStatement preparedStatement = connection.prepareStatement(sql);
 		preparedStatement.executeUpdate();
 		System.out.println("deleted from Coupon");
 
+	}
 
-}
-
-	
-
-	@Override
-	public void updateCoupon() {
+	public static void updateCoupon() {
 		// TODO Auto-generated method stub
 
 	}

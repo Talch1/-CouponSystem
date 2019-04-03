@@ -47,20 +47,20 @@ public class Database {
 	// Create table costumer
 	public static void createCustomer() throws SQLException {
 		Connection connection = DriverManager.getConnection(sql, user, pasword);
-		String sql = "create table Costumer  (" + "ID bigint  primary key, " + "COST_NAME varchar(50) , "
+		String sql = "create table Custumer  (" + "ID bigint  primary key, " + "CUST_NAME varchar(50) , "
 				+ "PASSWORD varchar(50) )";
 
 		Statement statement = connection.createStatement();
 		statement.executeUpdate(sql);
-		System.out.println("Created table Costumer");
+		System.out.println("Created table Custumer");
 		connection.close();
 	}
 
 	// Create table coupon
 	public static void createCoupon() throws SQLException {
 		Connection connection = DriverManager.getConnection(sql, user, pasword);
-		String sql = "create table Coupon  (" + "ID bigint  primary key, " + "TITLE varchar(50) , "
-				+ "START_DATA datetime ," + "END_DATA datetime ," + "AMOUNT int , " + "TYPE varchar(50) ,"
+		String sql = "create table Coupon  (" + "ID bigint primary key, " + "TITLE varchar(50) , "
+				+ "START_DATE datetime ," + "END_DATE datetime ," + "AMOUNT int , " + "TYPE varchar(50) ,"
 				+ "MESSAGE varchar(50) ," + "PRICE double ," + "IMAGE varchar(50))";
 
 		Statement statement = connection.createStatement();
