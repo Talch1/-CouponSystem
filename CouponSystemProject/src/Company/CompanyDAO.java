@@ -6,16 +6,16 @@ import java.util.Collection;
 import Coupon.Coupon;
 
 public interface CompanyDAO {
-	public static void createCompany() throws SQLException {
+	public static void createCompany(Company company) throws SQLException {
 	}
 
-	public static void removeCompany() throws SQLException {
+	public static void removeCompany(Company company) throws SQLException {
 	}
 
-	public static void updateCompany() {
+	public static void updateCompany(Company company) {
 	}
 
-	public  Company getCompany();
+	public Company getCompany(long id);
 
 	public Collection<Company> getAllCompany();
 

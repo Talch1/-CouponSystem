@@ -6,16 +6,16 @@ import java.util.Collection;
 import Coupon.Coupon;
 
 public interface CustumerDAO {
-	public static void createCustumer() throws SQLException {
+	public static void createCustumer(Custumer custumer) throws SQLException {
 	}
 
-	public static void removeCustumer() throws SQLException {
+	public static void removeCustumer(Custumer custumer) throws SQLException {
 	}
 
-	public static void updateCustumer() throws SQLException {
+	public static void updateCustumer(Custumer custumer) throws SQLException {
 	}
 
-	public Custumer getCustumer();
+	public Custumer getCustumer(long id);
 
 	public Collection<Coupon> getAllCustomer();
 

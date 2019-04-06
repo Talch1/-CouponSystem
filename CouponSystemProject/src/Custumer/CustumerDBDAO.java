@@ -10,7 +10,7 @@ import Coupon.Coupon;
 import DataBase.Database;
 
 public class CustumerDBDAO implements CustumerDAO {
-	public static void createCustumer(long id, String name, String pass) throws SQLException {
+	public static void createCustumer(Custumer custumer) throws SQLException {
 
 		Connection connection = DriverManager.getConnection(Database.getSql(), Database.getUser(),
 				Database.getPasword());
@@ -19,59 +19,47 @@ public class CustumerDBDAO implements CustumerDAO {
 
 		// create the mysql insert preparedstatement
 		PreparedStatement preparedStmt = connection.prepareStatement(query);
-		preparedStmt.setLong(1, id);
-		preparedStmt.setString(2, name);
-		preparedStmt.setString(3, pass);
+		preparedStmt.setLong(1, custumer.getId());
+		preparedStmt.setString(2, custumer.getCustName());
+		preparedStmt.setString(3, custumer.getPassword());
 
 		// execute the preparedstatement
 		preparedStmt.execute();
-		System.out.println("insreted to Custumer");
+		System.out.println("Custumer Created");
 
 		connection.close();
 
 	}
 
-	public static void removeCustumer(long id) throws SQLException {
+	public static void removeCustumer(Custumer custumer) throws SQLException {
 
 		Connection connection = DriverManager.getConnection(Database.getSql(), Database.getUser(),
 				Database.getPasword());
 		String sql = "delete from  Custumer where id = ?";
 		PreparedStatement preparedStatement = connection.prepareStatement(sql);
-		preparedStatement.setLong(1, id);
+		preparedStatement.setLong(1,custumer.getId() );
 		preparedStatement.executeUpdate();
 		System.out.println("deleted from Custumer");
 
 	}
 
-	public static void updateCompanyName(String name, long id) throws SQLException {
+	public static void updateCompanyName(Custumer custumer) throws SQLException {
 
 		Connection connection = DriverManager.getConnection(Database.getSql(), Database.getUser(),
 				Database.getPasword());
-		String sql = "update Custumer set CUST_NAME = ? where id = ? ";
+		String sql = "update Custumer set CUST_NAME = ?, password = ? where id = ? ";
 		PreparedStatement preparedStatement = connection.prepareStatement(sql);
-		preparedStatement.setString(1, name);
-		preparedStatement.setLong(2, id);
+		preparedStatement.setString(1, custumer.getCustName());
+		preparedStatement.setString(2, custumer.getPassword());
+		preparedStatement.setLong(3, custumer.getId());
 		preparedStatement.executeUpdate();
 
-		System.out.println("COMP_NAME Custumer Updatet");
+		System.out.println("Custumer Updatet");
 
-	}
-
-	public static void updateCompanyPass(String pass, long id) throws SQLException {
-
-		Connection connection = DriverManager.getConnection(Database.getSql(), Database.getUser(),
-				Database.getPasword());
-		String sql = "update Custumer set pass = ? where id = ? ";
-		PreparedStatement preparedStatement = connection.prepareStatement(sql);
-		preparedStatement.setString(1, pass);
-		preparedStatement.setLong(2, id);
-		preparedStatement.executeUpdate();
-
-		System.out.println("Password Custumer Updatet");
 	}
 
 	@Override
-	public Custumer getCustumer() {
+	public Custumer getCustumer(long id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
