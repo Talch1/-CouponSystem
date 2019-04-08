@@ -20,6 +20,10 @@ public class Company {
 		setCupons(cupons);
 	}
 
+	public Company() {
+		// TODO Auto-generated constructor stub
+	}
+
 	public long getId() {
 		return id;
 	}
