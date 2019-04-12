@@ -7,9 +7,9 @@ import java.sql.Statement;
 
 public class Database {
 
-	static  String sql = "jdbc:mysql://localhost:3306/new?autoReconnect=true&useSSL=false";
-	static  String user = "root";
-	static  String pasword = "root";
+	static String sql = "jdbc:mysql://localhost:3306/new?autoReconnect=true&useSSL=false";
+	static String user = "Talch";
+	static String pasword = "root";
 
 	public static String getDriverData() {
 		return "com.mysql.jdbc.Driver";
@@ -28,8 +28,7 @@ public class Database {
 		createCompany();
 		createCustomer();
 		createCoupon();
-		CreateJoinCostumer_Coupon();
-		CreateJoinCompany_Coupon();
+
 	}
 
 	// Create table company
@@ -61,34 +60,14 @@ public class Database {
 		Connection connection = DriverManager.getConnection(sql, user, pasword);
 		String sql = "create table Coupon  (" + "ID bigint primary key, " + "TITLE varchar(50) , "
 				+ "START_DATE datetime ," + "END_DATE datetime ," + "AMOUNT int , " + "TYPE varchar(50) ,"
-				+ "MESSAGE varchar(50) ," + "PRICE double ," + "IMAGE varchar(50))";
+				+ "MESSAGE varchar(50) ," + "PRICE double ," + "IMAGE varchar(50))"
+				+ "FOREIGN KEY(ID) REFERENCES Custumer(ID)" + "FOREIGN KEY(ID) REFERENCES Company(ID)";
 
 		Statement statement = connection.createStatement();
 		statement.executeUpdate(sql);
 		System.out.println("Created table Coupon");
 		connection.close();
 
-	}// Create table costumer coupon
-
-	public static void CreateJoinCostumer_Coupon() throws SQLException {
-		Connection connection = DriverManager.getConnection(sql, user, pasword);
-		String sql = "create table JOIN_COSTUMER_COUPON  (" + "COST_ID Bigint, "
-				+ "COUPON_ID Bigint, primary key(COST_ID,COUPON_ID ))";
-		Statement statement = connection.createStatement();
-		statement.executeUpdate(sql);
-		System.out.println("Created table Costumer_Coupon");
-		connection.close();
-	}
-
-	// Create table company coupon
-	public static void CreateJoinCompany_Coupon() throws SQLException {
-		Connection connection = DriverManager.getConnection(sql, user, pasword);
-		String sql = "create table JOIN_Company_COUPON  (" + "COMP_ID Bigint, "
-				+ "COUPON_ID Bigint, primary key(COMP_ID,COUPON_ID ))";
-		Statement statement = connection.createStatement();
-		statement.executeUpdate(sql);
-		System.out.println("Created table Company_Coupon");
-		connection.close();
 	}
 
 	public static String getSql() {
