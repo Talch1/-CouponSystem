@@ -68,7 +68,8 @@ public class Database {
 		System.out.println("Created table Coupon");
 		connection.close();
 
-	}// Create table costumer coupon
+	}
+	// Create table costumer coupon
 
 	public static void CreateJoinCostumer_Coupon() throws SQLException {
 		Connection connection = DriverManager.getConnection(sql, user, pasword);
