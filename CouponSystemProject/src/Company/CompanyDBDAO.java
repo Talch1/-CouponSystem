@@ -71,7 +71,7 @@ public class CompanyDBDAO implements CompanyDAO {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+	}
 		String sql = String.format("delete from  Company where id = ?");
 		PreparedStatement preparedStatement;
 		try {
@@ -98,7 +98,7 @@ public class CompanyDBDAO implements CompanyDAO {
 			e.printStackTrace();
 		}
 		String sql = String.format("update company set PASSWORD = %s , EMAIL =' %s', COMP_NAME = '%s' where ID =  %d",company.getPassword(), company.getEamil() ,company.getCompName() ,company.getId());
-		PreparedStatement preparedStatement;
+	PreparedStatement preparedStatement;
 		try {
 			preparedStatement = connection.prepareStatement(sql);
 		

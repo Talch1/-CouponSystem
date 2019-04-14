@@ -4,7 +4,7 @@ import java.sql.Date;
 
 public class Coupon {
 
-	private int id;
+	private long id;
 	private String title;
 	private Date startDate;
 	private Date endDate;
@@ -14,7 +14,7 @@ public class Coupon {
 	private double price;
 	private String image;
 
-	public Coupon(int id, String title, Date startDate, Date endDate, int amount, String couponTipe, String message,
+	public Coupon(int id, String title, Date startDate, Date endDate, int amount, CouponType couponType, String message,
 			double price, String immage) {
 		super();
 		setId(id);
@@ -22,13 +22,17 @@ public class Coupon {
 		setStartDate(startDate);
 		setEndDate(endDate);
 		setAmount(amount);
-		setType(type);
+		setType(couponType);
 		setMessage(message);
 		setPrice(price);
 		setImage(immage);
 	}
 
-	public int getId() {
+	public Coupon() {
+		// TODO Auto-generated constructor stub
+	}
+
+	public long getId() {
 		return id;
 	}
 
@@ -40,8 +44,8 @@ public class Coupon {
 		this.image = image;
 	}
 
-	public void setId(int id) {
-		this.id = id;
+	public void setId(long l) {
+		this.id = l;
 	}
 
 	public String getTitle() {
