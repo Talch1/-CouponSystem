@@ -13,11 +13,10 @@ public interface CouponDAO {
 	public static void updateCoupon(Coupon coupon) throws SQLException {
 	};
 
-	public Coupon getCustumer(long id);
 
-	public Collection<Coupon> getAllCustomer();
+	public Collection<Coupon> getAllCoupons();
 
-	public Collection<Coupon> getCoupon();
+	public Coupon getCoupon(int id);
 
 	public Collection<Coupon> getCouponByType();
 

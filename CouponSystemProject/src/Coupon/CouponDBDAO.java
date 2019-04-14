@@ -71,20 +71,15 @@ public class CouponDBDAO implements CouponDAO {
 
 	}
 
+	
 	@Override
-	public Coupon getCustumer(long id) {
+	public Collection<Coupon> getAllCoupons() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Collection<Coupon> getAllCustomer() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Collection<Coupon> getCoupon() {
+	public Coupon getCoupon(int id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
