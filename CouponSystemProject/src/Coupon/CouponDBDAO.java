@@ -1,7 +1,7 @@
 package Coupon;
 
 import java.sql.Connection;
-
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -14,20 +14,29 @@ import DataBase.Database;
 public class CouponDBDAO implements CouponDAO {
 
 	// insert coupon to table
-	public static void createCoupon(Coupon coupon) throws SQLException {
+	public static void createCoupon(Coupon coupon)  {
 
-		Connection connection = DriverManager.getConnection(Database.getSql(), Database.getUser(),
-				Database.getPasword());
+		Connection connection = null;
+		try {
+			connection = DriverManager.getConnection(Database.getSql(), Database.getUser(),
+					Database.getPasword());
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		String query = " insert into coupon (id ,title ,START_DATE , END_DATE, amount ,type , message , price, image)"
 				+ " values (?, ?, ?, ?, ?, ?, ?, ? ,?)";
 
 		// create the mysql insert preparedstatement
-		PreparedStatement preparedStmt = connection.prepareStatement(query);
+		PreparedStatement preparedStmt;
+		try {
+			preparedStmt = connection.prepareStatement(query);
+		
 		preparedStmt.setLong(1, coupon.getId());
 		preparedStmt.setString(2, coupon.getTitle());
-		preparedStmt.setDate(3, coupon.getStartDate());
-		preparedStmt.setDate(4, coupon.getEndDate());
+		preparedStmt.setDate(3, (Date) coupon.getStartDate());
+		preparedStmt.setDate(4, (Date) coupon.getEndDate());
 		preparedStmt.setDouble(5, coupon.getAmount());
 		String type = coupon.getType().toString();
 
@@ -39,29 +48,66 @@ public class CouponDBDAO implements CouponDAO {
 		// execute the preparedstatement
 		preparedStmt.execute();
 		System.out.println(" Coupon created");
-
-		connection.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			connection.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
-	public static void removeCoupon(Coupon coupon) throws SQLException {
-		Connection connection = DriverManager.getConnection(Database.getSql(), Database.getUser(),
-				Database.getPasword());
+	public static void removeCoupon(Coupon coupon) {
+		Connection connection = null;
+		try {
+			connection = DriverManager.getConnection(Database.getSql(), Database.getUser(),
+					Database.getPasword());
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		String sql = "delete from  Coupon where id = ?";
-		PreparedStatement preparedStatement = connection.prepareStatement(sql);
+		PreparedStatement preparedStatement;
+		try {
+			preparedStatement = connection.prepareStatement(sql);
+
 		preparedStatement.setLong(1, coupon.getId());
 		preparedStatement.executeUpdate();
 		System.out.println("deleted from Coupon");
-
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
-	public static void updateCoupon(Coupon coupon) throws SQLException {
+	public static void updateCoupon(Coupon coupon)  {
 
-		Connection connection = DriverManager.getConnection(Database.getSql(), Database.getUser(),
-				Database.getPasword());
+		Connection connection = null;
+		try {
+			connection = DriverManager.getConnection(Database.getSql(), Database.getUser(),
+					Database.getPasword());
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		String sql = "update coupon set TITLE = ?, START_DATE =  ?,END_DATE = ? ,amount = ?,type = ?,price = ?, image = ?  where id =  ?";
-		PreparedStatement preparedStatement = connection.prepareStatement(sql);
+		PreparedStatement preparedStatement = null;
+		try {
+			preparedStatement = connection.prepareStatement(sql);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
-		preparedStatement.executeUpdate();
+		try {
+			preparedStatement.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		System.out.println("Coupon Updated");
 
 	}

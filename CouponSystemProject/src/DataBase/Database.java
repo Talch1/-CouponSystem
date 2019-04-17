@@ -28,8 +28,7 @@ public class Database {
 		createCompany();
 		createCustomer();
 		createCoupon();
-		CreateJoinCustumer_Coupon();
-		CreateJoinCompany_Coupon();
+	
 	}
 
 	// Create table company
@@ -67,30 +66,8 @@ public class Database {
 		statement.executeUpdate(sql);
 		System.out.println("Created table Coupon");
 		connection.close();
-	}// Create table costumer coupon
-
-	public static void CreateJoinCustumer_Coupon() throws SQLException {
-		Connection connection = DriverManager.getConnection(sql, user, pasword);
-		String sql = "create table JOIN_CUSTUMER_COUPON  (" + "CUST_ID Bigint, "
-				+ "COUPON_ID Bigint,FOREIGN KEY(CUST_ID) REFERENCES Custumer(ID),FOREIGN KEY(COUPON_ID) REFERENCES Coupon(ID)"+ ")  ";
-		Statement statement = connection.createStatement();
-		statement.executeUpdate(sql);
-		System.out.println("Created table Costumer_Coupon");
-		connection.close();
 	}
-
-	// Create table company coupon
-	public static void CreateJoinCompany_Coupon() throws SQLException {
-		Connection connection = DriverManager.getConnection(sql, user, pasword);
-		String sql = "create table JOIN_COMPANY_COUPON  (" + "COMP_ID Bigint, "
-				+ "COUPON_ID Bigint,FOREIGN KEY(COMP_ID) REFERENCES Company(ID),FOREIGN KEY(COUPON_ID) REFERENCES Coupon(ID)"+ ")  ";
-		Statement statement = connection.createStatement();
-		statement.executeUpdate(sql);
-		System.out.println("Created table Company_Coupon");
-		connection.close();
-	}
-
-
+	
 	public static String getSql() {
 
 		return sql;
