@@ -34,8 +34,8 @@ public class Database {
 	// Create table company
 	public static void createCompany() throws SQLException {
 		Connection connection = DriverManager.getConnection(sql, user, pasword);
-		String sql = "create table Company  (" + "ID bigint  primary key, " + "COMP_NAME varchar(50) , "
-				+ "PASSWORD varchar(50) , " + "EMAIL varchar(50)  )";
+		String sql = "create table Company  (" + "ID bigint  primary key not null, " + "COMP_NAME varchar(50) not null, "
+				+ "PASSWORD varchar(50) not null , " + "EMAIL varchar(50) not null  )";
 
 		Statement statement = connection.createStatement();
 		statement.executeUpdate(sql);
@@ -46,8 +46,8 @@ public class Database {
 	// Create table costumer
 	public static void createCustomer() throws SQLException {
 		Connection connection = DriverManager.getConnection(sql, user, pasword);
-		String sql = "create table Custumer  (" + "ID bigint  primary key, " + "CUST_NAME varchar(50) , "
-				+ "PASSWORD varchar(50) )";
+		String sql = "create table Custumer  (" + "ID bigint  primary key not null, " + "CUST_NAME varchar(50) not null, "
+				+ "PASSWORD varchar(50) not null )";
 
 		Statement statement = connection.createStatement();
 		statement.executeUpdate(sql);
@@ -58,9 +58,9 @@ public class Database {
 	// Create table coupon
 	public static void createCoupon() throws SQLException {
 		Connection connection = DriverManager.getConnection(sql, user, pasword);
-		String sql = "create table Coupon  (" + "ID bigint primary key, " + "TITLE varchar(50) , "
-				+ "START_DATE datetime ," + "END_DATE datetime ," + "AMOUNT int , " + "TYPE varchar(50) ,"
-				+ "MESSAGE varchar(50) ," + "PRICE double ," + "IMAGE varchar(50))";
+		String sql = "create table Coupon  (" + "ID bigint primary key not null, " + "TITLE varchar(50) not null , "
+				+ "START_DATE datetime not null ," + "END_DATE datetime not null," + "AMOUNT int not null , " + "TYPE varchar(50) not null ,"
+				+ "MESSAGE varchar(50) not null ," + "PRICE double not null ," + "IMAGE varchar(50) not null)";
 
 		Statement statement = connection.createStatement();
 		statement.executeUpdate(sql);

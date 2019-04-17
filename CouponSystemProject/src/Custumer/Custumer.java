@@ -4,7 +4,7 @@ import java.sql.Connection;
 import java.util.ArrayList;
 
 public class Custumer {
-	private int id;
+	private long id;
 	private String custName;
 	private String password;
 	private ArrayList<Connection> connections;
@@ -17,11 +17,15 @@ public class Custumer {
 		setConnections(connections);
 	}
 
-	public int getId() {
+	public Custumer() {
+		// TODO Auto-generated constructor stub
+	}
+
+	public long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 

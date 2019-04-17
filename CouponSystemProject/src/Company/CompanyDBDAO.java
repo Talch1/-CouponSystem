@@ -17,7 +17,7 @@ import DataBase.Database;
 
 public class CompanyDBDAO implements CompanyDAO {
 	// create table company
-	public static void createCompany( Company company)  {
+	public static void createCompany( Company company) throws SQLException  {
 
 		Connection connection = null;
 		try {
@@ -26,6 +26,8 @@ public class CompanyDBDAO implements CompanyDAO {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}finally {
+			connection.close();
 		}
 
 		String query = " insert into company (id ,COMP_NAME ,password , email)" + " values (?, ?, ?, ?)";
@@ -54,15 +56,10 @@ public class CompanyDBDAO implements CompanyDAO {
 			e.printStackTrace();
 		} 
 		System.out.printf("Added to Company");
-		try {
-			connection.close();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
 	}
 	// remove table company
-	public static void removeCompany(Company company)  {
+	public static void removeCompany(Company company) throws SQLException  {
 
 		Connection connection = null;
 		try {
@@ -71,6 +68,8 @@ public class CompanyDBDAO implements CompanyDAO {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+	}finally {
+		connection.close();
 	}
 		String sql = String.format("delete from  Company where id = ?");
 		PreparedStatement preparedStatement;
@@ -87,7 +86,7 @@ public class CompanyDBDAO implements CompanyDAO {
 
 	}
 
-	public static void updateCompany(Company company){
+	public static void updateCompany(Company company) throws SQLException{
 
 		Connection connection = null;
 		try {
@@ -96,6 +95,8 @@ public class CompanyDBDAO implements CompanyDAO {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}finally {
+			connection.close();
 		}
 		String sql = String.format("update company set PASSWORD = %s , EMAIL =' %s', COMP_NAME = '%s' where ID =  %d",company.getPassword(), company.getEamil() ,company.getCompName() ,company.getId());
 	PreparedStatement preparedStatement;
@@ -108,17 +109,12 @@ public class CompanyDBDAO implements CompanyDAO {
 			e.printStackTrace();
 		}
 		System.out.println(" Company Updatet");
-		try {
-			connection.close();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
 	}
 
 	
 	
-	public Company getCompany(long id) {
+	public Company getCompany(long id) throws SQLException {
 
 
 		Connection connection = null;
@@ -129,20 +125,23 @@ public class CompanyDBDAO implements CompanyDAO {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}finally {
+			connection.close();
 		}
 			Company company = new Company();
-
-			try {
-			Statement	statement = connection.createStatement();
-	
 			String sql = "SELECT * FROM Company WHERE ID=" + id;
-			ResultSet resultSet;
-			resultSet = statement.executeQuery(sql);
-			resultSet.next();
+			try {
+			PreparedStatement	preparedStatement = connection.prepareStatement(sql);
+	
 			
+			ResultSet resultSet;
+			resultSet = preparedStatement.executeQuery(sql);
+			resultSet.next();
+			while(resultSet.next()) {
 			company.setId(resultSet.getLong(1));
 			company.setPassword(resultSet.getString(2));
 			company.setEamil(resultSet.getString(3));
+			}
 			} catch (SQLException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();

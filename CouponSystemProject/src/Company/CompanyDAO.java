@@ -12,10 +12,10 @@ public interface CompanyDAO {
 	public static void removeCompany(Company company) throws SQLException {
 	}
 
-	public static void updateCompany(Company company) {
+	public static void updateCompany(Company company) throws SQLException {
 	}
 
-	public Company getCompany(long id);
+	public Company getCompany(long id) throws SQLException;
 
 	public Collection<Company> getAllCompany();
 

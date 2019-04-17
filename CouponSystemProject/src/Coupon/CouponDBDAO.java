@@ -14,7 +14,7 @@ import DataBase.Database;
 public class CouponDBDAO implements CouponDAO {
 
 	// insert coupon to table
-	public static void createCoupon(Coupon coupon)  {
+	public static void createCoupon(Coupon coupon) throws SQLException  {
 
 		Connection connection = null;
 		try {
@@ -23,6 +23,8 @@ public class CouponDBDAO implements CouponDAO {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}finally {
+			connection.close();
 		}
 
 		String query = " insert into coupon (id ,title ,START_DATE , END_DATE, amount ,type , message , price, image)"
@@ -52,15 +54,10 @@ public class CouponDBDAO implements CouponDAO {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		try {
-			connection.close();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	
 	}
 
-	public static void removeCoupon(Coupon coupon) {
+	public static void removeCoupon(Coupon coupon) throws SQLException {
 		Connection connection = null;
 		try {
 			connection = DriverManager.getConnection(Database.getSql(), Database.getUser(),
@@ -68,6 +65,8 @@ public class CouponDBDAO implements CouponDAO {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}finally {
+			connection.close();
 		}
 		String sql = "delete from  Coupon where id = ?";
 		PreparedStatement preparedStatement;
@@ -83,7 +82,7 @@ public class CouponDBDAO implements CouponDAO {
 		}
 	}
 
-	public static void updateCoupon(Coupon coupon)  {
+	public static void updateCoupon(Coupon coupon) throws SQLException  {
 
 		Connection connection = null;
 		try {
@@ -92,6 +91,8 @@ public class CouponDBDAO implements CouponDAO {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}finally {
+			connection.close();
 		}
 		String sql = "update coupon set TITLE = ?, START_DATE =  ?,END_DATE = ? ,amount = ?,type = ?,price = ?, image = ?  where id =  ?";
 		PreparedStatement preparedStatement = null;
@@ -118,8 +119,7 @@ public class CouponDBDAO implements CouponDAO {
 		return null;
 	}
 
-	@Override
-	public Coupon getCoupon(int id) {
+	public Coupon getCoupon(int id) throws SQLException {
 
  		Connection connection = null;
 
@@ -130,24 +130,27 @@ public class CouponDBDAO implements CouponDAO {
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+			}finally {
+				connection.close();
 			}
 			
-				
+			String sql = "SELECT * FROM coupon WHERE ID=" + id;
 				Coupon coupon = new Coupon();
-				Statement stm;
+				PreparedStatement preparedStatement;
 				try {
-					stm = connection.createStatement();
+					preparedStatement = connection.prepareStatement(sql);
 				
-					String sql = "SELECT * FROM coupon WHERE ID=" + id;
-					ResultSet rs = stm.executeQuery(sql);
+					
+					ResultSet rs = preparedStatement.executeQuery(sql);
 					rs.next();
+					while(rs.next()) {
 					coupon.setId(rs.getLong(1));
 					coupon.setTitle(rs.getString(2));
 				    coupon.setStartDate(rs.getDate(3));
                     coupon.setEndDate(rs.getDate(4));
                     coupon.setAmount(rs.getInt(5));
 			
-				
+					}
 			String returnType = rs.getString(6);
 			switch (rs.getString(6)) {
 			
@@ -195,7 +198,6 @@ public class CouponDBDAO implements CouponDAO {
  		}
 	
 
-	@Override
 	public Collection<Coupon> getCouponByType() {
 		// TODO Auto-generated method stub
 		return null;
