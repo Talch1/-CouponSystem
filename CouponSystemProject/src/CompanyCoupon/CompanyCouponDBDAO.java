@@ -31,41 +31,7 @@ public class CompanyCouponDBDAO implements CompanyCouponDAO {
 		this.coupon_id = coupon_id;
 	}
 
-	// Create table company coupon
-	public static void CreateJoinCompany_Coupon() {
-		Connection connection = null;
-		try {
-			connection = DriverManager.getConnection(Database.getSql(), Database.getUser(), Database.getPasword());
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		String sql = "create table JOIN_COMPANY_COUPON  " + "(COMP_ID Bigint not null, "
-				+ "COUPON_ID Bigint NOT NULL, FOREIGN KEY(COMP_ID) REFERENCES Company(ID), FOREIGN KEY(COUPON_ID) REFERENCES Coupon(ID) ,"
-				+ " PRIMARY KEY (COMP_ID, COUPON_ID) ) ";
-		PreparedStatement statement = null;
-		try {
-			statement = connection.prepareStatement(sql);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		try {
-			statement.executeUpdate(sql);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		System.out.println("Created table Company_Coupon");
-		try {
-			connection.close();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-
-	public static void removeJoinCompany_Coupon(Coupon coupon) {
+		public static void removeJoinCompanyCoupon(Coupon coupon) {
 
 		Connection connection = null;
 		try {
@@ -74,7 +40,7 @@ public class CompanyCouponDBDAO implements CompanyCouponDAO {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		String sql = "delete from  JoinCompany_Coupon where COUPON_ID = ?";
+		String sql = "delete from CompanyCoupon where COUPON_ID = ?";
 		PreparedStatement preparedStatement = null;
 		try {
 			preparedStatement = connection.prepareStatement(sql);
@@ -94,7 +60,7 @@ public class CompanyCouponDBDAO implements CompanyCouponDAO {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		System.out.println("deleted from table JoinCompany_Coupon");
+		System.out.println("deleted from table CompanyCoupon");
 
 	}
 
@@ -114,7 +80,7 @@ public class CompanyCouponDBDAO implements CompanyCouponDAO {
 		try {
 			stm = connection.createStatement();
 
-			String sql = "SELECT * FROM join_company_coupon WHERE COUPON_ID = " + id;
+			String sql = "SELECT * FROM CompanyCoupon WHERE COUPON_ID = " + id;
 			ResultSet rs = stm.executeQuery(sql);
 			rs.next();
 

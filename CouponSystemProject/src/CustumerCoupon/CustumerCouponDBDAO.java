@@ -5,16 +5,12 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 
-import CompanyCoupon.CompanyCouponDBDAO;
 import Coupon.Coupon;
 import DataBase.Database;
 
-
-
 public class CustumerCouponDBDAO implements CustumerCouponDAO {
-	
+
 	private long cust_id;
 	private long coupon_id;
 
@@ -34,26 +30,9 @@ public class CustumerCouponDBDAO implements CustumerCouponDAO {
 		this.coupon_id = coupon_id;
 	}
 
-	public static void CreateJoinCustumer_Coupon() throws SQLException {
-		Connection connection=null;
-		try {
-			connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/new?autoReconnect=true&useSSL=false", "Talch", "root");
-			String sql = "create table JOIN_custumer_COUPON  " + "(Cust_ID Bigint not null, "
-					+ "COUPON_ID Bigint NOT NULL, FOREIGN KEY(Cust_ID) REFERENCES Custumer(ID), FOREIGN KEY(CUST_ID) REFERENCES Coupon(ID) ," + " PRIMARY KEY (CUST_ID, COUPON_ID) ) ";
-			Statement statement = connection.createStatement();
-			statement.executeUpdate(sql);
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			connection.close();
-		}
-		System.out.println("Created table Costumer_Coupon");
-	}
-	
-	
-	
-	
-	public static void removeJoinCustumer_Coupon(Coupon coupon) {
+
+
+	public static void removeJoinCustumer_Coupon(Coupon coupon) throws SQLException {
 
 		Connection connection = null;
 		try {
@@ -66,28 +45,21 @@ public class CustumerCouponDBDAO implements CustumerCouponDAO {
 		PreparedStatement preparedStatement = null;
 		try {
 			preparedStatement = connection.prepareStatement(sql);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		try {
+		
 			preparedStatement.setLong(1, coupon.getId());
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		try {
+		
 			preparedStatement.executeUpdate();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}finally {
+			connection.close();
 		}
-		System.out.println("deleted from table JoinCustumer_Coupon");
+		System.out.println("deleted from table CustumerCoupon");
 
-	
 	}
 
-	public static CustumerCouponDBDAO getJoinCustumer_Coupon(int id) {
+	public static CustumerCouponDBDAO getJoinCustumerCoupon(int id) throws SQLException {
 		Connection connection = null;
 
 		try {
@@ -98,26 +70,27 @@ public class CustumerCouponDBDAO implements CustumerCouponDAO {
 		}
 
 		CustumerCouponDBDAO custumerCouponDBDAO = new CustumerCouponDBDAO();
-		Statement stm;
+		PreparedStatement preparedStatement = null;
+		String sql = "SELECT * FROM CustumerCoupon WHERE COUPON_ID = " + id;
 		try {
-			stm = connection.createStatement();
+			preparedStatement = connection.prepareStatement(sql);
 
-			String sql = "SELECT * FROM join_company_coupon WHERE COUPON_ID = " + id;
-			ResultSet rs = stm.executeQuery(sql);
+			
+			ResultSet rs = preparedStatement.executeQuery(sql);
 			rs.next();
 
 			custumerCouponDBDAO.setCust_id(rs.getLong(1));
 			custumerCouponDBDAO.setCoupon_id(rs.getLong(2));
-	
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}finally {
+			connection.close();
 		}
 
 		return custumerCouponDBDAO;
 
 	}
 
-	}
-	
+}
