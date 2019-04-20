@@ -31,7 +31,7 @@ public class CompanyCouponDBDAO implements CompanyCouponDAO {
 		this.coupon_id = coupon_id;
 	}
 
-		public static void removeJoinCompanyCoupon(Coupon coupon) {
+		public static void removeCompanyCoupon(Coupon coupon) {
 
 		Connection connection = null;
 		try {
@@ -64,7 +64,7 @@ public class CompanyCouponDBDAO implements CompanyCouponDAO {
 
 	}
 
-	public static CompanyCouponDBDAO getJoinCompany_Coupon(int id) {
+	public static CompanyCouponDBDAO getCompanyCoupon(int id) {
 
 		Connection connection = null;
 

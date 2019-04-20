@@ -3,6 +3,7 @@ package Custumer;
 import java.sql.SQLException;
 import java.util.Collection;
 
+import Company.Company;
 import Coupon.Coupon;
 
 public interface CustumerDAO {
@@ -17,10 +18,12 @@ public interface CustumerDAO {
 
 	public Custumer getCustumer(long id) throws SQLException;
 
-	public Collection<Coupon> getAllCustomer();
+	public Collection<Company> getAllCustomer();
 
-	public Collection<Coupon> getCoupon();
+	public Collection<Coupon> getCoupons();
 
-	public boolean login();
+	public boolean login(String custName,String pasword) throws SQLException;
+	
+
 
 }

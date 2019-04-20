@@ -14,10 +14,10 @@ public interface CouponDAO {
 	};
 
 
-	public Collection<Coupon> getAllCoupons();
+	public Collection<Coupon> getAllCoupons() throws SQLException;
 
 	public Coupon getCoupon(int id) throws SQLException;
 
-	public Collection<Coupon> getCouponByType();
+	public Collection<Coupon> getCouponByType() throws SQLException;
 
 }

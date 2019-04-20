@@ -17,7 +17,7 @@ public interface CompanyDAO {
 
 	public Company getCompany(long id) throws SQLException;
 
-	public Collection<Company> getAllCompany();
+	public Collection<Company> getAllCompany() throws SQLException;
 
 	public Collection<Coupon> getCoupon();
 

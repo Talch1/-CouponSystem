@@ -32,7 +32,7 @@ public class CustumerCouponDBDAO implements CustumerCouponDAO {
 
 
 
-	public static void removeJoinCustumer_Coupon(Coupon coupon) throws SQLException {
+	public static void removeCustumerCoupon(Coupon coupon) throws SQLException {
 
 		Connection connection = null;
 		try {
@@ -59,7 +59,7 @@ public class CustumerCouponDBDAO implements CustumerCouponDAO {
 
 	}
 
-	public static CustumerCouponDBDAO getJoinCustumerCoupon(int id) throws SQLException {
+	public static CustumerCouponDBDAO getCustumerCoupon(int id) throws SQLException {
 		Connection connection = null;
 
 		try {

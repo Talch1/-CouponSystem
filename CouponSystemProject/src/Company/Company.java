@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import Coupon.Coupon;
 
-// TODO: Auto-generated Javadoc
+
 /**
  * The Class Company.
  */
@@ -19,8 +19,8 @@ public class Company {
 	/** The password. */
 	private String password;
 	
-	/** The eamil. */
-	private String eamil;
+	/** The email. */
+	private String email;
 	
 	/** The cupons. */
 	private ArrayList<Coupon> cupons;
@@ -31,7 +31,7 @@ public class Company {
 	 * @param id the id
 	 * @param compName the comp name
 	 * @param password the password
-	 * @param eamil the eamil
+	 * @param eamil the email
 	 * @param cupons the cupons
 	 */
 	public Company(long id, String compName, String password, String eamil, ArrayList<Coupon> cupons) {
@@ -39,7 +39,7 @@ public class Company {
 		setId(id);
 		setCompName(compName);
 		setPassword(password);
-		setEamil(eamil);
+		setEmail(eamil);
 		setCupons(cupons);
 	}
 
@@ -105,21 +105,21 @@ public class Company {
 	}
 
 	/**
-	 * Gets the eamil.
+	 * Gets the email.
 	 *
-	 * @return the eamil
+	 * @return the email
 	 */
-	public String getEamil() {
-		return eamil;
+	public String getEmail() {
+		return email;
 	}
 
 	/**
-	 * Sets the eamil.
+	 * Sets the email.
 	 *
 	 * @param eamil the new eamil
 	 */
-	public void setEamil(String eamil) {
-		this.eamil = eamil;
+	public void setEmail(String eamil) {
+		this.email = eamil;
 	}
 
 	/**
@@ -145,7 +145,7 @@ public class Company {
 	 */
 	@Override
 	public String toString() {
-		return "Company [id=" + id + ", compName=" + compName + ", password=" + password + ", eamil=" + eamil
+		return "Company [id=" + id + ", compName=" + compName + ", password=" + password + ", email=" + email
 				+ ", cupons=" + cupons + "]";
 	}
 

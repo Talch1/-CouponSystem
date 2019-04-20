@@ -14,7 +14,7 @@ public class Coupon {
 	private double price;
 	private String image;
 
-	public Coupon(int id, String title, Date startDate, Date endDate, int amount, CouponType couponType, String message,
+	public Coupon(long id, String title, Date startDate, Date endDate, int amount, CouponType couponType, String message,
 			double price, String immage) {
 		super();
 		setId(id);
