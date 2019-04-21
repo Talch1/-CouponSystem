@@ -24,7 +24,7 @@ public class CouponDBDAO implements CouponDAO {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} 
+		}
 
 		String query = " insert into coupon (id ,title ,START_DATE , END_DATE, amount ,type , message , price, image)"
 				+ " values (?, ?, ?, ?, ?, ?, ?, ? ,?)";
@@ -46,13 +46,12 @@ public class CouponDBDAO implements CouponDAO {
 			preparedStmt.setDouble(8, coupon.getPrice());
 			preparedStmt.setString(9, coupon.getImage());
 
-		
 			preparedStmt.execute();
 			System.out.println(" Coupon created");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}finally {
+		} finally {
 			connection.close();
 		}
 
@@ -65,7 +64,7 @@ public class CouponDBDAO implements CouponDAO {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} 
+		}
 		String sql = "delete from  Coupon where id = ?";
 		PreparedStatement preparedStatement;
 		try {
@@ -77,7 +76,7 @@ public class CouponDBDAO implements CouponDAO {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}finally {
+		} finally {
 			connection.close();
 		}
 	}
@@ -101,7 +100,7 @@ public class CouponDBDAO implements CouponDAO {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		preparedStatement.setString(1, coupon.getTitle());
 		preparedStatement.setDate(2, (Date) coupon.getStartDate());
 		preparedStatement.setDate(3, (Date) coupon.getEndDate());
@@ -113,7 +112,6 @@ public class CouponDBDAO implements CouponDAO {
 		preparedStatement.setDouble(7, coupon.getPrice());
 		preparedStatement.setString(8, coupon.getImage());
 		preparedStatement.setLong(9, coupon.getId());
-	
 
 		try {
 			preparedStatement.executeUpdate();
@@ -136,7 +134,7 @@ public class CouponDBDAO implements CouponDAO {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} 
+		}
 		Coupon coupon = new Coupon();
 		String sql = "SELECT * FROM Coupon ";
 		PreparedStatement preparedStatement = null;
@@ -196,7 +194,7 @@ public class CouponDBDAO implements CouponDAO {
 		} catch (SQLException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
-		}finally {
+		} finally {
 			connection.close();
 		}
 
@@ -212,70 +210,70 @@ public class CouponDBDAO implements CouponDAO {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} 
+		}
 
-		String sql = "SELECT * FROM coupon WHERE ID = " + id ;
+		String sql = "SELECT * FROM coupon WHERE ID = " + id;
 
 		PreparedStatement preparedStatement = null;
-	
+
 		try {
 			preparedStatement = connection.prepareStatement(sql);
 
 			ResultSet rs = preparedStatement.executeQuery(sql);
-			
+
 			while (rs.next()) {
 				coupon.setId(rs.getLong(1));
 				coupon.setTitle(rs.getString(2));
 				coupon.setStartDate(rs.getDate(3));
 				coupon.setEndDate(rs.getDate(4));
 				coupon.setAmount(rs.getInt(5));
-			String returnType = rs.getString(6);
-			switch (rs.getString(6)) {
+				String returnType = rs.getString(6);
+				switch (rs.getString(6)) {
 
-			case "Food":
-				coupon.setType(CouponType.FOOD);
-				break;
+				case "Food":
+					coupon.setType(CouponType.FOOD);
+					break;
 
-			case "RESTURANS":
-				coupon.setType(CouponType.RESTURANS);
-				break;
+				case "RESTURANS":
+					coupon.setType(CouponType.RESTURANS);
+					break;
 
-			case "ELECTRICITY":
-				coupon.setType(CouponType.ELECTRICITY);
-				break;
+				case "ELECTRICITY":
+					coupon.setType(CouponType.ELECTRICITY);
+					break;
 
-			case "HEALTH":
-				coupon.setType(CouponType.HEALTH);
-				break;
+				case "HEALTH":
+					coupon.setType(CouponType.HEALTH);
+					break;
 
-			case "SPORTS":
-				coupon.setType(CouponType.SPORTS);
-				break;
+				case "SPORTS":
+					coupon.setType(CouponType.SPORTS);
+					break;
 
-			case "CAMPING":
-				coupon.setType(CouponType.CAMPING);
-				break;
+				case "CAMPING":
+					coupon.setType(CouponType.CAMPING);
+					break;
 
-			case "TRAVELLING":
-				coupon.setType(CouponType.TRAVELLING);
-				break;
-			default:
-				break;
-			}
-			coupon.setMessage(rs.getString(7));
-			coupon.setPrice(rs.getDouble(8));
-			coupon.setImage(rs.getString(9));
+				case "TRAVELLING":
+					coupon.setType(CouponType.TRAVELLING);
+					break;
+				default:
+					break;
+				}
+				coupon.setMessage(rs.getString(7));
+				coupon.setPrice(rs.getDouble(8));
+				coupon.setImage(rs.getString(9));
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}finally {
+		} finally {
 			connection.close();
 		}
 		return coupon;
 	}
 
-	public Collection<Coupon> getCouponByType() throws SQLException {
+	public Collection<Coupon> getCouponByType(CouponType type) throws SQLException {
 
 		Coupon coupon = new Coupon();
 		Connection connection = null;
@@ -285,17 +283,12 @@ public class CouponDBDAO implements CouponDAO {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} 
+		}
 		ArrayList<Coupon> coupons = new ArrayList<>();
-		String sql = "SELECT * FROM coupon WHERE Type = ?";
-		PreparedStatement preparedStatement;
+		String sql = "SELECT * FROM coupon WHERE Type = " + type;
+
 		try {
-			preparedStatement = connection.prepareStatement(sql);
-
-			preparedStatement.setString(1, coupon.getType().toString());
-			preparedStatement.executeUpdate();
-
-			preparedStatement = null;
+		PreparedStatement	preparedStatement = null;
 
 			preparedStatement = connection.prepareStatement(sql);
 
@@ -351,11 +344,12 @@ public class CouponDBDAO implements CouponDAO {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}finally {
+		} finally {
 			connection.close();
 		}
 
 		return coupons;
 	}
+
 
 }

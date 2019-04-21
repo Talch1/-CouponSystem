@@ -167,7 +167,7 @@ public class CustumerDBDAO implements CustumerDAO {
 			preparedStatement = connection.prepareStatement(sql);
 
 			ResultSet rs = preparedStatement.executeQuery(sql);
-			rs.next();
+	
 			while (rs.next()) {
 
 				custumer.setId(rs.getLong(1));

@@ -13,11 +13,12 @@ import java.sql.Statement;
 import javax.swing.SpinnerListModel;
 
 import Coupon.Coupon;
+import Custumer.Custumer;
 import DataBase.Database;
 
 public class CompanyDBDAO implements CompanyDAO {
 	// create table company
-	public static void createCompany(Company company) throws SQLException {
+	public void createCompany(Company company) throws SQLException {
 
 		Connection connection = null;
 		try {
@@ -29,7 +30,6 @@ public class CompanyDBDAO implements CompanyDAO {
 
 		String query = " insert into company (id ,COMP_NAME ,password , email)" + " values (?, ?, ?, ?)";
 
-		// create the mysql insert preparedstatement
 		PreparedStatement preparedStmt = null;
 		try {
 			preparedStmt = connection.prepareStatement(query);
@@ -40,7 +40,6 @@ public class CompanyDBDAO implements CompanyDAO {
 			preparedStmt.setString(3, company.getPassword());
 			preparedStmt.setString(4, company.getEmail());
 
-			// execute the preparedstatement
 			preparedStmt.execute();
 
 		} catch (SQLException e) {
@@ -49,12 +48,12 @@ public class CompanyDBDAO implements CompanyDAO {
 		}finally {
 			connection.close();
 		}
-		System.out.printf("Added to Company");
+		System.out.printf("Inserted to Company");
 
 	}
 
 	// remove table company
-	public static void removeCompany(Company company) throws SQLException {
+	public void removeCompany(Company company) throws SQLException {
 
 		Connection connection = null;
 		try {
@@ -64,7 +63,7 @@ public class CompanyDBDAO implements CompanyDAO {
 			e.printStackTrace();
 		} 
 		String sql = String.format("delete from  Company where id = ?");
-		PreparedStatement preparedStatement;
+		PreparedStatement preparedStatement = null;
 		try {
 			preparedStatement = connection.prepareStatement(sql);
 
@@ -80,7 +79,7 @@ public class CompanyDBDAO implements CompanyDAO {
 
 	}
 
-	public static void updateCompany(Company company) throws SQLException {
+	public void updateCompany(Company company) throws SQLException {
 
 		Connection connection = null;
 		try {
@@ -165,7 +164,7 @@ public class CompanyDBDAO implements CompanyDAO {
 
 			ResultSet resultSet;
 			resultSet = preparedStatement.executeQuery(sql);
-			resultSet.next();
+		
 			while (resultSet.next()) {
 				company.setId(resultSet.getLong(1));
 				company.setPassword(resultSet.getString(2));
@@ -184,14 +183,53 @@ public class CompanyDBDAO implements CompanyDAO {
 
 	@Override
 	public Collection<Coupon> getCoupon() {
-		// TODO Auto-generated method stub
+		
+//	!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 		return null;
 	}
 
 	@Override
-	public boolean login() {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean login(String compname,String pass) {
+		Company company = new Company();
+		Connection connection = null;
+		try {
+			connection = DriverManager.getConnection(Database.getSql(), Database.getUser(), Database.getPasword());
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+
+		}
+		String sql = "SELECT * FROM company WHERE COMP_NAME = " + "'"+compname + "'"  + " and  password = " + "'" +pass+ "'";
+		PreparedStatement preparedStatement = null;
+
+		try {
+
+			preparedStatement = connection.prepareStatement(sql);
+
+			ResultSet rs = preparedStatement.executeQuery(sql);
+	
+			while (rs.next()) {
+
+				company.setId(rs.getLong(1));
+				company.setCompName(rs.getString(2));
+				company.setPassword(rs.getString(3));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+
+			try {
+				connection.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		if (company.getId() == 0) {
+			return false;
+		} else
+			return true;
 	}
 
 }

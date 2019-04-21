@@ -3,6 +3,7 @@ package DataBase;
 import java.sql.Date;
 import java.sql.SQLException;
 
+import Company.Company;
 import Company.CompanyDBDAO;
 import Coupon.Coupon;
 import Coupon.CouponDBDAO;
@@ -17,9 +18,10 @@ public class Test {
 	public static void main(String[] args) throws SQLException {
 		CouponType couponType = CouponType.FOOD;
 		
-CompanyDBDAO companyDBDAO = new CompanyDBDAO();
+		
+CompanyDBDAO custumerDBDAO = new CompanyDBDAO();
 
-System.out.println(companyDBDAO.getCompany(11));
+System.out.println(custumerDBDAO.login("kola", "pppp"));
        
 	}
 

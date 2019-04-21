@@ -6,14 +6,11 @@ import java.util.Collection;
 import Coupon.Coupon;
 
 public interface CompanyDAO {
-	public static void createCompany(Company company) throws SQLException {
-	}
+	public void createCompany(Company company) throws SQLException ;
 
-	public static void removeCompany(Company company) throws SQLException {
-	}
+	public void removeCompany(Company company) throws SQLException ;
 
-	public static void updateCompany(Company company) throws SQLException {
-	}
+	public void updateCompany(Company company) throws SQLException ;
 
 	public Company getCompany(long id) throws SQLException;
 
@@ -21,6 +18,7 @@ public interface CompanyDAO {
 
 	public Collection<Coupon> getCoupon();
 
-	public boolean login();
+
+	public boolean login(String compname, String pass);
 
 }

@@ -7,7 +7,7 @@ import Coupon.Coupon;
 import Coupon.CouponType;
 import Custumer.Custumer;
 
-public class AdminFacade {
+public class AdminFacade implements CouponClientFasade {
 
 	public static void createCompany(Company company) {
 
