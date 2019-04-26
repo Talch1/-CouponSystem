@@ -18,7 +18,7 @@ public interface CustumerDAO {
 
 	public Custumer getCustumer(long id) throws SQLException;
 
-	public Collection<Company> getAllCustomer();
+	public Collection<Custumer> getAllCustomer() throws SQLException;
 
 	public Collection<Coupon> getCoupons();
 

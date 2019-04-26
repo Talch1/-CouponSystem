@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Collection;
 
 import Company.Company;
@@ -83,15 +84,15 @@ public class CustumerDBDAO implements CustumerDAO {
 		} finally {
 			connection.close();
 		}
-		String sql = "update Custumer set CUST_NAME = ?, password = ? where id = ? ";
+		String sql = "update Custumer set password = ? where id = ? ";
 		PreparedStatement preparedStatement = null;
 
 		try {
 			preparedStatement = connection.prepareStatement(sql);
 
-			preparedStatement.setString(1, custumer.getCustName());
-			preparedStatement.setString(2, custumer.getPassword());
-			preparedStatement.setLong(3, custumer.getId());
+			
+			preparedStatement.setString(1, custumer.getPassword());
+			preparedStatement.setLong(2, custumer.getId());
 			preparedStatement.executeUpdate();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -111,7 +112,7 @@ public class CustumerDBDAO implements CustumerDAO {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} 
-		String sql = "SELECT * FROM coupon WHERE ID=" + id;
+		String sql = "SELECT * FROM Custumer WHERE ID=" + id;
 		PreparedStatement preparedStatement = null;
 
 		try {
@@ -136,9 +137,43 @@ public class CustumerDBDAO implements CustumerDAO {
 	}
 
 	@Override
-	public Collection<Company> getAllCustomer() {
-		// TODO Auto-generated method stub
-		return null;
+	public Collection<Custumer> getAllCustomer() throws SQLException {
+	
+
+			ArrayList<Custumer> custumers = new ArrayList<>();
+
+			Connection connection = null;
+
+			try {
+				connection = DriverManager.getConnection(Database.getSql(), Database.getUser(), Database.getPasword());
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} 
+			Custumer custumer = new Custumer();
+			String sql = "SELECT * FROM Custumer ";
+			try {
+				PreparedStatement preparedStatement = connection.prepareStatement(sql);
+
+				ResultSet rs;
+				rs = preparedStatement.executeQuery(sql);
+			
+
+				
+				while (rs.next()) {
+
+					custumer.setId(rs.getLong(1));
+					custumer.setCustName(rs.getString(2));
+					custumer.setPassword(rs.getString(3));
+				}
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}finally {
+				connection.close();
+			}
+
+		return custumers;
 	}
 
 	@Override

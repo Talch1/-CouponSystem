@@ -15,18 +15,16 @@ import javax.swing.SpinnerListModel;
 import Coupon.Coupon;
 import Custumer.Custumer;
 import DataBase.Database;
+import Exeptions.ConectionExeption;
 
 public class CompanyDBDAO implements CompanyDAO {
 	// create table company
 	public void createCompany(Company company) throws SQLException {
 
 		Connection connection = null;
-		try {
+	
 			connection = DriverManager.getConnection(Database.getSql(), Database.getUser(), Database.getPasword());
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} 
+		
 
 		String query = " insert into company (id ,COMP_NAME ,password , email)" + " values (?, ?, ?, ?)";
 
@@ -88,15 +86,14 @@ public class CompanyDBDAO implements CompanyDAO {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} 
-		String sql = "update company set PASSWORD = ? , EMAIL = ?, COMP_NAME = ?  where ID =  ?";
+		String sql = "update company set PASSWORD = ? , EMAIL = ? where ID =  ?";
 
 		PreparedStatement preparedStatement = null;
 		preparedStatement = connection.prepareStatement(sql);
 
-		preparedStatement.setString(1, company.getCompName());
-		preparedStatement.setString(2, company.getPassword());
-		preparedStatement.setString(3, company.getEmail());
-		preparedStatement.setLong(4, company.getId());
+		preparedStatement.setString(1, company.getPassword());
+		preparedStatement.setString(2, company.getEmail());
+		preparedStatement.setLong(3, company.getId());
 
 		try {
 			preparedStatement = connection.prepareStatement(sql);
@@ -167,8 +164,9 @@ public class CompanyDBDAO implements CompanyDAO {
 		
 			while (resultSet.next()) {
 				company.setId(resultSet.getLong(1));
-				company.setPassword(resultSet.getString(2));
-				company.setEmail(resultSet.getString(3));
+				company.setCompName(resultSet.getString(2));
+				company.setPassword(resultSet.getString(3));
+				company.setEmail(resultSet.getString(4));
 				companies.add(company);
 			}
 		} catch (SQLException e1) {

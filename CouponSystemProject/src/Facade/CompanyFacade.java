@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import Company.Company;
 import Company.CompanyDAO;
 import Company.CompanyDBDAO;
 import Coupon.Coupon;
@@ -16,68 +17,52 @@ public class CompanyFacade implements CouponClientFasade {
 	 static CouponDBDAO couponDBDAO = new CouponDBDAO();
 	
 
-	public static void createCoupon(Coupon coupon) {
-		try {
+	public static void createCoupon(Coupon coupon) throws SQLException {
+		for (Coupon coup : couponDBDAO.getAllCoupons()) {
+			if (coup.getTitle()== coupon.getTitle()) {
+				return;
+			}else {
 			couponDBDAO.createCoupon(coupon);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		
+	}
 		}
 	}
 
-	public static void rempveCoupon(Coupon coupon) {
-		try {
+	public static void removeCoupon(Coupon coupon) throws SQLException {
+		
 			couponDBDAO.removeCoupon(coupon);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!	
 	}
 
-	public static void updateCoupon(Coupon coupon) {
-		try {
+	public static void updateCoupon(Coupon coupon) throws SQLException {
+		
 			couponDBDAO.updateCoupon(coupon);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
 	}
 
 	public static Coupon getCoupon(int id) {
-		Coupon c = new Coupon();
- try {
-	couponDBDAO.getCoupon(id);
-} catch (SQLException e) {
-	// TODO Auto-generated catch block
-	e.printStackTrace();
-}
- return c;
+		return getCoupon(id);
 	}
 
-	public static Collection<Coupon> getAllCoupons() {
-		ArrayList<Coupon> coupons = new ArrayList<>();
-		try {
-		coupons = (ArrayList<Coupon>) couponDBDAO.getAllCoupons();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return coupons;
+	public static Collection<Coupon> getAllCoupons() throws SQLException {
+		
+	
+		return couponDBDAO.getAllCoupons();
+		
+		
 		
 	}
 
-	public static Collection<Coupon> getCouponByType(CouponType type) {
+	public static Collection<Coupon> getCouponByType(CouponType type) throws SQLException {
 		
-		ArrayList<Coupon> list = new ArrayList<>();
-		try {
-			list = (ArrayList<Coupon>) couponDBDAO.getCouponByType(type);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return list;
+		return couponDBDAO.getAllCoupons();
 	}
 
+	
+	//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	
+	
+	
 	public static boolean login(String name, String password, String clientType) {
 		return companyDBDAO.login(name, password);
      

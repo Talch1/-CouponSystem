@@ -20,6 +20,7 @@ public class CustumerFacade implements CouponClientFasade{
 		
 	}
 	public static boolean login(String name,String password,String clientType) {
+		
 		return false;
 	}
 }

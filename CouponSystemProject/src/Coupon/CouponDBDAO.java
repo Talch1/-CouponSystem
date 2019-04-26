@@ -92,7 +92,7 @@ public class CouponDBDAO implements CouponDAO {
 		} finally {
 			connection.close();
 		}
-		String sql = "update coupon set TITLE = ?, START_DATE =  ?,END_DATE = ? ,amount = ?,type = ?,price = ?, image = ?  where id =  ?";
+		String sql = "update coupon set END_DATE = ? ,price = ?  where id =  ?";
 		PreparedStatement preparedStatement = null;
 		try {
 			preparedStatement = connection.prepareStatement(sql);
@@ -101,17 +101,10 @@ public class CouponDBDAO implements CouponDAO {
 			e.printStackTrace();
 		}
 
-		preparedStatement.setString(1, coupon.getTitle());
-		preparedStatement.setDate(2, (Date) coupon.getStartDate());
-		preparedStatement.setDate(3, (Date) coupon.getEndDate());
-		preparedStatement.setDouble(4, coupon.getAmount());
-		String type = coupon.getType().toString();
-
-		preparedStatement.setString(5, type);
-		preparedStatement.setString(6, coupon.getMessage());
-		preparedStatement.setDouble(7, coupon.getPrice());
-		preparedStatement.setString(8, coupon.getImage());
-		preparedStatement.setLong(9, coupon.getId());
+		
+		preparedStatement.setDate(1, (Date) coupon.getEndDate());
+		preparedStatement.setDouble(2, coupon.getPrice());
+		preparedStatement.setLong(3, coupon.getId());
 
 		try {
 			preparedStatement.executeUpdate();

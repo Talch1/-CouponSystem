@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.Collection;
 
 import Coupon.Coupon;
+import Exeptions.ConectionExeption;
 
 public interface CompanyDAO {
 	public void createCompany(Company company) throws SQLException ;
