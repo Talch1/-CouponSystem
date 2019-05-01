@@ -15,7 +15,7 @@ import Custumer.Custumer;
 import Custumer.CustumerDBDAO;
 
 public class AdminFacade implements CouponClientFasade {
-
+    static AdminFacade adminFacade = new AdminFacade();
 	static CompanyDBDAO companyDBDAO = new CompanyDBDAO();
 	static CustumerDBDAO custumerDBDAO = new CustumerDBDAO();
 
@@ -93,13 +93,13 @@ for (Company comp : companyDBDAO.getAllCompany()) {
 
 	}
 
-	public static boolean login(String name, String password, String clientType) {
+	public static CouponClientFasade login(String name, String password,CouponClientFasade clientFasade) {
 		String username = "admin";
 		String pass = "1234";
 		if( (name== username) && (pass == password)) {
-			return true;
+			return adminFacade;
 		}else {
-			return false;
+			return null;
 		}
 	}
 

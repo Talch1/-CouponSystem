@@ -15,7 +15,6 @@ import javax.swing.SpinnerListModel;
 import Coupon.Coupon;
 import Custumer.Custumer;
 import DataBase.Database;
-import Exeptions.ConectionExeption;
 
 public class CompanyDBDAO implements CompanyDAO {
 	// create table company

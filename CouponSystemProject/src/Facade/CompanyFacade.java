@@ -13,6 +13,7 @@ import Coupon.CouponType;
 
 public class CompanyFacade implements CouponClientFasade {
 	
+	static CompanyFacade companyFacade = new CompanyFacade();
      static CompanyDBDAO companyDBDAO = new CompanyDBDAO();
 	 static CouponDBDAO couponDBDAO = new CouponDBDAO();
 	
@@ -63,8 +64,10 @@ public class CompanyFacade implements CouponClientFasade {
 	
 	
 	
-	public static boolean login(String name, String password, String clientType) {
-		return companyDBDAO.login(name, password);
+	public static CouponClientFasade login(String name, String password,CouponClientFasade clientFasade) {
+	
+		return companyFacade;
+		
      
 	}
 }

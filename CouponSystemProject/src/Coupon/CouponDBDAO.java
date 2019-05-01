@@ -89,9 +89,7 @@ public class CouponDBDAO implements CouponDAO {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} finally {
-			connection.close();
-		}
+		} 
 		String sql = "update coupon set END_DATE = ? ,price = ?  where id =  ?";
 		PreparedStatement preparedStatement = null;
 		try {
@@ -111,6 +109,8 @@ public class CouponDBDAO implements CouponDAO {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}finally {
+			connection.close();
 		}
 		System.out.println("Coupon Updated");
 
@@ -194,7 +194,7 @@ public class CouponDBDAO implements CouponDAO {
 		return coupons;
 	}
 
-	public Coupon getCoupon(int id) throws SQLException {
+	public Coupon getCoupon(long id) throws SQLException {
 
 		Connection connection = null;
 		Coupon coupon = new Coupon();
@@ -217,7 +217,7 @@ public class CouponDBDAO implements CouponDAO {
 			while (rs.next()) {
 				coupon.setId(rs.getLong(1));
 				coupon.setTitle(rs.getString(2));
-				coupon.setStartDate(rs.getDate(3));
+				coupon.setStartDate(rs.getDate(3)); 
 				coupon.setEndDate(rs.getDate(4));
 				coupon.setAmount(rs.getInt(5));
 				String returnType = rs.getString(6);

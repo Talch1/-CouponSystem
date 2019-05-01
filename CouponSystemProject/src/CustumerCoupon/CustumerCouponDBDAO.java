@@ -5,8 +5,10 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import Coupon.Coupon;
+import Coupon.CouponDBDAO;
 import DataBase.Database;
 
 public class CustumerCouponDBDAO implements CustumerCouponDAO {
@@ -30,8 +32,6 @@ public class CustumerCouponDBDAO implements CustumerCouponDAO {
 		this.coupon_id = coupon_id;
 	}
 
-
-
 	public static void removeCustumerCoupon(Coupon coupon) throws SQLException {
 
 		Connection connection = null;
@@ -41,26 +41,27 @@ public class CustumerCouponDBDAO implements CustumerCouponDAO {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		String sql = "delete from  JoinCustumer_Coupon where COUPON_ID = ?";
+		String sql = "delete from  CustumerCoupon where COUPON_ID = ?";
 		PreparedStatement preparedStatement = null;
 		try {
 			preparedStatement = connection.prepareStatement(sql);
-		
+
 			preparedStatement.setLong(1, coupon.getId());
-		
+
 			preparedStatement.executeUpdate();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}finally {
+		} finally {
 			connection.close();
 		}
 		System.out.println("deleted from table CustumerCoupon");
 
 	}
 
-	public static CustumerCouponDBDAO getCustumerCoupon(int id) throws SQLException {
+	public static ArrayList<CustumerCouponDBDAO> getCustumerCoupon(long l) throws SQLException {
 		Connection connection = null;
+		ArrayList<CustumerCouponDBDAO> list = new ArrayList<>();
 
 		try {
 			connection = DriverManager.getConnection(Database.getSql(), Database.getUser(), Database.getPasword());
@@ -71,26 +72,29 @@ public class CustumerCouponDBDAO implements CustumerCouponDAO {
 
 		CustumerCouponDBDAO custumerCouponDBDAO = new CustumerCouponDBDAO();
 		PreparedStatement preparedStatement = null;
-		String sql = "SELECT * FROM CustumerCoupon WHERE COUPON_ID = " + id;
+		String sql = "SELECT * FROM CustumerCoupon WHERE CUST_ID = " + l;
 		try {
 			preparedStatement = connection.prepareStatement(sql);
 
-			
 			ResultSet rs = preparedStatement.executeQuery(sql);
-			rs.next();
+			while (rs.next()) {
 
-			custumerCouponDBDAO.setCust_id(rs.getLong(1));
-			custumerCouponDBDAO.setCoupon_id(rs.getLong(2));
+				custumerCouponDBDAO.setCust_id(rs.getLong(1));
+				custumerCouponDBDAO.setCoupon_id(rs.getLong(2));
+				list.add(custumerCouponDBDAO);
+			}
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}finally {
+		} finally {
 			connection.close();
 		}
 
-		return custumerCouponDBDAO;
+		return list;
 
 	}
-
-}
+	
+		
+		
+	}
