@@ -8,22 +8,23 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.sql.Statement;
-
-import javax.swing.SpinnerListModel;
 
 import Coupon.Coupon;
-import Custumer.Custumer;
+import Coupon.CouponDBDAO;
+
 import DataBase.Database;
+import Utils.CompCoup;
 
 public class CompanyDBDAO implements CompanyDAO {
+	CouponDBDAO couponDBDAO = new CouponDBDAO();
+	CompCoup compCoup = new CompCoup();
+
 	// create table company
 	public void createCompany(Company company) throws SQLException {
 
 		Connection connection = null;
-	
-			connection = DriverManager.getConnection(Database.getSql(), Database.getUser(), Database.getPasword());
-		
+
+		connection = DriverManager.getConnection(Database.getSql(), Database.getUser(), Database.getPasword());
 
 		String query = " insert into company (id ,COMP_NAME ,password , email)" + " values (?, ?, ?, ?)";
 
@@ -42,7 +43,7 @@ public class CompanyDBDAO implements CompanyDAO {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}finally {
+		} finally {
 			connection.close();
 		}
 		System.out.printf("Inserted to Company");
@@ -58,7 +59,7 @@ public class CompanyDBDAO implements CompanyDAO {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} 
+		}
 		String sql = String.format("delete from  Company where id = ?");
 		PreparedStatement preparedStatement = null;
 		try {
@@ -69,7 +70,7 @@ public class CompanyDBDAO implements CompanyDAO {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}finally {
+		} finally {
 			connection.close();
 		}
 		System.out.println("Deleted from Company");
@@ -84,7 +85,7 @@ public class CompanyDBDAO implements CompanyDAO {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} 
+		}
 		String sql = "update company set PASSWORD = ? , EMAIL = ? where ID =  ?";
 
 		PreparedStatement preparedStatement = null;
@@ -101,7 +102,7 @@ public class CompanyDBDAO implements CompanyDAO {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}finally {
+		} finally {
 			connection.close();
 		}
 		System.out.println("Company Updatet");
@@ -116,15 +117,15 @@ public class CompanyDBDAO implements CompanyDAO {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} 
+		}
 		Company company = new Company();
-		String sql = "SELECT * FROM  Company WHERE ID=" + id ;
+		String sql = "SELECT * FROM  Company WHERE ID=" + id;
 		try {
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
 
 			ResultSet resultSet;
 			resultSet = preparedStatement.executeQuery(sql);
-			
+
 			while (resultSet.next()) {
 				company.setId(resultSet.getLong(1));
 				company.setPassword(resultSet.getString(2));
@@ -133,7 +134,7 @@ public class CompanyDBDAO implements CompanyDAO {
 		} catch (SQLException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
-		}finally {
+		} finally {
 			connection.close();
 		}
 		return company;
@@ -152,7 +153,7 @@ public class CompanyDBDAO implements CompanyDAO {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} 
+		}
 		Company company = new Company();
 		String sql = "SELECT * FROM Company ";
 		try {
@@ -160,7 +161,7 @@ public class CompanyDBDAO implements CompanyDAO {
 
 			ResultSet resultSet;
 			resultSet = preparedStatement.executeQuery(sql);
-		
+
 			while (resultSet.next()) {
 				company.setId(resultSet.getLong(1));
 				company.setCompName(resultSet.getString(2));
@@ -171,7 +172,7 @@ public class CompanyDBDAO implements CompanyDAO {
 		} catch (SQLException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
-		}finally {
+		} finally {
 			connection.close();
 		}
 
@@ -179,14 +180,12 @@ public class CompanyDBDAO implements CompanyDAO {
 	}
 
 	@Override
-	public Collection<Coupon> getCoupon() {
-		
-//	!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-		return null;
+	public Collection<Coupon> getCoupons() throws SQLException {
+		return compCoup.allCouponsOfCompany();
 	}
 
 	@Override
-	public boolean login(String compname,String pass) {
+	public boolean login(String compname, String pass) {
 		Company company = new Company();
 		Connection connection = null;
 		try {
@@ -196,7 +195,8 @@ public class CompanyDBDAO implements CompanyDAO {
 			e.printStackTrace();
 
 		}
-		String sql = "SELECT * FROM company WHERE COMP_NAME = " + "'"+compname + "'"  + " and  password = " + "'" +pass+ "'";
+		String sql = "SELECT * FROM company WHERE COMP_NAME = " + "'" + compname + "'" + " and  password = " + "'"
+				+ pass + "'";
 		PreparedStatement preparedStatement = null;
 
 		try {
@@ -204,7 +204,7 @@ public class CompanyDBDAO implements CompanyDAO {
 			preparedStatement = connection.prepareStatement(sql);
 
 			ResultSet rs = preparedStatement.executeQuery(sql);
-	
+
 			while (rs.next()) {
 
 				company.setId(rs.getLong(1));

@@ -76,12 +76,13 @@ public class CompanyCouponDBDAO implements CompanyCouponDAO {
 		}
 
 		CompanyCouponDBDAO companyCouponDBDAO = new CompanyCouponDBDAO();
-		Statement stm;
+		PreparedStatement preparedStatement;
 		try {
-			stm = connection.createStatement();
 
 			String sql = "SELECT * FROM CompanyCoupon WHERE COUPON_ID = " + id;
-			ResultSet rs = stm.executeQuery(sql);
+
+			preparedStatement = connection.prepareStatement(sql);
+			ResultSet rs = preparedStatement.executeQuery(sql);
 			rs.next();
 
 			companyCouponDBDAO.setComp_id(rs.getLong(1));

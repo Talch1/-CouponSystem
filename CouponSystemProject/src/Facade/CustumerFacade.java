@@ -11,9 +11,10 @@ import Custumer.CustumerDBDAO;
 import Utils.CouponPurchaise;
 import Utils.CustumerCouponChek;
 import CustumerCoupon.CustumerCouponDBDAO;
+import Exeptions.*;
 
 public class CustumerFacade implements CouponClientFasade {
-     private static final CouponClientFasade Exception = null;
+
 	static CustumerDBDAO custumerDBDAO = new CustumerDBDAO();
 	static CustumerFacade custumerFacade = new CustumerFacade();
 	static CustumerCouponDBDAO custumerCouponDBDAO = new CustumerCouponDBDAO();
@@ -43,13 +44,14 @@ public class CustumerFacade implements CouponClientFasade {
 
 	}
 
-	public static CouponClientFasade login(String name, String password, CouponClientFasade clientFasade) {
+	public static CouponClientFasade login(String name, String password, CouponClientFasade clientFasade)
+			throws LoginEx {
 
-		if (custumerDBDAO.login(name, password )== true) {
+		if (custumerDBDAO.login(name, password) != true) {
+			throw new LoginEx("login or password is incorect");
+		} else {
 			return custumerFacade;
-		}else {return Exception;//1111111111111111111111111111111111111111111111111111111111111111111111111111111111
 		}
-		
 
 	}
 }

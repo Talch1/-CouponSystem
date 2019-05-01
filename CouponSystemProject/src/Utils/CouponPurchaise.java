@@ -63,10 +63,6 @@ public class CouponPurchaise {
 
 	}
 
-
-	
-	
-	
 	public static ArrayList<Coupon> getAllPurchaiseCouponByPrice(double price) throws SQLException {
 		ArrayList<Coupon> alloupons = new ArrayList<>();
 		ArrayList<Coupon> byprice = new ArrayList<>();
@@ -78,7 +74,7 @@ public class CouponPurchaise {
 		}
 		return byprice;
 
-}
+	}
 
 	public static ArrayList<Coupon> getAllPurchaiseCouponByType(CouponType type) throws SQLException {
 		ArrayList<Coupon> alloupons = new ArrayList<>();

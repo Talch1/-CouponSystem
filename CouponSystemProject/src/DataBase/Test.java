@@ -10,15 +10,16 @@ import Coupon.CouponDBDAO;
 import Coupon.CouponType;
 import Custumer.Custumer;
 import Custumer.CustumerDBDAO;
+import Exeptions.LoginEx;
+import Facade.AdminFacade;
 import Utils.CustumerCouponChek;
 
 
 
 public class Test {
 
-	public static void main(String[] args) throws SQLException {
-		 CompanyDBDAO co = new CompanyDBDAO();
-		System.out.println(co.login("kola", "ppp"));
+	public static void main(String[] args) throws SQLException, LoginEx {
+		 AdminFacade .login("admin", "123", null);
 		
 		
 	}

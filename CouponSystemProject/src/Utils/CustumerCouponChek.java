@@ -6,8 +6,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 
-
-
 import Coupon.Coupon;
 import Custumer.Custumer;
 import CustumerCoupon.CustumerCouponDBDAO;
@@ -36,28 +34,22 @@ public class CustumerCouponChek {
 
 	}
 
-   public static boolean checkCustumerCouponByCouponId (Custumer custumer, Coupon coupon) throws SQLException {
-	   ArrayList<CustumerCouponDBDAO> list = new ArrayList<>();
-	   custumerCouponDBDAO = null;
-	   int a = 0;
-	   list = custumerCouponDBDAO.getCustumerCoupon(custumer.getId());
-	   for (CustumerCouponDBDAO custumerCouponDBDAO : list) {
-	if(	custumerCouponDBDAO.getCoupon_id() == coupon.getId()) {
-		a++;
-	}
-	}
-	   if (a > 0) {
-		return true;
-	}else {
-		return false;
-	}
-	   
-	   
-	
-	   
-	   
+	public static boolean checkCustumerCouponByCouponId(Custumer custumer, Coupon coupon) throws SQLException {
+		ArrayList<CustumerCouponDBDAO> list = new ArrayList<>();
+		custumerCouponDBDAO = null;
+		int a = 0;
+		list = custumerCouponDBDAO.getCustumerCoupon(custumer.getId());
+		for (CustumerCouponDBDAO custumerCouponDBDAO : list) {
+			if (custumerCouponDBDAO.getCoupon_id() == coupon.getId()) {
+				a++;
+			}
+		}
+		if (a > 0) {
+			return true;
+		} else {
+			return false;
+		}
 
-	
-}
-	
+	}
+
 }

@@ -1,7 +1,7 @@
 package Coupon;
 
 import java.sql.Connection;
-import java.sql.Date;
+
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 
 import Company.Company;
 import DataBase.Database;
@@ -36,8 +37,8 @@ public class CouponDBDAO implements CouponDAO {
 
 			preparedStmt.setLong(1, coupon.getId());
 			preparedStmt.setString(2, coupon.getTitle());
-			preparedStmt.setDate(3, (Date) coupon.getStartDate());
-			preparedStmt.setDate(4, (Date) coupon.getEndDate());
+			preparedStmt.setDate(3, (java.sql.Date) coupon.getStartDate());
+			preparedStmt.setDate(4, (java.sql.Date) coupon.getEndDate());
 			preparedStmt.setDouble(5, coupon.getAmount());
 			String type = coupon.getType().toString();
 
@@ -81,6 +82,32 @@ public class CouponDBDAO implements CouponDAO {
 		}
 	}
 
+	public static void updateCoupon1(Coupon coupon)  {
+		String sql = "update coupon set TITLE = ?, START_DATE =  ?,END_DATE = ? ,amount = ?,type = ?,price = ?, image = ?  where id =  ?";
+		Connection connection = null;
+
+		try {
+			connection = DriverManager.getConnection(Database.getSql(), Database.getUser(), Database.getPasword());
+		
+		PreparedStatement preparedStatement = connection.prepareStatement(sql);
+		preparedStatement.setString(1, coupon.getTitle());
+		preparedStatement.setDate(2, (java.sql.Date) coupon.getStartDate());
+		preparedStatement.setDate(3, (java.sql.Date) coupon.getEndDate());
+		preparedStatement.setInt(4, coupon.getAmount());
+		preparedStatement.setObject(5, coupon.getType());
+		preparedStatement.setDouble(6, coupon.getPrice());
+		preparedStatement.setString(7, coupon.getImage());
+		preparedStatement.setLong(8, coupon.getId());
+
+		preparedStatement.executeUpdate();
+		System.out.println("Coupon Updated");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+
 	public static void updateCoupon(Coupon coupon) throws SQLException {
 
 		Connection connection = null;
@@ -89,7 +116,7 @@ public class CouponDBDAO implements CouponDAO {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} 
+		}
 		String sql = "update coupon set END_DATE = ? ,price = ?  where id =  ?";
 		PreparedStatement preparedStatement = null;
 		try {
@@ -99,8 +126,7 @@ public class CouponDBDAO implements CouponDAO {
 			e.printStackTrace();
 		}
 
-		
-		preparedStatement.setDate(1, (Date) coupon.getEndDate());
+		preparedStatement.setDate(1, (java.sql.Date) coupon.getEndDate());
 		preparedStatement.setDouble(2, coupon.getPrice());
 		preparedStatement.setLong(3, coupon.getId());
 
@@ -109,7 +135,7 @@ public class CouponDBDAO implements CouponDAO {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}finally {
+		} finally {
 			connection.close();
 		}
 		System.out.println("Coupon Updated");
@@ -117,7 +143,7 @@ public class CouponDBDAO implements CouponDAO {
 	}
 
 	@Override
-	public Collection<Coupon> getAllCoupons() throws SQLException {
+	public ArrayList<Coupon> getAllCoupons() throws SQLException {
 		ArrayList<Coupon> coupons = new ArrayList<>();
 
 		Connection connection = null;
@@ -217,7 +243,7 @@ public class CouponDBDAO implements CouponDAO {
 			while (rs.next()) {
 				coupon.setId(rs.getLong(1));
 				coupon.setTitle(rs.getString(2));
-				coupon.setStartDate(rs.getDate(3)); 
+				coupon.setStartDate(rs.getDate(3));
 				coupon.setEndDate(rs.getDate(4));
 				coupon.setAmount(rs.getInt(5));
 				String returnType = rs.getString(6);
@@ -281,7 +307,7 @@ public class CouponDBDAO implements CouponDAO {
 		String sql = "SELECT * FROM coupon WHERE Type = " + type;
 
 		try {
-		PreparedStatement	preparedStatement = null;
+			PreparedStatement preparedStatement = null;
 
 			preparedStatement = connection.prepareStatement(sql);
 
@@ -343,6 +369,5 @@ public class CouponDBDAO implements CouponDAO {
 
 		return coupons;
 	}
-
 
 }

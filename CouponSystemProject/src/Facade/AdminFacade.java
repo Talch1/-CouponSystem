@@ -13,6 +13,7 @@ import Coupon.CouponDBDAO;
 import Coupon.CouponType;
 import Custumer.Custumer;
 import Custumer.CustumerDBDAO;
+import Exeptions.*;
 
 public class AdminFacade implements CouponClientFasade {
     static AdminFacade adminFacade = new AdminFacade();
@@ -74,7 +75,7 @@ for (Company comp : companyDBDAO.getAllCompany()) {
 	public static void removeCustumer(Custumer cust) throws SQLException {
 
 		custumerDBDAO.removeCustumer(cust);
-		//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 	}
 
@@ -93,13 +94,14 @@ for (Company comp : companyDBDAO.getAllCompany()) {
 
 	}
 
-	public static CouponClientFasade login(String name, String password,CouponClientFasade clientFasade) {
+	public static CouponClientFasade login(String name, String password,CouponClientFasade clientFasade) throws LoginEx {
 		String username = "admin";
 		String pass = "1234";
 		if( (name== username) && (pass == password)) {
 			return adminFacade;
 		}else {
-			return null;
+			throw new LoginEx("login or password is incorrect");
+		
 		}
 	}
 
