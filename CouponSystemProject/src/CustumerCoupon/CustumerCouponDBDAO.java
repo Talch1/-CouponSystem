@@ -90,11 +90,6 @@ public class CustumerCouponDBDAO implements CustumerCouponDAO {
 		} finally {
 			connection.close();
 		}
-
 		return list;
-
 	}
-	
-		
-		
-	}
+}

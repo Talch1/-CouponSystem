@@ -11,34 +11,35 @@ import Company.CompanyDBDAO;
 import Coupon.Coupon;
 import Coupon.CouponDBDAO;
 import Coupon.CouponType;
-import Custumer.Custumer;
-import Custumer.CustumerDBDAO;
+import Customer.Customer;
+import Customer.CustomerDBDAO;
+import DataBase.ClientType;
 import Exeptions.*;
 
 public class AdminFacade implements CouponClientFasade {
-    static AdminFacade adminFacade = new AdminFacade();
 	static CompanyDBDAO companyDBDAO = new CompanyDBDAO();
-	static CustumerDBDAO custumerDBDAO = new CustumerDBDAO();
+	static CustomerDBDAO customerDBDAO = new CustomerDBDAO();
 
 	public static void createCompany(Company company) throws SQLException {
-for (Company comp : companyDBDAO.getAllCompany()) {
-	if (comp.getCompName()== company.getCompName()) {
-		return;
-	}else {
-		companyDBDAO.createCompany(company);
-	}
-}
+		for (Company comp : companyDBDAO.getAllCompany()) {
+			if (comp.getCompName() == company.getCompName()) {
+				return;
+			} else {
+				companyDBDAO.createCompany(company);
+			}
+		}
 	}
 
-	public static void removeCompany(Company company) {
+	public static void removeCompany(Company company) throws SQLException {
 		try {
 			companyDBDAO.removeCompany(company);
+
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+		Utils.CompCoup.deletefromCompcoup(company.getId());
+
 	}
 
 	public static void updateCompany(Company company) {
@@ -63,46 +64,44 @@ for (Company comp : companyDBDAO.getAllCompany()) {
 
 	}
 
-	public static void createCustumer(Custumer cust) throws SQLException {
-		for (Custumer custumer : custumerDBDAO.getAllCustomer()) {
-			if (custumer.getCustName()== cust.getCustName()) {
+	public static void createCustomer(Customer cust) throws SQLException {
+		for (Customer customer : customerDBDAO.getAllCustomer()) {
+			if (customer.getCustName() == cust.getCustName()) {
 				return;
-			}else {
-				custumerDBDAO.createCustumer(cust);
+			} else {
+				customerDBDAO.createCustomer(cust);
 			}
 		}
 	}
-	public static void removeCustumer(Custumer cust) throws SQLException {
 
-		custumerDBDAO.removeCustumer(cust);
-//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	public static void removeCustomer(Customer cust) throws SQLException {
 
-	}
-
-	public static void updateCustumer(Custumer cust) throws SQLException {
-		custumerDBDAO.updateCompanyName(cust);
-	}
-
-	public static Custumer getCustumer(int id) {
-		
-		return getCustumer(id);
+		customerDBDAO.removeCustomer(cust);
+		Utils.CouponPurchaise.deletefromCustcoup(cust.getId());
 
 	}
 
-	public static Collection<Company> getAllCustumers() {
-		return getAllCustumers();
+	public static void updateCustomer(Customer cust) throws SQLException {
+		customerDBDAO.updateCompanyName(cust);
+	}
+
+	public static Customer getCustomer(int id) {
+
+		return getCustomer(id);
 
 	}
 
-	public static CouponClientFasade login(String name, String password,CouponClientFasade clientFasade) throws LoginEx {
-		String username = "admin";
-		String pass = "1234";
-		if( (name== username) && (pass == password)) {
+	public static Collection<Company> getAllCustomers() {
+		return getAllCustomers();
+
+	}
+
+	public CouponClientFasade login(String name, String password, ClientType c) {
+		if ((name.equals("admin")) && (password.equals("1234"))) {
+			AdminFacade adminFacade = new AdminFacade();
 			return adminFacade;
-		}else {
-			throw new LoginEx("login or password is incorrect");
-		
 		}
+		return null;
 	}
 
 }

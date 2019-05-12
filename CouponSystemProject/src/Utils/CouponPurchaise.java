@@ -14,6 +14,36 @@ import CustumerCoupon.CustumerCouponDBDAO;
 import DataBase.Database;
 
 public class CouponPurchaise {
+	
+
+	public static void insert(long custId,long coupId) throws SQLException {
+		
+		Connection connection = null;
+		
+		try {
+			connection = DriverManager.getConnection(Database.getSql(), Database.getUser(), Database.getPasword());
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	
+		String query = " insert into CustumerCoupon (CUST_ID , COUPON_ID) values (?, ?)";
+
+		PreparedStatement preparedStmt = null;
+		try {
+			preparedStmt = connection.prepareStatement(query);
+
+		//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+			preparedStmt.execute();
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			connection.close();
+		}
+	}
 
 	public static ArrayList<CustumerCouponDBDAO> getAllCustumerCoupons() throws SQLException {
 		Connection connection = null;
@@ -88,4 +118,32 @@ public class CouponPurchaise {
 		return bytype;
 
 	}
+	
+	
+	public static void deletefromCustcoup(long id) throws SQLException {
+		Connection connection = null;
+		try {
+			connection = DriverManager.getConnection(Database.getSql(), Database.getUser(), Database.getPasword());
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		String sql = String.format("delete from  CustumerCoupon where cust_id = ?");
+		PreparedStatement preparedStatement = null;
+		try {
+			preparedStatement = connection.prepareStatement(sql);
+
+			preparedStatement.setLong(1, id);
+			preparedStatement.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			connection.close();
+		}
+		System.out.println("Deleted from CustumerCoupon");
+
+	}
+		
+	
 }

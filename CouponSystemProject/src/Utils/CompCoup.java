@@ -72,5 +72,28 @@ public class CompCoup {
 		return allCoupons;
 
 	}
+	public static void deletefromCompcoup(long id) throws SQLException {
+		Connection connection = null;
+		try {
+			connection = DriverManager.getConnection(Database.getSql(), Database.getUser(), Database.getPasword());
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		String sql = String.format("delete from  CompanyCoupon where comp_id = ?");
+		PreparedStatement preparedStatement = null;
+		try {
+			preparedStatement = connection.prepareStatement(sql);
 
+			preparedStatement.setLong(1, id);
+			preparedStatement.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			connection.close();
+		}
+		System.out.println("Deleted from CompanyCoupon");
+
+}
 }

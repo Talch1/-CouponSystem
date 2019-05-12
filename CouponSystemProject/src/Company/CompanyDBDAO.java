@@ -82,10 +82,7 @@ public class CompanyDBDAO implements CompanyDAO {
 		Connection connection = null;
 		try {
 			connection = DriverManager.getConnection(Database.getSql(), Database.getUser(), Database.getPasword());
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
 		String sql = "update company set PASSWORD = ? , EMAIL = ? where ID =  ?";
 
 		PreparedStatement preparedStatement = null;
@@ -95,7 +92,7 @@ public class CompanyDBDAO implements CompanyDAO {
 		preparedStatement.setString(2, company.getEmail());
 		preparedStatement.setLong(3, company.getId());
 
-		try {
+	
 			preparedStatement = connection.prepareStatement(sql);
 
 			preparedStatement.execute(sql);

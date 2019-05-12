@@ -82,25 +82,37 @@ public class CouponDBDAO implements CouponDAO {
 		}
 	}
 
-	public static void updateCoupon1(Coupon coupon)  {
+	public void deleteExpirdCoup(Date date) throws SQLException {
+
+		ArrayList<Coupon> list = getAllCoupons();
+
+		for (Coupon coupon : list) {
+			if (coupon.getEndDate().before(date)) {
+				removeCoupon(coupon);
+			}
+			
+		}
+	}
+
+	public static void updateCoupon1(Coupon coupon) {
 		String sql = "update coupon set TITLE = ?, START_DATE =  ?,END_DATE = ? ,amount = ?,type = ?,price = ?, image = ?  where id =  ?";
 		Connection connection = null;
 
 		try {
 			connection = DriverManager.getConnection(Database.getSql(), Database.getUser(), Database.getPasword());
-		
-		PreparedStatement preparedStatement = connection.prepareStatement(sql);
-		preparedStatement.setString(1, coupon.getTitle());
-		preparedStatement.setDate(2, (java.sql.Date) coupon.getStartDate());
-		preparedStatement.setDate(3, (java.sql.Date) coupon.getEndDate());
-		preparedStatement.setInt(4, coupon.getAmount());
-		preparedStatement.setObject(5, coupon.getType());
-		preparedStatement.setDouble(6, coupon.getPrice());
-		preparedStatement.setString(7, coupon.getImage());
-		preparedStatement.setLong(8, coupon.getId());
 
-		preparedStatement.executeUpdate();
-		System.out.println("Coupon Updated");
+			PreparedStatement preparedStatement = connection.prepareStatement(sql);
+			preparedStatement.setString(1, coupon.getTitle());
+			preparedStatement.setDate(2, (java.sql.Date) coupon.getStartDate());
+			preparedStatement.setDate(3, (java.sql.Date) coupon.getEndDate());
+			preparedStatement.setInt(4, coupon.getAmount());
+			preparedStatement.setObject(5, coupon.getType());
+			preparedStatement.setDouble(6, coupon.getPrice());
+			preparedStatement.setString(7, coupon.getImage());
+			preparedStatement.setLong(8, coupon.getId());
+
+			preparedStatement.executeUpdate();
+			System.out.println("Coupon Updated");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -7,9 +7,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import Coupon.Coupon;
-import Custumer.Custumer;
 import CustumerCoupon.CustumerCouponDBDAO;
 import Coupon.CouponDBDAO;
+import Customer.Customer;
 
 public class CustumerCouponChek {
 	static Connection con = null;
@@ -34,7 +34,7 @@ public class CustumerCouponChek {
 
 	}
 
-	public static boolean checkCustumerCouponByCouponId(Custumer custumer, Coupon coupon) throws SQLException {
+	public static boolean checkCustumerCouponByCouponId(Customer custumer, Coupon coupon) throws SQLException {
 		ArrayList<CustumerCouponDBDAO> list = new ArrayList<>();
 		custumerCouponDBDAO = null;
 		int a = 0;

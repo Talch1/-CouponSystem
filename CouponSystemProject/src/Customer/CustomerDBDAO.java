@@ -1,4 +1,4 @@
-package Custumer;
+package Customer;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -12,12 +12,13 @@ import Company.Company;
 import Coupon.Coupon;
 import DataBase.Database;
 
-public class CustumerDBDAO implements CustumerDAO {
-	public static void createCustumer(Custumer custumer) throws SQLException {
+public class CustomerDBDAO implements CustomerDAO {
+	public static void createCustomer(Customer customer) throws SQLException {
 
 		Connection connection = null;
 		try {
 			connection = DriverManager.getConnection(Database.getSql(), Database.getUser(), Database.getPasword());
+			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -26,16 +27,16 @@ public class CustumerDBDAO implements CustumerDAO {
 
 		String query = " insert into customer (id ,CUST_NAME ,password )" + " values (?, ?, ?)";
 
-		// create the mysql insert preparedstatement
+	
 		PreparedStatement preparedStmt;
 		try {
 			preparedStmt = connection.prepareStatement(query);
 
-			preparedStmt.setLong(1, custumer.getId());
-			preparedStmt.setString(2, custumer.getCustName());
-			preparedStmt.setString(3, custumer.getPassword());
+			preparedStmt.setLong(1, customer.getId());
+			preparedStmt.setString(2, customer.getCustName());
+			preparedStmt.setString(3, customer.getPassword());
 
-			// execute the preparedstatement
+	
 			preparedStmt.execute();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -43,11 +44,11 @@ public class CustumerDBDAO implements CustumerDAO {
 		} finally {
 			connection.close();
 		}
-		System.out.println("Custumer Created");
+		System.out.println("customer Created");
 
 	}
 
-	public static void removeCustumer(Custumer custumer) throws SQLException {
+	public static void removeCustomer(Customer customer) throws SQLException {
 
 		Connection connection = null;
 		try {
@@ -58,22 +59,22 @@ public class CustumerDBDAO implements CustumerDAO {
 		} finally {
 			connection.close();
 		}
-		String sql = "delete from  Custumer where id = ?";
+		String sql = "delete from  customer where id = ?";
 		PreparedStatement preparedStatement;
 		try {
 			preparedStatement = connection.prepareStatement(sql);
 
-			preparedStatement.setLong(1, custumer.getId());
+			preparedStatement.setLong(1, customer.getId());
 			preparedStatement.executeUpdate();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		System.out.println("deleted from Custumer");
+		System.out.println("deleted from customer");
 
 	}
 
-	public static void updateCompanyName(Custumer custumer) throws SQLException {
+	public static void updateCompanyName(Customer customer) throws SQLException {
 
 		Connection connection = null;
 		try {
@@ -84,27 +85,26 @@ public class CustumerDBDAO implements CustumerDAO {
 		} finally {
 			connection.close();
 		}
-		String sql = "update Custumer set password = ? where id = ? ";
+		String sql = "update customer set password = ? where id = ? ";
 		PreparedStatement preparedStatement = null;
 
 		try {
 			preparedStatement = connection.prepareStatement(sql);
 
 			
-			preparedStatement.setString(1, custumer.getPassword());
-			preparedStatement.setLong(2, custumer.getId());
+			preparedStatement.setString(1, customer.getPassword());
+			preparedStatement.setLong(2, customer.getId());
 			preparedStatement.executeUpdate();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		System.out.println("Custumer Updatet");
+		System.out.println("customer Updatet");
 
 	}
 
-	@Override
-	public Custumer getCustumer(long id) throws SQLException {
-		Custumer custumer = new Custumer();
+	public Customer getCustomer(long id) throws SQLException {
+		Customer customer = new Customer();
 		Connection connection = null;
 		try {
 			connection = DriverManager.getConnection(Database.getSql(), Database.getUser(), Database.getPasword());
@@ -112,7 +112,7 @@ public class CustumerDBDAO implements CustumerDAO {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} 
-		String sql = "SELECT * FROM Custumer WHERE ID=" + id;
+		String sql = "SELECT * FROM customer WHERE ID=" + id;
 		PreparedStatement preparedStatement = null;
 
 		try {
@@ -122,9 +122,9 @@ public class CustumerDBDAO implements CustumerDAO {
 	
 			while (rs.next()) {
 
-				custumer.setId(rs.getLong(1));
-				custumer.setCustName(rs.getString(2));
-				custumer.setPassword(rs.getString(3));
+				customer.setId(rs.getLong(1));
+				customer.setCustName(rs.getString(2));
+				customer.setPassword(rs.getString(3));
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -133,14 +133,14 @@ public class CustumerDBDAO implements CustumerDAO {
 			connection.close();
 		}
 
-		return custumer;
+		return customer;
 	}
 
 	@Override
-	public Collection<Custumer> getAllCustomer() throws SQLException {
+	public Collection<Customer> getAllCustomer() throws SQLException {
 	
 
-			ArrayList<Custumer> custumers = new ArrayList<>();
+			ArrayList<Customer> customers = new ArrayList<>();
 
 			Connection connection = null;
 
@@ -150,8 +150,8 @@ public class CustumerDBDAO implements CustumerDAO {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} 
-			Custumer custumer = new Custumer();
-			String sql = "SELECT * FROM Custumer ";
+			Customer customer = new Customer();
+			String sql = "SELECT * FROM customer ";
 			try {
 				PreparedStatement preparedStatement = connection.prepareStatement(sql);
 
@@ -162,9 +162,9 @@ public class CustumerDBDAO implements CustumerDAO {
 				
 				while (rs.next()) {
 
-					custumer.setId(rs.getLong(1));
-					custumer.setCustName(rs.getString(2));
-					custumer.setPassword(rs.getString(3));
+					customer.setId(rs.getLong(1));
+					customer.setCustName(rs.getString(2));
+					customer.setPassword(rs.getString(3));
 				}
 			} catch (SQLException e1) {
 				// TODO Auto-generated catch block
@@ -173,7 +173,7 @@ public class CustumerDBDAO implements CustumerDAO {
 				connection.close();
 			}
 
-		return custumers;
+		return customers;
 	}
 
 	@Override
@@ -185,7 +185,7 @@ public class CustumerDBDAO implements CustumerDAO {
 	@Override
 	public boolean login(String custName, String pasword) {
 
-		Custumer custumer = new Custumer();
+		Customer customer = new Customer();
 		Connection connection = null;
 		try {
 			connection = DriverManager.getConnection(Database.getSql(), Database.getUser(), Database.getPasword());
@@ -205,9 +205,9 @@ public class CustumerDBDAO implements CustumerDAO {
 	
 			while (rs.next()) {
 
-				custumer.setId(rs.getLong(1));
-				custumer.setCustName(rs.getString(2));
-				custumer.setPassword(rs.getString(3));
+				customer.setId(rs.getLong(1));
+				customer.setCustName(rs.getString(2));
+				customer.setPassword(rs.getString(3));
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -222,7 +222,7 @@ public class CustumerDBDAO implements CustumerDAO {
 			}
 		}
 
-		if (custumer.getId() == 0) {
+		if (customer.getId() == 0) {
 			return false;
 		} else
 			return true;

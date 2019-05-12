@@ -1,15 +1,15 @@
-package Custumer;
+package Customer;
 
 import java.sql.Connection;
 import java.util.ArrayList;
 
-public class Custumer {
+public class Customer {
 	private long id;
 	private String custName;
 	private String password;
 	private ArrayList<Connection> connections;
 
-	public Custumer(int id, String custName, String password, ArrayList<Connection> connections) {
+	public Customer(int id, String custName, String password, ArrayList<Connection> connections) {
 
 		setId(id);
 		setCustName(custName);
@@ -17,7 +17,7 @@ public class Custumer {
 		setConnections(connections);
 	}
 
-	public Custumer() {
+	public Customer() {
 		// TODO Auto-generated constructor stub
 	}
 

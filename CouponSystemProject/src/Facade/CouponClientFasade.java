@@ -1,10 +1,8 @@
 package Facade;
 
+import DataBase.ClientType;
 
 public interface CouponClientFasade {
 
-	public static CouponClientFasade login(String name,String password,CouponClientFasade clientFasade) {
-		return clientFasade;
-		
-	}
+	public CouponClientFasade login(String name, String password, ClientType c);
 }

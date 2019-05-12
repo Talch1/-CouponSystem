@@ -6,26 +6,29 @@ import java.util.Collection;
 
 import Coupon.Coupon;
 import Coupon.CouponType;
-import Custumer.Custumer;
-import Custumer.CustumerDBDAO;
+import Customer.Customer;
+import Customer.CustomerDBDAO;
 import Utils.CouponPurchaise;
 import Utils.CustumerCouponChek;
 import CustumerCoupon.CustumerCouponDBDAO;
+import DataBase.ClientType;
 import Exeptions.*;
 
-public class CustumerFacade implements CouponClientFasade {
+public class CustomerFacade implements CouponClientFasade {
 
-	static CustumerDBDAO custumerDBDAO = new CustumerDBDAO();
-	static CustumerFacade custumerFacade = new CustumerFacade();
+	static CustomerDBDAO custumerDBDAO = new CustomerDBDAO();
+
 	static CustumerCouponDBDAO custumerCouponDBDAO = new CustumerCouponDBDAO();
 
-	public static void purchaseCoupon(Coupon coupon, Custumer custumer) throws SQLException {
+	public  void purchaseCoupon(Coupon coupon, Customer custumer) throws SQLException {
 
 		CustumerCouponChek chek = new CustumerCouponChek();
 		CouponPurchaise couponPurchaise = new CouponPurchaise();
 
 		if ((chek.checkAmount(coupon) == true && chek.checkCustumerCouponByCouponId(custumer, coupon) == false)) {
-
+         
+	      couponPurchaise.insert(custumer.getId(), coupon.getId());
+	      
 		}
 
 	}
@@ -44,14 +47,14 @@ public class CustumerFacade implements CouponClientFasade {
 
 	}
 
-	public static CouponClientFasade login(String name, String password, CouponClientFasade clientFasade)
-			throws LoginEx {
+	public  CouponClientFasade login(String name, String password, ClientType c) {
+			
 
-		if (custumerDBDAO.login(name, password) != true) {
-			throw new LoginEx("login or password is incorect");
-		} else {
-			return custumerFacade;
+		if (custumerDBDAO.login(name, password)) {
+			CustomerFacade customerFacade = new CustomerFacade();
+			return customerFacade;
 		}
+	return null;
 
 	}
 }

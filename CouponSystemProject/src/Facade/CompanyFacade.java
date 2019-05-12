@@ -10,12 +10,13 @@ import Company.CompanyDBDAO;
 import Coupon.Coupon;
 import Coupon.CouponDBDAO;
 import Coupon.CouponType;
+import DataBase.ClientType;
 
 public class CompanyFacade implements CouponClientFasade {
 
-	static CompanyFacade companyFacade = new CompanyFacade();
+	
 	static CompanyDBDAO companyDBDAO = new CompanyDBDAO();
-	static CouponDBDAO couponDBDAO = new CouponDBDAO();
+	 static CouponDBDAO couponDBDAO = new CouponDBDAO();
 
 	public static void createCoupon(Coupon coupon) throws SQLException {
 		for (Coupon coup : couponDBDAO.getAllCoupons()) {
@@ -31,7 +32,7 @@ public class CompanyFacade implements CouponClientFasade {
 	public static void removeCoupon(Coupon coupon) throws SQLException {
 
 		couponDBDAO.removeCoupon(coupon);
-		// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+		Utils.CouponPurchaise.deletefromCustcoup(coupon.getId());
 	}
 
 	public static void updateCoupon(Coupon coupon) throws SQLException {
@@ -55,14 +56,14 @@ public class CompanyFacade implements CouponClientFasade {
 		return couponDBDAO.getCouponByType(type);
 	}
 
-	public static CouponClientFasade login(String name, String password, CouponClientFasade clientFasade)
-			throws LoginEx {
-
-		if (companyDBDAO.login(name, password) != true) {
-			throw new LoginEx("login or password is incorrect");
-		} else {
+	public CouponClientFasade login(String name, String password, ClientType c)
+	
+	{
+		if (companyDBDAO.login(name, password)) {
+			CompanyFacade companyFacade = new CompanyFacade();
 			return companyFacade;
 		}
-
+		return null;
+      
 	}
 }
