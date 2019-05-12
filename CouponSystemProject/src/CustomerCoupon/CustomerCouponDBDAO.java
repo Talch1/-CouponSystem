@@ -1,4 +1,4 @@
-package CustumerCoupon;
+package CustomerCoupon;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -9,9 +9,10 @@ import java.util.ArrayList;
 
 import Coupon.Coupon;
 import Coupon.CouponDBDAO;
+import DataBase.ConnectionPool;
 import DataBase.Database;
 
-public class CustumerCouponDBDAO implements CustumerCouponDAO {
+public class CustomerCouponDBDAO implements CustomerCouponDAO {
 
 	private long cust_id;
 	private long coupon_id;
@@ -32,16 +33,16 @@ public class CustumerCouponDBDAO implements CustumerCouponDAO {
 		this.coupon_id = coupon_id;
 	}
 
-	public static void removeCustumerCoupon(Coupon coupon) throws SQLException {
+	public static void removeCustomerCoupon(Coupon coupon) throws SQLException, InterruptedException {
 
 		Connection connection = null;
 		try {
-			connection = DriverManager.getConnection(Database.getSql(), Database.getUser(), Database.getPasword());
+			connection = ConnectionPool.getInstance().getConnection();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		String sql = "delete from  CustumerCoupon where COUPON_ID = ?";
+		String sql = "delete from  CustomerCoupon where COUPON_ID = ?";
 		PreparedStatement preparedStatement = null;
 		try {
 			preparedStatement = connection.prepareStatement(sql);
@@ -53,42 +54,42 @@ public class CustumerCouponDBDAO implements CustumerCouponDAO {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
-			connection.close();
+			ConnectionPool.getInstance().returnConnection(connection);
 		}
-		System.out.println("deleted from table CustumerCoupon");
+		System.out.println("deleted from table CustomerCoupon");
 
 	}
 
-	public static ArrayList<CustumerCouponDBDAO> getCustumerCoupon(long l) throws SQLException {
+	public static ArrayList<CustomerCouponDBDAO> getCustomerCoupon(long l) throws SQLException, InterruptedException {
 		Connection connection = null;
-		ArrayList<CustumerCouponDBDAO> list = new ArrayList<>();
+		ArrayList<CustomerCouponDBDAO> list = new ArrayList<>();
 
 		try {
-			connection = DriverManager.getConnection(Database.getSql(), Database.getUser(), Database.getPasword());
+			connection = ConnectionPool.getInstance().getConnection();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
-		CustumerCouponDBDAO custumerCouponDBDAO = new CustumerCouponDBDAO();
+		CustomerCouponDBDAO customerCouponDBDAO = new CustomerCouponDBDAO();
 		PreparedStatement preparedStatement = null;
-		String sql = "SELECT * FROM CustumerCoupon WHERE CUST_ID = " + l;
+		String sql = "SELECT * FROM CustomerCoupon WHERE CUST_ID = " + l;
 		try {
 			preparedStatement = connection.prepareStatement(sql);
 
 			ResultSet rs = preparedStatement.executeQuery(sql);
 			while (rs.next()) {
 
-				custumerCouponDBDAO.setCust_id(rs.getLong(1));
-				custumerCouponDBDAO.setCoupon_id(rs.getLong(2));
-				list.add(custumerCouponDBDAO);
+				customerCouponDBDAO.setCust_id(rs.getLong(1));
+				customerCouponDBDAO.setCoupon_id(rs.getLong(2));
+				list.add(customerCouponDBDAO);
 			}
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
-			connection.close();
+			ConnectionPool.getInstance().returnConnection(connection);
 		}
 		return list;
 	}

@@ -16,9 +16,9 @@ import Facade.CustomerFacade;
 
 public class Test {
 
-	public static void main(String[] args) throws SQLException {
-		Company company = new Company(252, "pepsi", "1+1", "pppkkk", null);
-		Customer cust = new Customer(553,"kolya","vvv",null);
+	public static void main(String[] args) throws SQLException, InterruptedException {
+		Company company = new Company(162, "fanta", "11", "ppk", null);
+		Customer cust = new Customer(553, "kolya", "vvv", null);
 
 		// Database.createAllTables();
 
@@ -32,7 +32,7 @@ public class Test {
 
 		// AdminFacade.removeCustomer(cust);
 
-		// AdminFacade.updateCompany(company);  ?????????????????
+		// AdminFacade.updateCompany(company);
 
 		// AdminFacade.updateCustomer(cust);
 

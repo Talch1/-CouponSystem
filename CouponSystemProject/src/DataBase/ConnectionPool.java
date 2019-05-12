@@ -1,24 +1,40 @@
 package DataBase;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
+
 public class ConnectionPool {
-	String url = "jdbc:mysql://localhost:3306/new?autoReconnect=true&useSSL=false, Talch, root";
-	String driver = "com.mysql.jdbc.Driver";
-	int maxcon = 30;
+	private final int MAX = 10;
+	BlockingQueue<Connection> blockingQueue =  new LinkedBlockingQueue<Connection>(MAX) ;
 	
-	public ConnectionPool( int initConnCnt) {
-		try {
-			Class.forName(driver);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		this.url = url;
-		for (int i = 0; i < maxcon; i++) {
-		//	availableConns.addElement(getConnection());
-		}
+	
+	private static ConnectionPool instance = new ConnectionPool();
+
+	public static ConnectionPool getInstance() {
+		return instance;
+	}
+	private ConnectionPool() {
+		this.instance = instance;
 	}
 
-	private Object getConnection() {
-		// TODO Auto-generated method stub
-		return null;
+	
+	public Connection getConnection() throws SQLException, InterruptedException {
+	
+		String sql = Database.sql;
+	    String user = Database.user;
+	    String pasword = Database.pasword;
+	    blockingQueue.put(DriverManager.getConnection(sql,user,pasword));
+	    
+		return blockingQueue.poll();
 	}
+	
+	public synchronized void returnConnection(Connection connection) throws InterruptedException {
+		blockingQueue.offer(connection);
+		
+	}
+	
 }

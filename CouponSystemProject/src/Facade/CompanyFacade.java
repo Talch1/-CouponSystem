@@ -18,7 +18,7 @@ public class CompanyFacade implements CouponClientFasade {
 	static CompanyDBDAO companyDBDAO = new CompanyDBDAO();
 	 static CouponDBDAO couponDBDAO = new CouponDBDAO();
 
-	public static void createCoupon(Coupon coupon) throws SQLException {
+	public static void createCoupon(Coupon coupon) throws SQLException, InterruptedException {
 		for (Coupon coup : couponDBDAO.getAllCoupons()) {
 			if (coup.getTitle() == coupon.getTitle()) {
 				return;
@@ -29,13 +29,13 @@ public class CompanyFacade implements CouponClientFasade {
 		}
 	}
 
-	public static void removeCoupon(Coupon coupon) throws SQLException {
+	public static void removeCoupon(Coupon coupon) throws SQLException, InterruptedException {
 
 		couponDBDAO.removeCoupon(coupon);
 		Utils.CouponPurchaise.deletefromCustcoup(coupon.getId());
 	}
 
-	public static void updateCoupon(Coupon coupon) throws SQLException {
+	public static void updateCoupon(Coupon coupon) throws SQLException, InterruptedException {
 
 		couponDBDAO.updateCoupon(coupon);
 
@@ -45,18 +45,18 @@ public class CompanyFacade implements CouponClientFasade {
 		return getCoupon(id);
 	}
 
-	public static Collection<Coupon> getAllCoupons() throws SQLException {
+	public static Collection<Coupon> getAllCoupons() throws SQLException, InterruptedException {
 
 		return couponDBDAO.getAllCoupons();
 
 	}
 
-	public static Collection<Coupon> getCouponByType(CouponType type) throws SQLException {
+	public static Collection<Coupon> getCouponByType(CouponType type) throws SQLException, InterruptedException{
 
 		return couponDBDAO.getCouponByType(type);
 	}
 
-	public CouponClientFasade login(String name, String password, ClientType c)
+	public CouponClientFasade login(String name, String password, ClientType c) throws InterruptedException
 	
 	{
 		if (companyDBDAO.login(name, password)) {

@@ -16,13 +16,13 @@ public interface CustomerDAO {
 	public static void updateCustumer(Customer custumer) throws SQLException {
 	}
 
-	public Customer getCustomer(long id) throws SQLException;
+	public Customer getCustomer(long id) throws SQLException, InterruptedException;
 
-	public Collection<Customer> getAllCustomer() throws SQLException;
+	public Collection<Customer> getAllCustomer() throws SQLException, InterruptedException;
 
 	public Collection<Coupon> getCoupons();
 
-	public boolean login(String custName,String pasword) throws SQLException;
+	public boolean login(String custName, String password) throws InterruptedException;
 	
 
 

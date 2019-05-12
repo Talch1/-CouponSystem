@@ -10,15 +10,16 @@ import java.util.ArrayList;
 import CompanyCoupon.CompanyCouponDBDAO;
 import Coupon.Coupon;
 import Coupon.CouponDBDAO;
+import DataBase.ConnectionPool;
 import DataBase.Database;
 
 public class CompCoup {
-	public static ArrayList<CompanyCouponDBDAO> getAllCompanyCoupon() throws SQLException {
+	public static ArrayList<CompanyCouponDBDAO> getAllCompanyCoupon() throws SQLException, InterruptedException {
 		ArrayList<CompanyCouponDBDAO> companyCouponDBDAOs = new ArrayList<>();
 		Connection connection = null;
 
 		try {
-			connection = DriverManager.getConnection(Database.getSql(), Database.getUser(), Database.getPasword());
+			connection = ConnectionPool.getInstance().getConnection();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -44,7 +45,8 @@ public class CompCoup {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
-			connection.close();
+			ConnectionPool.getInstance().returnConnection(connection);
+
 		}
 		return companyCouponDBDAOs;
 	}
@@ -62,7 +64,7 @@ public class CompCoup {
 
 	}
 
-	public static ArrayList<Coupon> allCouponsOfCompany() throws SQLException {
+	public static ArrayList<Coupon> allCouponsOfCompany() throws SQLException, InterruptedException {
 		CouponDBDAO coupon = new CouponDBDAO();
 		ArrayList<Coupon> allCoupons = new ArrayList<>();
 		ArrayList<Long> ids = new ArrayList<>();
@@ -72,10 +74,10 @@ public class CompCoup {
 		return allCoupons;
 
 	}
-	public static void deletefromCompcoup(long id) throws SQLException {
+	public static void deletefromCompcoup(long id) throws SQLException, InterruptedException {
 		Connection connection = null;
 		try {
-			connection = DriverManager.getConnection(Database.getSql(), Database.getUser(), Database.getPasword());
+			connection = ConnectionPool.getInstance().getConnection();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -91,7 +93,8 @@ public class CompCoup {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
-			connection.close();
+			ConnectionPool.getInstance().returnConnection(connection);
+
 		}
 		System.out.println("Deleted from CompanyCoupon");
 

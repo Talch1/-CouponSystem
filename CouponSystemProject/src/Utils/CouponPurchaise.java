@@ -10,55 +10,28 @@ import java.util.ArrayList;
 import Coupon.Coupon;
 import Coupon.CouponDBDAO;
 import Coupon.CouponType;
-import CustumerCoupon.CustumerCouponDBDAO;
+import CustomerCoupon.CustomerCouponDBDAO;
+import DataBase.ConnectionPool;
 import DataBase.Database;
 
 public class CouponPurchaise {
 	
 
-	public static void insert(long custId,long coupId) throws SQLException {
-		
-		Connection connection = null;
-		
-		try {
-			connection = DriverManager.getConnection(Database.getSql(), Database.getUser(), Database.getPasword());
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	
-		String query = " insert into CustumerCoupon (CUST_ID , COUPON_ID) values (?, ?)";
-
-		PreparedStatement preparedStmt = null;
-		try {
-			preparedStmt = connection.prepareStatement(query);
-
-		//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
-			preparedStmt.execute();
-
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} finally {
-			connection.close();
-		}
-	}
-
-	public static ArrayList<CustumerCouponDBDAO> getAllCustumerCoupons() throws SQLException {
+	public static ArrayList<CustomerCouponDBDAO> getAllCustumerCoupons() throws SQLException, InterruptedException {
 		Connection connection = null;
-		ArrayList<CustumerCouponDBDAO> list = new ArrayList<>();
+		ArrayList<CustomerCouponDBDAO> list = new ArrayList<>();
 
 		try {
-			connection = DriverManager.getConnection(Database.getSql(), Database.getUser(), Database.getPasword());
+			connection = ConnectionPool.getInstance().getConnection();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
-		CustumerCouponDBDAO custumerCouponDBDAO = new CustumerCouponDBDAO();
+		CustomerCouponDBDAO custumerCouponDBDAO = new CustomerCouponDBDAO();
 		PreparedStatement preparedStatement = null;
-		String sql = "SELECT * FROM CustumerCoupon ";
+		String sql = "SELECT * FROM CustomerCoupon ";
 		try {
 			preparedStatement = connection.prepareStatement(sql);
 
@@ -74,17 +47,18 @@ public class CouponPurchaise {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
-			connection.close();
+			ConnectionPool.getInstance().returnConnection(connection);
+
 		}
 
 		return list;
 
 	}
 
-	public static ArrayList<Coupon> getAllpurchoiseCoupons() throws SQLException {
+	public static ArrayList<Coupon> getAllpurchoiseCoupons() throws SQLException, InterruptedException {
 		CouponDBDAO coupon = new CouponDBDAO();
 		ArrayList<Coupon> list = new ArrayList<>();
-		for (CustumerCouponDBDAO coupons : getAllCustumerCoupons()) {
+		for (CustomerCouponDBDAO coupons : getAllCustumerCoupons()) {
 			list.add(coupon.getCoupon(coupons.getCoupon_id()));
 
 		}
@@ -93,7 +67,7 @@ public class CouponPurchaise {
 
 	}
 
-	public static ArrayList<Coupon> getAllPurchaiseCouponByPrice(double price) throws SQLException {
+	public static ArrayList<Coupon> getAllPurchaiseCouponByPrice(double price) throws SQLException, InterruptedException {
 		ArrayList<Coupon> alloupons = new ArrayList<>();
 		ArrayList<Coupon> byprice = new ArrayList<>();
 		alloupons = getAllpurchoiseCoupons();
@@ -106,7 +80,7 @@ public class CouponPurchaise {
 
 	}
 
-	public static ArrayList<Coupon> getAllPurchaiseCouponByType(CouponType type) throws SQLException {
+	public static ArrayList<Coupon> getAllPurchaiseCouponByType(CouponType type) throws SQLException, InterruptedException {
 		ArrayList<Coupon> alloupons = new ArrayList<>();
 		ArrayList<Coupon> bytype = new ArrayList<>();
 		alloupons = getAllpurchoiseCoupons();
@@ -120,15 +94,15 @@ public class CouponPurchaise {
 	}
 	
 	
-	public static void deletefromCustcoup(long id) throws SQLException {
+	public static void deletefromCustcoup(long id) throws SQLException, InterruptedException {
 		Connection connection = null;
 		try {
-			connection = DriverManager.getConnection(Database.getSql(), Database.getUser(), Database.getPasword());
+			connection = ConnectionPool.getInstance().getConnection();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		String sql = String.format("delete from  CustumerCoupon where cust_id = ?");
+		String sql = String.format("delete from  CustomerCoupon where cust_id = ?");
 		PreparedStatement preparedStatement = null;
 		try {
 			preparedStatement = connection.prepareStatement(sql);
@@ -139,9 +113,10 @@ public class CouponPurchaise {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
-			connection.close();
+			ConnectionPool.getInstance().returnConnection(connection);
+
 		}
-		System.out.println("Deleted from CustumerCoupon");
+		System.out.println("Deleted from CustomerCoupon");
 
 	}
 		
