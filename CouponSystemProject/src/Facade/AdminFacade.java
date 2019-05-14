@@ -15,20 +15,23 @@ import Customer.Customer;
 import Customer.CustomerDBDAO;
 import DataBase.ClientType;
 import Exeptions.*;
+import Utils.CompCoup;
+import Utils.CouponPurchaise;
 
 public class AdminFacade implements CouponClientFasade {
-	 static CompanyDBDAO companyDBDAO = new CompanyDBDAO();
-	 static CustomerDBDAO customerDBDAO = new CustomerDBDAO();
+	
+
 
 	public static void createCompany(Company company) throws SQLException, InterruptedException {
-		
-		///!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-				companyDBDAO.createCompany(company);
-			
-		
+		CompanyDBDAO companyDBDAO = new CompanyDBDAO();
+		/// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+		companyDBDAO.createCompany(company);
+
 	}
 
 	public static void removeCompany(Company company) throws SQLException, InterruptedException {
+		CompanyDBDAO companyDBDAO = new CompanyDBDAO();
+		CompCoup compCoup = new CompCoup();
 		try {
 			companyDBDAO.removeCompany(company);
 
@@ -36,11 +39,12 @@ public class AdminFacade implements CouponClientFasade {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		Utils.CompCoup.deletefromCompcoup(company.getId());
+		compCoup.deletefromCompcoup(company.getId());
 
 	}
 
 	public static void updateCompany(Company company) throws InterruptedException {
+		CompanyDBDAO companyDBDAO = new CompanyDBDAO();
 		try {
 			companyDBDAO.updateCompany(company);
 		} catch (SQLException e) {
@@ -51,32 +55,34 @@ public class AdminFacade implements CouponClientFasade {
 	}
 
 	public static Company getCompany(int id) throws SQLException, InterruptedException {
-
+		CompanyDBDAO companyDBDAO = new CompanyDBDAO();
 		return companyDBDAO.getCompany(id);
 
 	}
 
 	public static Collection<Company> getAllCompanyes() throws SQLException, InterruptedException {
-
+		CompanyDBDAO companyDBDAO = new CompanyDBDAO();
 		return companyDBDAO.getAllCompany();
 
 	}
 
 	public static void createCustomer(Customer cust) throws SQLException, InterruptedException {
-		//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-				customerDBDAO.createCustomer(cust);
-			
-		}
+		// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+		CustomerDBDAO customerDBDAO = new CustomerDBDAO();
+		CustomerDBDAO.createCustomer(cust);
 
+	}
 
 	public static void removeCustomer(Customer cust) throws SQLException, InterruptedException {
-
+		CouponPurchaise couponPurchaise = new CouponPurchaise();
+		CustomerDBDAO customerDBDAO = new CustomerDBDAO();
 		customerDBDAO.removeCustomer(cust);
-		Utils.CouponPurchaise.deletefromCustcoup(cust.getId());
+		couponPurchaise.deletefromCustcoup(cust.getId());
 
 	}
 
 	public static void updateCustomer(Customer cust) throws SQLException, InterruptedException {
+		CustomerDBDAO customerDBDAO = new CustomerDBDAO();
 		customerDBDAO.updateCompanyName(cust);
 	}
 

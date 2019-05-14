@@ -5,7 +5,7 @@ import java.sql.SQLException;
 import java.util.Collection;
 
 import Exeptions.*;
-
+import Utils.CouponPurchaise;
 import Company.CompanyDBDAO;
 import Coupon.Coupon;
 import Coupon.CouponDBDAO;
@@ -30,9 +30,9 @@ public class CompanyFacade implements CouponClientFasade {
 	}
 
 	public static void removeCoupon(Coupon coupon) throws SQLException, InterruptedException {
-
+        CouponPurchaise couponPurchaise = new CouponPurchaise();
 		couponDBDAO.removeCoupon(coupon);
-		Utils.CouponPurchaise.deletefromCustcoup(coupon.getId());
+		couponPurchaise.deletefromCustcoup(coupon.getId());
 	}
 
 	public static void updateCoupon(Coupon coupon) throws SQLException, InterruptedException {

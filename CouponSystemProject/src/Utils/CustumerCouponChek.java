@@ -1,6 +1,5 @@
 package Utils;
 
-import java.sql.Connection;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -12,12 +11,13 @@ import Customer.Customer;
 import CustomerCoupon.CustomerCouponDBDAO;
 
 public class CustumerCouponChek {
-	static Connection con = null;
-	static CustomerCouponDBDAO custumerCouponDBDAO = new CustomerCouponDBDAO();
-	static CouponDBDAO couponDBDAO = new CouponDBDAO();
+	
+	CustomerCouponDBDAO custumerCouponDBDAO = new CustomerCouponDBDAO();
+	
 
-	public static boolean checkAmount(Coupon coupon) throws SQLException, InterruptedException {
+	public boolean checkAmount(Coupon coupon) throws SQLException, InterruptedException {
 		Collection<Coupon> allCoupons = new ArrayList<>();
+		CouponDBDAO couponDBDAO = new CouponDBDAO();
 		int a = 0;
 		allCoupons = couponDBDAO.getAllCoupons();
 
@@ -34,7 +34,7 @@ public class CustumerCouponChek {
 
 	}
 
-	public static boolean checkCustomerCouponByCouponId(Customer custumer, Coupon coupon)
+	public boolean checkCustomerCouponByCouponId(Customer custumer, Coupon coupon)
 			throws SQLException, InterruptedException {
 		ArrayList<CustomerCouponDBDAO> list = new ArrayList<>();
 		custumerCouponDBDAO = null;

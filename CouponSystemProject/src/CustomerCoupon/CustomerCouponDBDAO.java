@@ -33,7 +33,7 @@ public class CustomerCouponDBDAO implements CustomerCouponDAO {
 		this.coupon_id = coupon_id;
 	}
 
-	public static void removeCustomerCoupon(Coupon coupon) throws SQLException, InterruptedException {
+	public  void removeCustomerCoupon(Coupon coupon) throws SQLException, InterruptedException {
 
 		Connection connection = null;
 		try {
@@ -60,7 +60,7 @@ public class CustomerCouponDBDAO implements CustomerCouponDAO {
 
 	}
 
-	public static ArrayList<CustomerCouponDBDAO> getCustomerCoupon(long l) throws SQLException, InterruptedException {
+	public ArrayList<CustomerCouponDBDAO> getCustomerCoupon(long l) throws SQLException, InterruptedException {
 		Connection connection = null;
 		ArrayList<CustomerCouponDBDAO> list = new ArrayList<>();
 

@@ -9,14 +9,15 @@ import Facade.CustomerFacade;
 
 public class CouponSystem {
 
-	private static CouponSystem instanse = new CouponSystem();
+	private CouponSystem instanse = new CouponSystem();
 	Thread thread = new Thread(new DailyCouponExpirationTask());
+	Database database = new Database();
 
 	private CouponSystem() {
 
 		try {
 
-			Database.createAllTables();
+			database.createAllTables();
 
 		} catch (InterruptedException | SQLException e) {
 			// TODO Auto-generated catch block

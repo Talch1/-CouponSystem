@@ -19,11 +19,9 @@ public class Test {
 	public static void main(String[] args) throws SQLException, InterruptedException {
 		Company company = new Company(162, "fanta", "11", "ppk", null);
 		Customer cust = new Customer(553, "kolya", "vvv", null);
+         Database database = new Database();
 
-		// Database.createAllTables();
-
-		// Database.dropAllTables();
-
+         database.createAllTables();
 		// AdminFacade.createCompany(company);
 
 		// AdminFacade.createCustomer(cust);

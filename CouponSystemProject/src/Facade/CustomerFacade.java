@@ -17,14 +17,14 @@ import Exeptions.*;
 
 public class CustomerFacade implements CouponClientFasade {
 
-	static CustomerDBDAO custumerDBDAO = new CustomerDBDAO();
+	 CustomerDBDAO custumerDBDAO = new CustomerDBDAO();
 
-	static CustomerCouponDBDAO custumerCouponDBDAO = new CustomerCouponDBDAO();
+	 CustomerCouponDBDAO custumerCouponDBDAO = new CustomerCouponDBDAO();
 
 	public  void purchaseCoupon(Coupon coupon, Customer custumer) throws SQLException, InterruptedException {
 
 		CustumerCouponChek chek = new CustumerCouponChek();
-		CouponPurchaise couponPurchaise = new CouponPurchaise();
+	
 
 		if ((chek.checkAmount(coupon) == true && chek.checkCustomerCouponByCouponId(custumer, coupon) == false)) {
          
@@ -35,17 +35,20 @@ public class CustomerFacade implements CouponClientFasade {
 
 	}
 
-	public static ArrayList<Coupon> getAllPurchoisedCoupons() throws SQLException, InterruptedException {
-		return CouponPurchaise.getAllpurchoiseCoupons();
+	public  ArrayList<Coupon> getAllPurchoisedCoupons() throws SQLException, InterruptedException {
+		CouponPurchaise couponPurchaise = new CouponPurchaise();
+		return couponPurchaise.getAllpurchoiseCoupons();
 
 	}
 
-	public static ArrayList<Coupon> getAllPurchisedCouponsByType(CouponType type) throws SQLException, InterruptedException {
-		return CouponPurchaise.getAllPurchaiseCouponByType(type);
+	public  ArrayList<Coupon> getAllPurchisedCouponsByType(CouponType type) throws SQLException, InterruptedException {
+		CouponPurchaise couponPurchaise = new CouponPurchaise();
+		return couponPurchaise.getAllPurchaiseCouponByType(type);
 	}
 
-	public static ArrayList<Coupon> getAllPurchisedCouponsByPrice(double price) throws SQLException, InterruptedException {
-		return CouponPurchaise.getAllPurchaiseCouponByPrice(price);
+	public  ArrayList<Coupon> getAllPurchisedCouponsByPrice(double price) throws SQLException, InterruptedException {
+		CouponPurchaise couponPurchaise = new CouponPurchaise();
+		return couponPurchaise.getAllPurchaiseCouponByPrice(price);
 
 	}
 

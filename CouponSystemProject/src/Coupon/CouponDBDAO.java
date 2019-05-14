@@ -18,7 +18,7 @@ import DataBase.Database;
 public class CouponDBDAO implements CouponDAO {
 
 	// insert coupon to table
-	public static void createCoupon(Coupon coupon) throws SQLException, InterruptedException {
+	public void createCoupon(Coupon coupon) throws SQLException, InterruptedException {
 
 		Connection connection = null;
 
@@ -27,7 +27,6 @@ public class CouponDBDAO implements CouponDAO {
 		String query = " insert into coupon (id ,title ,START_DATE , END_DATE, amount ,type , message , price, image)"
 				+ " values (?, ?, ?, ?, ?, ?, ?, ? ,?)";
 
-		// create the mysql insert preparedstatement
 		PreparedStatement preparedStmt;
 		try {
 			preparedStmt = connection.prepareStatement(query);
@@ -55,7 +54,7 @@ public class CouponDBDAO implements CouponDAO {
 
 	}
 
-	public static void removeCoupon(Coupon coupon) throws SQLException, InterruptedException {
+	public void removeCoupon(Coupon coupon) throws SQLException, InterruptedException {
 		Connection connection = null;
 		try {
 			connection = ConnectionPool.getInstance().getConnection();
@@ -88,7 +87,7 @@ public class CouponDBDAO implements CouponDAO {
 		}
 	}
 
-	public static void updateCoupon1(Coupon coupon) throws InterruptedException {
+	public void updateCoupon1(Coupon coupon) throws InterruptedException {
 		String sql = "update coupon set TITLE = ?, START_DATE =  ?,END_DATE = ? ,amount = ?,type = ?,price = ?, image = ?  where id =  ?";
 		Connection connection = null;
 
@@ -114,7 +113,7 @@ public class CouponDBDAO implements CouponDAO {
 
 	}
 
-	public static void updateCoupon(Coupon coupon) throws SQLException, InterruptedException {
+	public void updateCoupon(Coupon coupon) throws SQLException, InterruptedException {
 
 		Connection connection = null;
 		try {
@@ -143,12 +142,11 @@ public class CouponDBDAO implements CouponDAO {
 	@Override
 	public ArrayList<Coupon> getAllCoupons() throws InterruptedException {
 		ArrayList<Coupon> coupons = new ArrayList<>();
-		
-			Connection connection = null;
 
-			try {
-				connection = ConnectionPool.getInstance().getConnection();
-			
+		Connection connection = null;
+
+		try {
+			connection = ConnectionPool.getInstance().getConnection();
 
 			Coupon coupon = new Coupon();
 			String sql = "SELECT * FROM Coupon ";
@@ -204,13 +202,13 @@ public class CouponDBDAO implements CouponDAO {
 
 				coupons.add(coupon);
 			}
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}finally {
-				ConnectionPool.getInstance().returnConnection(connection);
-			}
-		
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			ConnectionPool.getInstance().returnConnection(connection);
+		}
+
 		return coupons;
 	}
 

@@ -51,7 +51,7 @@ public class CompCoup {
 		return companyCouponDBDAOs;
 	}
 
-	public static ArrayList<Long> getCouponsId() {
+	public static ArrayList<Long> getInCompanycouponCouponsId() {
 
 		ArrayList<Long> ids = new ArrayList<>();
 		ArrayList<CompanyCouponDBDAO> companyCouponDBDAOs = new ArrayList<>();
@@ -64,7 +64,7 @@ public class CompCoup {
 
 	}
 
-	public static ArrayList<Coupon> allCouponsOfCompany() throws SQLException, InterruptedException {
+	public ArrayList<Coupon> allCouponsOfCompany() throws SQLException, InterruptedException {
 		CouponDBDAO coupon = new CouponDBDAO();
 		ArrayList<Coupon> allCoupons = new ArrayList<>();
 		ArrayList<Long> ids = new ArrayList<>();
@@ -74,7 +74,7 @@ public class CompCoup {
 		return allCoupons;
 
 	}
-	public static void deletefromCompcoup(long id) throws SQLException, InterruptedException {
+	public  void deletefromCompcoup(long id) throws SQLException, InterruptedException {
 		Connection connection = null;
 		try {
 			connection = ConnectionPool.getInstance().getConnection();
