@@ -1,6 +1,7 @@
 package Facade;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 
@@ -86,14 +87,18 @@ public class AdminFacade implements CouponClientFasade {
 		customerDBDAO.updateCompanyName(cust);
 	}
 
-	public static Customer getCustomer(int id) {
-
-		return getCustomer(id);
+	public static Customer getCustomer(int id) throws SQLException, InterruptedException {
+		CustomerDBDAO customerDBDAO = new CustomerDBDAO();
+		return customerDBDAO.getCustomer(id);
+		
+		
 
 	}
 
-	public static Collection<Company> getAllCustomers() {
-		return getAllCustomers();
+	public static Collection<Customer> getAllCustomers() throws SQLException, InterruptedException {
+		CustomerDBDAO customerDBDAO = new CustomerDBDAO();
+	ArrayList<Customer> list =  customerDBDAO.getAllCustomer();
+		return list;
 
 	}
 

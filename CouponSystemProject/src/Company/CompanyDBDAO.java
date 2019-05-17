@@ -106,12 +106,9 @@ public class CompanyDBDAO implements CompanyDAO {
 	public Company getCompany(long id) throws SQLException, InterruptedException {
 		Connection connection = null;
 
-		try {
+		
 			connection = ConnectionPool.getInstance().getConnection();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
 		Company company = new Company();
 		String sql = "SELECT * FROM  Company WHERE ID= ?";
 		try {
@@ -119,8 +116,9 @@ public class CompanyDBDAO implements CompanyDAO {
 			preparedStatement = connection.prepareStatement(sql);
 
 			preparedStatement.setLong(1, id);
+			preparedStatement.execute();
 			ResultSet resultSet;
-			resultSet = preparedStatement.executeQuery(sql);
+			resultSet = preparedStatement.executeQuery();
 
 			while (resultSet.next()) {
 				company.setId(resultSet.getLong(1));

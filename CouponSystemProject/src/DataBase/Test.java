@@ -1,6 +1,7 @@
 package DataBase;
 
 import java.sql.SQLException;
+import java.util.Date;
 
 import Company.Company;
 import Company.CompanyDBDAO;
@@ -17,11 +18,16 @@ import Facade.CustomerFacade;
 public class Test {
 
 	public static void main(String[] args) throws SQLException, InterruptedException {
-		Company company = new Company(162, "fanta", "11", "ppk", null);
-		Customer cust = new Customer(553, "kolya", "vvv", null);
-         Database database = new Database();
+		Date date = new Date(11-12-2015);
+		CouponType couponType = CouponType.CAMPING;
+	//	Company company = new Company(162, "fanta", "11", "ppk", null);
+	//	Customer cust = new Customer(553, "kolya", "vvv", null);
+		Coupon coupon = new Coupon(1,"1+1",date,date,6,couponType,"gggg",
+				6.3, "hgf");
+         
 
-         database.createAllTables();
+       // CouponSystem.getInstanse().database.createAllTables();
+		
 		// AdminFacade.createCompany(company);
 
 		// AdminFacade.createCustomer(cust);
@@ -34,17 +40,17 @@ public class Test {
 
 		// AdminFacade.updateCustomer(cust);
 
-		// AdminFacade.getCompany(id);
+	    // System.out.println( AdminFacade.getCompany(55));
 
-		// AdminFacade.getCustomer(id);
+		// System.out.println(AdminFacade.getCustomer(2));
 
-		// AdminFacade.getAllCompanyes();
+		// System.out.println( AdminFacade.getAllCompanyes());
 
-		// AdminFacade.getAllCustomers();
+		// System.out.println(AdminFacade.getAllCustomers()); 
 
-		// AdminFacade.login(name, password, clientFasade);
+	//AdminFacade.login(name, password, clientFasade);
 
-		// CompanyFacade.createCoupon(coupon);
+		 CompanyFacade.createCoupon(coupon);
 
 		// CompanyFacade.removeCoupon(coupon);
 

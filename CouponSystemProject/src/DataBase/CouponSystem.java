@@ -9,7 +9,7 @@ import Facade.CustomerFacade;
 
 public class CouponSystem {
 
-	private CouponSystem instanse = new CouponSystem();
+	private static CouponSystem instanse = new CouponSystem();
 	Thread thread = new Thread(new DailyCouponExpirationTask());
 	Database database = new Database();
 
@@ -28,7 +28,7 @@ public class CouponSystem {
 
 	}
 
-	public CouponSystem getInstanse() {
+	public static CouponSystem getInstanse() {
 		return instanse;
 	}
 

@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 
+
 import Company.Company;
 import DataBase.ConnectionPool;
 import DataBase.Database;
@@ -219,14 +220,16 @@ public class CouponDBDAO implements CouponDAO {
 
 		connection = ConnectionPool.getInstance().getConnection();
 
-		String sql = "SELECT * FROM coupon WHERE ID = " + id;
+		String sql = "SELECT * FROM coupon WHERE ID = ?";
 
 		PreparedStatement preparedStatement = null;
 
 		try {
 			preparedStatement = connection.prepareStatement(sql);
 
-			ResultSet rs = preparedStatement.executeQuery(sql);
+			preparedStatement.setLong(1, id);
+			preparedStatement.execute();
+			ResultSet rs = preparedStatement.executeQuery();
 
 			while (rs.next()) {
 				coupon.setId(rs.getLong(1));

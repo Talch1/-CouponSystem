@@ -117,13 +117,15 @@ public class CustomerDBDAO implements CustomerDAO {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		String sql = "SELECT * FROM customer WHERE ID=" + id;
+		String sql = "SELECT * FROM customer WHERE ID= ?";
 		PreparedStatement preparedStatement = null;
 
 		try {
 			preparedStatement = connection.prepareStatement(sql);
 
-			ResultSet rs = preparedStatement.executeQuery(sql);
+			preparedStatement.setLong(1, id);
+			preparedStatement.execute();
+			ResultSet rs = preparedStatement.executeQuery();
 
 			while (rs.next()) {
 
@@ -144,7 +146,7 @@ public class CustomerDBDAO implements CustomerDAO {
 	}
 
 	@Override
-	public Collection<Customer> getAllCustomer() throws SQLException, InterruptedException {
+	public ArrayList<Customer> getAllCustomer() throws SQLException, InterruptedException {
 
 		ArrayList<Customer> customers = new ArrayList<>();
 
@@ -169,6 +171,7 @@ public class CustomerDBDAO implements CustomerDAO {
 				customer.setId(rs.getLong(1));
 				customer.setCustName(rs.getString(2));
 				customer.setPassword(rs.getString(3));
+				customers.add(customer);
 			}
 		} catch (SQLException e1) {
 			// TODO Auto-generated catch block
