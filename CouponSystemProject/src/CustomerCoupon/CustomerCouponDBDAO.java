@@ -33,7 +33,7 @@ public class CustomerCouponDBDAO implements CustomerCouponDAO {
 		this.coupon_id = coupon_id;
 	}
 
-	public  void removeCustomerCoupon(Coupon coupon) throws SQLException, InterruptedException {
+	public void removeCustomerCoupon(Coupon coupon) throws SQLException, InterruptedException {
 
 		Connection connection = null;
 		try {
@@ -60,6 +60,31 @@ public class CustomerCouponDBDAO implements CustomerCouponDAO {
 
 	}
 
+	public void insert(long custId, long coupId) throws SQLException, InterruptedException {
+
+		Connection connection = null;
+
+		try {
+			connection = ConnectionPool.getInstance().getConnection();
+
+			String query = "insert into CustomerCoupon (CUST_ID , COUPON_ID) values (?, ?)";
+
+			PreparedStatement preparedStmt = null;
+
+			preparedStmt = connection.prepareStatement(query);
+
+			preparedStmt.setLong(1, custId);
+			preparedStmt.setLong(2, coupId);
+			preparedStmt.execute();
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			ConnectionPool.getInstance().returnConnection(connection);
+		}
+	}
+
 	public ArrayList<CustomerCouponDBDAO> getCustomerCoupon(long l) throws SQLException, InterruptedException {
 		Connection connection = null;
 		ArrayList<CustomerCouponDBDAO> list = new ArrayList<>();
@@ -73,11 +98,42 @@ public class CustomerCouponDBDAO implements CustomerCouponDAO {
 
 		CustomerCouponDBDAO customerCouponDBDAO = new CustomerCouponDBDAO();
 		PreparedStatement preparedStatement = null;
-		String sql = "SELECT * FROM CustomerCoupon WHERE CUST_ID = " + l;
+		String sql = "SELECT * FROM CustomerCoupon WHERE CUST_ID = ?";
 		try {
 			preparedStatement = connection.prepareStatement(sql);
 
-			ResultSet rs = preparedStatement.executeQuery(sql);
+			preparedStatement.setLong(1, l);
+			preparedStatement.execute();
+			ResultSet rs = preparedStatement.executeQuery();
+			while (rs.next()) {
+
+				customerCouponDBDAO.setCust_id(rs.getLong(1));
+				customerCouponDBDAO.setCoupon_id(rs.getLong(2));
+				list.add(customerCouponDBDAO);
+			}
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			ConnectionPool.getInstance().returnConnection(connection);
+		}
+		return list;
+	}
+
+	public ArrayList<CustomerCouponDBDAO> getAllCustomerCoupons() throws InterruptedException, SQLException {
+		Connection connection = null;
+		ArrayList<CustomerCouponDBDAO> list = new ArrayList<>();
+		connection = ConnectionPool.getInstance().getConnection();
+
+		CustomerCouponDBDAO customerCouponDBDAO = new CustomerCouponDBDAO();
+		PreparedStatement preparedStatement = null;
+		String sql = "SELECT * FROM CustomerCoupon ";
+		try {
+			preparedStatement = connection.prepareStatement(sql);
+
+			preparedStatement.execute();
+			ResultSet rs = preparedStatement.executeQuery();
 			while (rs.next()) {
 
 				customerCouponDBDAO.setCust_id(rs.getLong(1));

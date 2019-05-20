@@ -1,5 +1,5 @@
 package Facade;
-
+import DataBase.ClientType;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -21,16 +21,27 @@ import Utils.CouponPurchaise;
 
 public class AdminFacade implements CouponClientFasade {
 	
+	ClientType clientType = ClientType.Admin;
+
+	public AdminFacade() {
+		
+	}
 
 
-	public static void createCompany(Company company) throws SQLException, InterruptedException {
+	public AdminFacade(ClientType clientType) {
+		super();
+		this.clientType = clientType;
+	}
+
+	
+	public void createCompany(Company company) throws SQLException, InterruptedException {
 		CompanyDBDAO companyDBDAO = new CompanyDBDAO();
 		/// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 		companyDBDAO.createCompany(company);
 
 	}
 
-	public static void removeCompany(Company company) throws SQLException, InterruptedException {
+	public void removeCompany(Company company) throws SQLException, InterruptedException {
 		CompanyDBDAO companyDBDAO = new CompanyDBDAO();
 		CompCoup compCoup = new CompCoup();
 		try {
@@ -44,7 +55,7 @@ public class AdminFacade implements CouponClientFasade {
 
 	}
 
-	public static void updateCompany(Company company) throws InterruptedException {
+	public void updateCompany(Company company) throws InterruptedException {
 		CompanyDBDAO companyDBDAO = new CompanyDBDAO();
 		try {
 			companyDBDAO.updateCompany(company);
@@ -55,26 +66,26 @@ public class AdminFacade implements CouponClientFasade {
 
 	}
 
-	public static Company getCompany(int id) throws SQLException, InterruptedException {
+	public Company getCompany(int id) throws SQLException, InterruptedException {
 		CompanyDBDAO companyDBDAO = new CompanyDBDAO();
 		return companyDBDAO.getCompany(id);
 
 	}
 
-	public static Collection<Company> getAllCompanyes() throws SQLException, InterruptedException {
+	public Collection<Company> getAllCompanyes() throws SQLException, InterruptedException {
 		CompanyDBDAO companyDBDAO = new CompanyDBDAO();
 		return companyDBDAO.getAllCompany();
 
 	}
 
-	public static void createCustomer(Customer cust) throws SQLException, InterruptedException {
+	public void createCustomer(Customer cust) throws SQLException, InterruptedException {
 		// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 		CustomerDBDAO customerDBDAO = new CustomerDBDAO();
-		CustomerDBDAO.createCustomer(cust);
+		customerDBDAO.createCustomer(cust);
 
 	}
 
-	public static void removeCustomer(Customer cust) throws SQLException, InterruptedException {
+	public void removeCustomer(Customer cust) throws SQLException, InterruptedException {
 		CouponPurchaise couponPurchaise = new CouponPurchaise();
 		CustomerDBDAO customerDBDAO = new CustomerDBDAO();
 		customerDBDAO.removeCustomer(cust);
@@ -82,22 +93,20 @@ public class AdminFacade implements CouponClientFasade {
 
 	}
 
-	public static void updateCustomer(Customer cust) throws SQLException, InterruptedException {
+	public void updateCustomer(Customer cust) throws SQLException, InterruptedException {
 		CustomerDBDAO customerDBDAO = new CustomerDBDAO();
-		customerDBDAO.updateCompanyName(cust);
+		customerDBDAO.updateCustomer(cust);
 	}
 
-	public static Customer getCustomer(int id) throws SQLException, InterruptedException {
+	public Customer getCustomer(int id) throws SQLException, InterruptedException {
 		CustomerDBDAO customerDBDAO = new CustomerDBDAO();
 		return customerDBDAO.getCustomer(id);
-		
-		
 
 	}
 
-	public static Collection<Customer> getAllCustomers() throws SQLException, InterruptedException {
+	public Collection<Customer> getAllCustomers() throws SQLException, InterruptedException {
 		CustomerDBDAO customerDBDAO = new CustomerDBDAO();
-	ArrayList<Customer> list =  customerDBDAO.getAllCustomer();
+		ArrayList<Customer> list = customerDBDAO.getAllCustomer();
 		return list;
 
 	}

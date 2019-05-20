@@ -3,27 +3,29 @@ package Customer;
 import java.sql.SQLException;
 import java.util.Collection;
 
-import Company.Company;
 import Coupon.Coupon;
 
 public interface CustomerDAO {
-	public static void createCustumer(Customer custumer) throws SQLException {
-	}
+	
+	// create Customer(insert to Customer)
+	public void createCustomer(Customer customer) throws SQLException, InterruptedException;
 
-	public static void removeCustumer(Customer custumer) throws SQLException {
-	}
+	//delete Customer (delete from Customer)
+	public void removeCustomer(Customer customer) throws SQLException, InterruptedException;
 
-	public static void updateCustumer(Customer custumer) throws SQLException {
-	}
+	//update Customer(update Customer)
+	public void updateCustomer(Customer customer) throws SQLException, InterruptedException;
 
+	//get Customer By Id
 	public Customer getCustomer(long id) throws SQLException, InterruptedException;
 
+	//get All Customers
 	public Collection<Customer> getAllCustomer() throws SQLException, InterruptedException;
 
-	public Collection<Coupon> getCoupons();
+	//get All Coupons by Customer
+	public Collection<Coupon> getCoupons(Customer customer) throws SQLException, InterruptedException;
 
+	//Login to Customer
 	public boolean login(String custName, String password) throws InterruptedException;
-	
-
 
 }

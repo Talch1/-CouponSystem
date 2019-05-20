@@ -4,11 +4,13 @@ import java.sql.Connection;
 import java.util.ArrayList;
 
 public class Customer {
+	// Data members
 	private long id;
 	private String custName;
 	private String password;
 	private ArrayList<Connection> connections;
 
+	// Constructor
 	public Customer(int id, String custName, String password, ArrayList<Connection> connections) {
 
 		setId(id);
@@ -18,9 +20,10 @@ public class Customer {
 	}
 
 	public Customer() {
-		// TODO Auto-generated constructor stub
+
 	}
 
+	// Getters and Setters
 	public long getId() {
 		return id;
 	}
@@ -53,6 +56,7 @@ public class Customer {
 		this.connections = connections;
 	}
 
+	// ToString
 	@Override
 	public String toString() {
 		return "Custumer [id=" + id + ", custName=" + custName + ", password=" + password + ", connections="

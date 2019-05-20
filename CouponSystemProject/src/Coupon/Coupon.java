@@ -1,9 +1,10 @@
 package Coupon;
 
-import java.util.Date;
+import java.sql.Date;
 
 public class Coupon {
 
+	//Data members
 	private long id;
 	private String title;
 	private Date startDate;
@@ -14,6 +15,7 @@ public class Coupon {
 	private double price;
 	private String image;
 
+	//Constructor
 	public Coupon(long id, String title, Date startDate, Date endDate, int amount, CouponType couponType, String message,
 			double price, String immage) {
 		super();
@@ -29,9 +31,10 @@ public class Coupon {
 	}
 
 	public Coupon() {
-		// TODO Auto-generated constructor stub
+		
 	}
 
+	//Getters Setter
 	public long getId() {
 		return id;
 	}
@@ -104,6 +107,7 @@ public class Coupon {
 		this.price = price;
 	}
 
+	//ToString
 	@Override
 	public String toString() {
 		return "Coupon [id=" + id + ", title=" + title + ", startDate=" + startDate + ", endDate=" + endDate

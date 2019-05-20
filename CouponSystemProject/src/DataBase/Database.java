@@ -100,8 +100,8 @@ public class Database {
 		try {
 			connection = ConnectionPool.getInstance().getConnection();
 
-			String sql = "create table if not exists CustomerCoupon  " + "(Cust_ID Bigint not null, "
-					+ "COUPON_ID Bigint NOT NULL, FOREIGN KEY(Cust_ID) REFERENCES customer(ID), FOREIGN KEY(CUST_ID) REFERENCES Coupon(ID) ,"
+			String sql = "create table if not exists CustomerCoupon  " + "(CUST_ID Bigint not null, "
+					+ "COUPON_ID Bigint NOT NULL, FOREIGN KEY(CUST_ID) REFERENCES customer(ID), FOREIGN KEY(CUST_ID) REFERENCES Coupon(ID) ,"
 					+ " PRIMARY KEY (CUST_ID, COUPON_ID) ) ";
 			PreparedStatement preparedStatement = null;
 

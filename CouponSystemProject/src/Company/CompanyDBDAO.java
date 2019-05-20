@@ -2,30 +2,26 @@
 package Company;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import CompanyCoupon.CompanyCouponDBDAO;
 import Coupon.Coupon;
 import Coupon.CouponDBDAO;
 import DataBase.ConnectionPool;
-import DataBase.Database;
-import Utils.CompCoup;
 
 public class CompanyDBDAO implements CompanyDAO {
-	CouponDBDAO couponDBDAO = new CouponDBDAO();
-	CompCoup compCoup = new CompCoup();
 
-	// create table company
+	// createCompany(insert to company)
+	@Override
 	public void createCompany(Company company) throws SQLException, InterruptedException {
 
 		Connection connection = null;
 
 		connection = ConnectionPool.getInstance().getConnection();
-		
 
 		String query = " insert into company (id ,COMP_NAME ,password , email)" + " values (?, ?, ?, ?)";
 
@@ -51,16 +47,17 @@ public class CompanyDBDAO implements CompanyDAO {
 
 	}
 
-	// remove table company
+	// removeCompany(delete from company)
+	@Override
 	public void removeCompany(Company company) throws SQLException, InterruptedException {
 
 		Connection connection = null;
 		try {
 			connection = ConnectionPool.getInstance().getConnection();
-		
-		String sql = String.format("delete from  Company where id = ?");
-		PreparedStatement preparedStatement = null;
-		
+
+			String sql = String.format("delete from  Company where id = ?");
+			PreparedStatement preparedStatement = null;
+
 			preparedStatement = connection.prepareStatement(sql);
 
 			preparedStatement.setLong(1, company.getId());
@@ -75,6 +72,8 @@ public class CompanyDBDAO implements CompanyDAO {
 
 	}
 
+	// updateCompany(update company)
+	@Override
 	public void updateCompany(Company company) throws SQLException, InterruptedException {
 
 		Connection connection = null;
@@ -92,7 +91,6 @@ public class CompanyDBDAO implements CompanyDAO {
 
 			preparedStatement = connection.prepareStatement(sql);
 
-			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -103,12 +101,13 @@ public class CompanyDBDAO implements CompanyDAO {
 
 	}
 
+	// getCompany when id is
+	@Override
 	public Company getCompany(long id) throws SQLException, InterruptedException {
 		Connection connection = null;
 
-		
-			connection = ConnectionPool.getInstance().getConnection();
-		
+		connection = ConnectionPool.getInstance().getConnection();
+
 		Company company = new Company();
 		String sql = "SELECT * FROM  Company WHERE ID= ?";
 		try {
@@ -135,6 +134,7 @@ public class CompanyDBDAO implements CompanyDAO {
 
 	}
 
+	// get all companys to Arraylist
 	@Override
 	public Collection<Company> getAllCompany() throws SQLException, InterruptedException {
 
@@ -173,23 +173,39 @@ public class CompanyDBDAO implements CompanyDAO {
 		return companies;
 	}
 
+	// get all coupons of this company
 	@Override
-	public Collection<Coupon> getCoupons() throws SQLException, InterruptedException {
-		return compCoup.allCouponsOfCompany();
+	public ArrayList<Coupon> getCoupons(Company company) throws SQLException, InterruptedException {
+		CompanyCouponDBDAO compCoup = new CompanyCouponDBDAO();
+		CouponDBDAO couponDBDAO = new CouponDBDAO();
+
+		ArrayList<CompanyCouponDBDAO> list = new ArrayList<>();
+		ArrayList<Coupon> coupons = new ArrayList<>();
+
+		list = compCoup.getAllCompanyCoupon();
+		for (CompanyCouponDBDAO companyCouponDBDAO : list) {
+			if (company.getId() == companyCouponDBDAO.getComp_id()) {
+
+				coupons.add(couponDBDAO.getCoupon(company.getId()));
+			}
+		}
+		return coupons;
+
 	}
 
+	// login to Company
 	@Override
 	public boolean login(String compname, String pass) throws InterruptedException {
 		Company company = new Company();
 		Connection connection = null;
 		try {
 			connection = ConnectionPool.getInstance().getConnection();
-			} catch (SQLException e) {
+		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 
 		}
-		
+
 		String sql = "SELECT * FROM company WHERE COMP_NAME = ? and  password = ?";
 
 		PreparedStatement preparedStatement = null;
@@ -197,8 +213,8 @@ public class CompanyDBDAO implements CompanyDAO {
 		try {
 
 			preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setString(1, compname);
-            preparedStatement.setString(2, pass);
+			preparedStatement.setString(1, compname);
+			preparedStatement.setString(2, pass);
 			ResultSet rs = preparedStatement.executeQuery(sql);
 
 			while (rs.next()) {

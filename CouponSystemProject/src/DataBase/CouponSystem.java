@@ -37,14 +37,17 @@ public class CouponSystem {
 	}
 
 	public CouponClientFasade login(String name, String password, ClientType clientType) throws InterruptedException {
+		AdminFacade adminFacade = new AdminFacade();
+		CompanyFacade companyFacade = new CompanyFacade();
+		CustomerFacade customerFacade = new CustomerFacade();
 		if (clientType.name().equals("Admin")) {
 
-			return new AdminFacade().login(name, password, clientType);
+			return adminFacade.login(name, password, clientType);
 
 		} else if (clientType.name().equals("Company")) {
-			return new CompanyFacade().login(name, password, clientType);
+			return  companyFacade.login(name, password, clientType);
 		} else if (clientType.name().equals("Customer")) {
-			return new CustomerFacade().login(name, password, clientType);
+			return  customerFacade.login(name, password, clientType);
 		}
 		return null;
 	}

@@ -1,20 +1,21 @@
 package Customer;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
-
-import Company.Company;
 import Coupon.Coupon;
+import Coupon.CouponDBDAO;
+import CustomerCoupon.CustomerCouponDBDAO;
 import DataBase.ConnectionPool;
-import DataBase.Database;
+
 
 public class CustomerDBDAO implements CustomerDAO {
-	public static void createCustomer(Customer customer) throws SQLException, InterruptedException {
+	// create Customer(insert to Customer)
+	@Override
+	public void createCustomer(Customer customer) throws SQLException, InterruptedException {
 
 		Connection connection = null;
 		try {
@@ -49,7 +50,9 @@ public class CustomerDBDAO implements CustomerDAO {
 
 	}
 
-	public static void removeCustomer(Customer customer) throws SQLException, InterruptedException {
+	// delete Customer (delete from Customer)
+	@Override
+	public void removeCustomer(Customer customer) throws SQLException, InterruptedException {
 
 		Connection connection = null;
 		try {
@@ -73,12 +76,13 @@ public class CustomerDBDAO implements CustomerDAO {
 
 			ConnectionPool.getInstance().returnConnection(connection);
 		}
-			System.out.println("deleted from customer");
-		
+		System.out.println("deleted from customer");
 
 	}
 
-	public static void updateCompanyName(Customer customer) throws SQLException, InterruptedException {
+	// update Customer(update Customer)
+	@Override
+	public void updateCustomer(Customer customer) throws SQLException, InterruptedException {
 
 		Connection connection = null;
 		try {
@@ -87,14 +91,15 @@ public class CustomerDBDAO implements CustomerDAO {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		String sql = "update customer set password = ? where id = ? ";
+		String sql = "update customer set password = ? , set CUST_NAME = ?  where id = ? ";
 		PreparedStatement preparedStatement = null;
 
 		try {
 			preparedStatement = connection.prepareStatement(sql);
 
 			preparedStatement.setString(1, customer.getPassword());
-			preparedStatement.setLong(2, customer.getId());
+			preparedStatement.setString(2, customer.getCustName());
+			preparedStatement.setLong(3, customer.getId());
 			preparedStatement.executeUpdate();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -102,12 +107,14 @@ public class CustomerDBDAO implements CustomerDAO {
 		} finally {
 
 			ConnectionPool.getInstance().returnConnection(connection);
-		
+
 		}
 		System.out.println("customer Updatet");
 
 	}
 
+	// get Customer By Id
+	@Override
 	public Customer getCustomer(long id) throws SQLException, InterruptedException {
 		Customer customer = new Customer();
 		Connection connection = null;
@@ -139,12 +146,13 @@ public class CustomerDBDAO implements CustomerDAO {
 		} finally {
 
 			ConnectionPool.getInstance().returnConnection(connection);
-		
+
 		}
 
 		return customer;
 	}
 
+	// get All Customers
 	@Override
 	public ArrayList<Customer> getAllCustomer() throws SQLException, InterruptedException {
 
@@ -179,18 +187,34 @@ public class CustomerDBDAO implements CustomerDAO {
 		} finally {
 
 			ConnectionPool.getInstance().returnConnection(connection);
-		
+
 		}
 
 		return customers;
 	}
 
+	// get All Coupons by Customer
 	@Override
-	public Collection<Coupon> getCoupons() {
-		// TODO Auto-generated method stub
-		return null;
+	public Collection<Coupon> getCoupons(Customer customer) throws SQLException, InterruptedException {
+
+		CustomerCouponDBDAO customerCouponDBDAO = new CustomerCouponDBDAO();
+		CouponDBDAO couponDBDAO = new CouponDBDAO();
+
+		ArrayList<CustomerCouponDBDAO> list = new ArrayList<>();
+		ArrayList<Coupon> coupons = new ArrayList<>();
+
+		list = customerCouponDBDAO.getAllCustomerCoupons();
+		for (CustomerCouponDBDAO custCouponDBDAO : list) {
+			if (customer.getId() == custCouponDBDAO.getCust_id()) {
+
+				coupons.add(couponDBDAO.getCoupon(customer.getId()));
+			}
+		}
+		return coupons;
+
 	}
 
+	// Login to Customer
 	@Override
 	public boolean login(String custName, String password) throws InterruptedException {
 
@@ -225,9 +249,8 @@ public class CustomerDBDAO implements CustomerDAO {
 			e.printStackTrace();
 		} finally {
 
-
 			ConnectionPool.getInstance().returnConnection(connection);
-		
+
 		}
 
 		if (customer.getId() == 0) {

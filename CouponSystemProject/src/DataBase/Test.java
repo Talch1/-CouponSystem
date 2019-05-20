@@ -1,7 +1,7 @@
 package DataBase;
 
 import java.sql.SQLException;
-import java.util.Date;
+import java.sql.Date;
 
 import Company.Company;
 import Company.CompanyDBDAO;
@@ -18,61 +18,60 @@ import Facade.CustomerFacade;
 public class Test {
 
 	public static void main(String[] args) throws SQLException, InterruptedException {
-		Date date = new Date(11-12-2015);
+		AdminFacade adminFacade = new AdminFacade();
+		CompanyFacade companyFacade = new CompanyFacade();
+		Date date = new Date(11 - 12 - 2015);
 		CouponType couponType = CouponType.CAMPING;
-	//	Company company = new Company(162, "fanta", "11", "ppk", null);
-	//	Customer cust = new Customer(553, "kolya", "vvv", null);
-		Coupon coupon = new Coupon(1,"1+1",date,date,6,couponType,"gggg",
-				6.3, "hgf");
-         
+		// Company company = new Company(162, "fanta", "11", "ppk", null);
+		 Customer cust = new Customer(553, "kolya", "vvv", null);
+		Coupon coupon = new Coupon(8888, "paa", date, date, 5, couponType, "jjj", 5.2, "http");
+		CustomerFacade customerFacade = new CustomerFacade();
 
-       // CouponSystem.getInstanse().database.createAllTables();
-		
-		// AdminFacade.createCompany(company);
+		//CouponSystem.getInstanse().database.createAllTables();
 
-		// AdminFacade.createCustomer(cust);
+		// adminFacade.createCompany(company);
 
-		// AdminFacade.removeCompany(company);
+		// adminFacade.createCustomer(cust);
 
-		// AdminFacade.removeCustomer(cust);
+		// adminFacade.removeCompany(company);
 
-		// AdminFacade.updateCompany(company);
+		// adminFacade.removeCustomer(cust);
 
-		// AdminFacade.updateCustomer(cust);
+		// adminFacade.updateCompany(company);
 
-	    // System.out.println( AdminFacade.getCompany(55));
+		// adminFacade.updateCustomer(cust);
 
-		// System.out.println(AdminFacade.getCustomer(2));
+		// System.out.println(adminFacade.getCompany(55));
 
-		// System.out.println( AdminFacade.getAllCompanyes());
+		// System.out.println(adminFacade.getCustomer(2));
 
-		// System.out.println(AdminFacade.getAllCustomers()); 
+		// System.out.println(adminFacade.getAllCompanyes());
 
-	//AdminFacade.login(name, password, clientFasade);
+		// System.out.println(adminFacade.getAllCustomers());
 
-		 CompanyFacade.createCoupon(coupon);
+		//companyFacade.createCoupon(coupon);
 
-		// CompanyFacade.removeCoupon(coupon);
+		// companyFacade.removeCoupon(coupon);
 
-		// CompanyFacade.updateCoupon(coupon);
+		// companyFacade.updateCoupon(coupon);
 
-		// CompanyFacade.getAllCoupons();
+		// System.out.println(companyFacade.getAllCoupons());
 
-		// CompanyFacade.getCoupon(id);
+		// System.out.println(companyFacade.getCoupon(8888));
 
-		// CompanyFacade.getCouponByType(type);
+		//System.out.println(companyFacade.getCouponByType(couponType));
 
-		// CompanyFacade.login(name, password, clientFasade);
+		//customerFacade.purchaseCoupon(coupon, cust);
+	//	!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-		// CustomerFacade.purchaseCoupon(coupon, customer);
+		// System.out.println(customerFacade.getAllPurchisedCouponsByPrice(9.6)); 
+		 
+           
+		//System.out.println( customerFacade.getAllPurchisedCouponsByType(null));
 
-		// CustomerFacade.getAllPurchisedCouponsByPrice(price);
+		//System.out.println(customerFacade.getAllPurchoisedCoupons());
 
-		// CustomerFacade.getAllPurchisedCouponsByType(type);
-
-		// CustomerFacade.getAllPurchoisedCoupons();
-
-		// CustomerFacade.login(name, password, clientFasade);
+	
 
 	}
 
