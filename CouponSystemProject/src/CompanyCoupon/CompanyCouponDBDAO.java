@@ -9,29 +9,30 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import Coupon.Coupon;
+import Coupon.CouponDBDAO;
 import DataBase.ConnectionPool;
 
 public class CompanyCouponDBDAO implements CompanyCouponDAO {
 
 	// Data members
-	private long comp_id;
-	private long coupon_id;
+	private long compId;
+	private long couponId;
 
 	// Getters Setters
-	public long getComp_id() {
-		return comp_id;
+	public long getCompId() {
+		return compId;
 	}
 
-	public void setComp_id(long comp_id) {
-		this.comp_id = comp_id;
+	public void setCompId(long compId) {
+		this.compId = compId;
 	}
 
-	public long getCoupon_id() {
-		return coupon_id;
+	public long getCouponId() {
+		return couponId;
 	}
 
-	public void setCoupon_id(long coupon_id) {
-		this.coupon_id = coupon_id;
+	public void setCouponId(long couponId) {
+		this.couponId = couponId;
 	}
 
 	// remove Company Coupon(company delete coupon)
@@ -45,7 +46,7 @@ public class CompanyCouponDBDAO implements CompanyCouponDAO {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		String sql = "delete from CompanyCoupon where COUPON_ID = ?";
+		String sql = "delete from CompanyCoupon where COUPONID = ?";
 		PreparedStatement preparedStatement = null;
 		try {
 			preparedStatement = connection.prepareStatement(sql);
@@ -74,16 +75,19 @@ public class CompanyCouponDBDAO implements CompanyCouponDAO {
 		CompanyCouponDBDAO companyCouponDBDAO = new CompanyCouponDBDAO();
 		PreparedStatement preparedStatement;
 
-		String sql = "SELECT * FROM CompanyCoupon WHERE COUPON_ID = " + id;
+		String sql = "SELECT * FROM CompanyCoupon WHERE COUPONID = ? ";
 
 		try {
 			preparedStatement = connection.prepareStatement(sql);
 
-			ResultSet rs = preparedStatement.executeQuery(sql);
+			
+			preparedStatement.setLong(1, id);
+			preparedStatement.execute();
+			ResultSet rs = preparedStatement.executeQuery();
 			rs.next();
 
-			companyCouponDBDAO.setComp_id(rs.getLong(1));
-			companyCouponDBDAO.setCoupon_id(rs.getLong(2));
+			companyCouponDBDAO.setCompId(rs.getLong(1));
+			companyCouponDBDAO.setCouponId(rs.getLong(2));
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -95,7 +99,7 @@ public class CompanyCouponDBDAO implements CompanyCouponDAO {
 
 	}
 
-	// get all coupons in Companys
+	// get all coupons in Company
 	@Override
 	public ArrayList<CompanyCouponDBDAO> getAllCompanyCoupon() throws SQLException, InterruptedException {
 		ArrayList<CompanyCouponDBDAO> companyCouponDBDAOs = new ArrayList<>();
@@ -118,8 +122,8 @@ public class CompanyCouponDBDAO implements CompanyCouponDAO {
 			ResultSet rs = preparedStatement.executeQuery(sql);
 			while (rs.next()) {
 
-				companyCouponDBDAO.setComp_id(rs.getLong(1));
-				companyCouponDBDAO.setCoupon_id(rs.getLong(2));
+				companyCouponDBDAO.setCompId(rs.getLong(1));
+				companyCouponDBDAO.setCouponId(rs.getLong(2));
 				companyCouponDBDAOs.add(companyCouponDBDAO);
 
 			}
@@ -135,7 +139,7 @@ public class CompanyCouponDBDAO implements CompanyCouponDAO {
 	}
 
    
-    //delete all coupons of company
+    //Company delete all Coupons
 	@Override
 	public void deletefromCompcoupByCompID(long id) throws SQLException, InterruptedException {
 		Connection connection = null;
@@ -145,7 +149,7 @@ public class CompanyCouponDBDAO implements CompanyCouponDAO {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		String sql = "delete from  CompanyCoupon where comp_id = ?";
+		String sql = "delete from  CompanyCoupon where COMPID = ?";
 		PreparedStatement preparedStatement = null;
 		try {
 			preparedStatement = connection.prepareStatement(sql);
@@ -165,7 +169,82 @@ public class CompanyCouponDBDAO implements CompanyCouponDAO {
 //ToString
 	@Override
 	public String toString() {
-		return "CompanyCouponDBDAO [comp_id=" + comp_id + ", coupon_id=" + coupon_id + "]";
+		return "CompanyCouponDBDAO [compId=" + compId + ", couponId=" + couponId + "]";
 	}
+
+	public void companyCreateCoupon(long compId, long coupId) throws SQLException, InterruptedException {
+
+		Connection connection = null;
+
+		try {
+			connection = ConnectionPool.getInstance().getConnection();
+
+			String query = "insert into CustomerCoupon (COMPID , COUPID) values (?, ?)";
+
+			PreparedStatement preparedStmt = null;
+
+			preparedStmt = connection.prepareStatement(query);
+
+			preparedStmt.setLong(1, compId);
+			preparedStmt.setLong(2, coupId);
+			preparedStmt.execute();
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			ConnectionPool.getInstance().returnConnection(connection);
+		}
+	}
+	public static ArrayList<Long> getInCompanycouponCouponsId() {
+
+		ArrayList<Long> ids = new ArrayList<>();
+		ArrayList<CompanyCouponDBDAO> companyCouponDBDAOs = new ArrayList<>();
+
+		for (CompanyCouponDBDAO companyCouponDBDAO : companyCouponDBDAOs) {
+			ids.add(companyCouponDBDAO.getCouponId());
+		}
+
+		return ids;
+
+	}
+
+	public ArrayList<Coupon> allCouponsOfCompany() throws SQLException, InterruptedException {
+		CouponDBDAO coupon = new CouponDBDAO();
+		ArrayList<Coupon> allCoupons = new ArrayList<>();
+		ArrayList<Long> ids = new ArrayList<>();
+		for (Long long1 : ids) {
+			allCoupons.add(coupon.getCoupon(long1));
+		}
+		return allCoupons;
+
+	}
+	public  void deletefromCompcoup(long id) throws SQLException, InterruptedException {
+		Connection connection = null;
+		try {
+			connection = ConnectionPool.getInstance().getConnection();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		String sql = String.format("delete from  CompanyCoupon where COMPID = ?");
+		PreparedStatement preparedStatement = null;
+		try {
+			preparedStatement = connection.prepareStatement(sql);
+
+			preparedStatement.setLong(1, id);
+			preparedStatement.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			ConnectionPool.getInstance().returnConnection(connection);
+
+		}
+		System.out.println("Deleted from CompanyCoupon");
+
+}
+
+
 
 }

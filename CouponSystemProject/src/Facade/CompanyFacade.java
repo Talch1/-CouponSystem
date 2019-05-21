@@ -1,77 +1,102 @@
 package Facade;
 
+import java.sql.Date;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Collection;
-
-import Exeptions.*;
-import Utils.CouponPurchaise;
+import Company.Company;
 import Company.CompanyDBDAO;
+import CompanyCoupon.CompanyCouponDBDAO;
 import Coupon.Coupon;
 import Coupon.CouponDBDAO;
 import Coupon.CouponType;
+import CustomerCoupon.CustomerCouponDBDAO;
 import DataBase.ClientType;
 
 public class CompanyFacade implements CouponClientFasade {
 
-	ClientType clientType =ClientType.Company;
+	// Data members
+	ClientType clientType = ClientType.Company;
+
 	public CompanyFacade(ClientType clientType) {
 
 		this.clientType = clientType;
 	}
 
 	public CompanyFacade() {
-	
+		
 	}
 
-	public void createCoupon(Coupon coupon) throws SQLException, InterruptedException {
+	// Insert Coupon to Table
+	public void createCoupon(Coupon coupon, Company company) throws SQLException, InterruptedException {
 
-		int count = 0;
+		CompanyCouponDBDAO companyCouponDBDAO = new CompanyCouponDBDAO();
+		ArrayList<Coupon> allCoup = new ArrayList<>();
 		CouponDBDAO couponDBDAO = new CouponDBDAO();
-		ArrayList<Coupon> coupons = couponDBDAO.getAllCoupons();
-		for (int i = 0; i < coupons.size(); i++) {
-			if (coupons.get(i).getTitle().equals(coupon.getTitle())) {
-				count++;
+		boolean chek = false;
+		allCoup = couponDBDAO.getAllCoupons();
+		for (Coupon coupon2 : allCoup) {
+			if (coupon2.getTitle().equals(coupon.getTitle())) {
+				chek = true;
 			}
 		}
-		if (count == 0) {
-			couponDBDAO.createCoupon(coupon);
-		} else {
-			System.out.println("TITELE DUPLICATE");
-			/// eXEPTION
+		if (chek == true) {
+			System.out.println("exist");
 		}
+		couponDBDAO.createCoupon(coupon);
+		companyCouponDBDAO.companyCreateCoupon(company.getId(), coupon.getId());
+
 	}
 
+	// Delete Coupon from Table
 	public void removeCoupon(Coupon coupon) throws SQLException, InterruptedException {
 		CouponDBDAO couponDBDAO = new CouponDBDAO();
-		CouponPurchaise couponPurchaise = new CouponPurchaise();
+		CustomerCouponDBDAO customerCouponDBDAO = new CustomerCouponDBDAO();
 		couponDBDAO.removeCoupon(coupon);
-		couponPurchaise.deletefromCustcoup(coupon.getId());
+		customerCouponDBDAO.deletefromCustcoup(coupon.getId());
 	}
 
+	// Update Coupon
 	public void updateCoupon(Coupon coupon) throws SQLException, InterruptedException {
 		CouponDBDAO couponDBDAO = new CouponDBDAO();
 		couponDBDAO.updateCoupon(coupon);
 
 	}
 
+	// Get Coupon by id
 	public Coupon getCoupon(int id) throws SQLException, InterruptedException {
 		CouponDBDAO couponDBDAO = new CouponDBDAO();
 		return couponDBDAO.getCoupon(id);
 	}
 
-	public Collection<Coupon> getAllCoupons() throws SQLException, InterruptedException {
+	// Get All Coupons
+	public ArrayList<Coupon> getAllCoupons() throws SQLException, InterruptedException {
 		CouponDBDAO couponDBDAO = new CouponDBDAO();
 		return couponDBDAO.getAllCoupons();
 
 	}
 
-	public Collection<Coupon> getCouponByType(CouponType type) throws SQLException, InterruptedException {
+	// Get All Coupons By Type
+	public ArrayList<Coupon> getCouponByType(CouponType type) throws SQLException, InterruptedException {
 		CouponDBDAO couponDBDAO = new CouponDBDAO();
 		return couponDBDAO.getCouponByType(type);
 
 	}
 
+	// Get All Coupons By Price
+	public ArrayList<Coupon> getCouponByPrice(double price) throws SQLException, InterruptedException {
+		CouponDBDAO couponDBDAO = new CouponDBDAO();
+		return couponDBDAO.getCouponByPrice(price);
+
+	}
+
+	// Get All Coupon Before Date
+	public ArrayList<Coupon> getCouponByDate(Date date) throws SQLException, InterruptedException {
+		CouponDBDAO couponDBDAO = new CouponDBDAO();
+		return couponDBDAO.getCouponByDate(date);
+
+	}
+
+	//Login to CompanyFacade
 	public CouponClientFasade login(String name, String password, ClientType c) throws InterruptedException {
 		CompanyDBDAO companyDBDAO = new CompanyDBDAO();
 		{

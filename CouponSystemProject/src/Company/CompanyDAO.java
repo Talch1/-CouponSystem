@@ -1,6 +1,4 @@
-/*
- * 
- */
+
 package Company;
 
 import java.sql.SQLException;
@@ -23,7 +21,7 @@ public interface CompanyDAO {
 	//getCompany when id is
 	public Company getCompany(long id) throws SQLException, InterruptedException;
 
-	// get all Companys to Arraylist
+	// get all Company's 
 	public Collection<Company> getAllCompany() throws SQLException, InterruptedException;
 
 	// get all Coupons of this Company

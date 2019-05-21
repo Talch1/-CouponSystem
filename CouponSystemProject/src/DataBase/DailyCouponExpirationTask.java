@@ -1,10 +1,7 @@
 package DataBase;
 
-import java.util.Date;
+import java.sql.Date;
 import java.sql.SQLException;
-import java.util.ArrayList;
-
-import Coupon.Coupon;
 import Coupon.CouponDBDAO;
 
 public class DailyCouponExpirationTask implements Runnable {

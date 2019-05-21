@@ -35,7 +35,7 @@ public class Database {
 		try {
 			connection = ConnectionPool.getInstance().getConnection();
 			String sql = "create table if not exists Company  (" + "ID bigint  primary key not null, "
-					+ "COMP_NAME varchar(50) not null, " + "PASSWORD varchar(50) not null , "
+					+ "COMPNAME varchar(50) not null, " + "PASSWORD varchar(50) not null , "
 					+ "EMAIL varchar(50) not null  )";
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
 			preparedStatement.executeUpdate(sql);
@@ -55,7 +55,7 @@ public class Database {
 		try {
 			connection = ConnectionPool.getInstance().getConnection();
 			String sql = "create table if not exists  customer  (" + "ID bigint  primary key not null, "
-					+ "CUST_NAME varchar(50) not null, " + "PASSWORD varchar(50) not null )";
+					+ "CUSTNAME varchar(50) not null, " + "PASSWORD varchar(50) not null )";
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
 			preparedStatement.executeUpdate(sql);
 			System.out.println("Created table Customer");
@@ -100,9 +100,9 @@ public class Database {
 		try {
 			connection = ConnectionPool.getInstance().getConnection();
 
-			String sql = "create table if not exists CustomerCoupon  " + "(CUST_ID Bigint not null, "
-					+ "COUPON_ID Bigint NOT NULL, FOREIGN KEY(CUST_ID) REFERENCES customer(ID), FOREIGN KEY(CUST_ID) REFERENCES Coupon(ID) ,"
-					+ " PRIMARY KEY (CUST_ID, COUPON_ID) ) ";
+			String sql = "create table if not exists CustomerCoupon  " + "(CUSTID Bigint not null, "
+					+ "COUPONID Bigint NOT NULL, FOREIGN KEY(CUSTID) REFERENCES customer(ID), FOREIGN KEY(CUSTID) REFERENCES Coupon(ID) ,"
+					+ " PRIMARY KEY (CUSTID, COUPONID) ) ";
 			PreparedStatement preparedStatement = null;
 
 			preparedStatement = connection.prepareStatement(sql);
@@ -123,9 +123,9 @@ public class Database {
 		try {
 			connection = ConnectionPool.getInstance().getConnection();
 
-			String sql = "create table if not exists CompanyCoupon  " + "(COMP_ID Bigint not null, "
-					+ "COUPON_ID Bigint NOT NULL, FOREIGN KEY(COMP_ID) REFERENCES Company(ID), FOREIGN KEY(COUPON_ID) REFERENCES Coupon(ID) ,"
-					+ " PRIMARY KEY (COMP_ID, COUPON_ID) ) ";
+			String sql = "create table if not exists CompanyCoupon  " + "(COMPID Bigint not null, "
+					+ "COUPONID Bigint NOT NULL, FOREIGN KEY(COMPID) REFERENCES Company(ID), FOREIGN KEY(COUPONID) REFERENCES Coupon(ID) ,"
+					+ " PRIMARY KEY (COMPID, COUPONID) ) ";
 			PreparedStatement preparedStatement = null;
 
 			preparedStatement = connection.prepareStatement(sql);
@@ -146,9 +146,9 @@ public class Database {
 		try {
 			connection = ConnectionPool.getInstance().getConnection();
 
-			String sql = "create table if not exists CompanyCoupon  " + "(COMP_ID Bigint not null, "
-					+ "COUPON_ID Bigint NOT NULL, FOREIGN KEY(COMP_ID) REFERENCES Company(ID), FOREIGN KEY(COUPON_ID) REFERENCES Coupon(ID) ,"
-					+ " PRIMARY KEY (COMP_ID, COUPON_ID) ) ";
+			String sql = "create table if not exists CompanyCoupon  " + "(COMPID Bigint not null, "
+					+ "COUPON_ID Bigint NOT NULL, FOREIGN KEY(COMPID) REFERENCES Company(ID), FOREIGN KEY(COUPONID) REFERENCES Coupon(ID) ,"
+					+ " PRIMARY KEY (COMPID, COUPONID) ) ";
 			PreparedStatement statement = null;
 
 			statement = connection.prepareStatement(sql);

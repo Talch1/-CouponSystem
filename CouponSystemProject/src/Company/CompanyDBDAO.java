@@ -23,7 +23,7 @@ public class CompanyDBDAO implements CompanyDAO {
 
 		connection = ConnectionPool.getInstance().getConnection();
 
-		String query = " insert into company (id ,COMP_NAME ,password , email)" + " values (?, ?, ?, ?)";
+		String query = " insert into company (id ,COMPNAME ,password , email)" + " values (?, ?, ?, ?)";
 
 		PreparedStatement preparedStmt = null;
 		try {
@@ -121,8 +121,9 @@ public class CompanyDBDAO implements CompanyDAO {
 
 			while (resultSet.next()) {
 				company.setId(resultSet.getLong(1));
-				company.setPassword(resultSet.getString(2));
-				company.setEmail(resultSet.getString(3));
+				company.setCompName(resultSet.getString(2));
+				company.setPassword(resultSet.getString(3));
+				company.setEmail(resultSet.getString(4));
 			}
 		} catch (SQLException e1) {
 			// TODO Auto-generated catch block
@@ -136,7 +137,7 @@ public class CompanyDBDAO implements CompanyDAO {
 
 	// get all companys to Arraylist
 	@Override
-	public Collection<Company> getAllCompany() throws SQLException, InterruptedException {
+	public ArrayList<Company> getAllCompany() throws SQLException, InterruptedException {
 
 		ArrayList<Company> companies = new ArrayList<>();
 
@@ -184,7 +185,7 @@ public class CompanyDBDAO implements CompanyDAO {
 
 		list = compCoup.getAllCompanyCoupon();
 		for (CompanyCouponDBDAO companyCouponDBDAO : list) {
-			if (company.getId() == companyCouponDBDAO.getComp_id()) {
+			if (company.getId() == companyCouponDBDAO.getCompId()) {
 
 				coupons.add(couponDBDAO.getCoupon(company.getId()));
 			}
@@ -206,7 +207,7 @@ public class CompanyDBDAO implements CompanyDAO {
 
 		}
 
-		String sql = "SELECT * FROM company WHERE COMP_NAME = ? and  password = ?";
+		String sql = "SELECT * FROM company WHERE COMPNAME = ? and  password = ?";
 
 		PreparedStatement preparedStatement = null;
 

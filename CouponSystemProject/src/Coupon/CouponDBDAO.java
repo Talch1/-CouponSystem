@@ -1,19 +1,13 @@
 package Coupon;
 
 import java.sql.Connection;
-
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
-
-import Company.Company;
+import java.sql.Date;
 import DataBase.ConnectionPool;
-import DataBase.Database;
+
 
 public class CouponDBDAO implements CouponDAO {
 
@@ -289,7 +283,7 @@ public class CouponDBDAO implements CouponDAO {
 
 	// get Coupon by Type
 	@Override
-	public Collection<Coupon> getCouponByType(CouponType type) throws SQLException, InterruptedException {
+	public ArrayList<Coupon> getCouponByType(CouponType type) throws SQLException, InterruptedException {
 
 		Coupon coupon = new Coupon();
 		Connection connection = null;
@@ -304,6 +298,153 @@ public class CouponDBDAO implements CouponDAO {
 
 			preparedStatement = connection.prepareStatement(sql);
 			preparedStatement.setString(1, type.name());
+			ResultSet resultSet;
+			resultSet = preparedStatement.executeQuery();
+			resultSet.next();
+			while (resultSet.next()) {
+				coupon.setId(resultSet.getLong(1));
+				coupon.setTitle(resultSet.getString(2));
+				coupon.setStartDate(resultSet.getDate(3));
+				coupon.setEndDate(resultSet.getDate(4));
+				coupon.setAmount(resultSet.getInt(5));
+				String returnType = resultSet.getString(6);
+				switch (resultSet.getString(6)) {
+
+				case "Food":
+					coupon.setType(CouponType.FOOD);
+					break;
+
+				case "RESTURANS":
+					coupon.setType(CouponType.RESTURANS);
+					break;
+
+				case "ELECTRICITY":
+					coupon.setType(CouponType.ELECTRICITY);
+					break;
+
+				case "HEALTH":
+					coupon.setType(CouponType.HEALTH);
+					break;
+
+				case "SPORTS":
+					coupon.setType(CouponType.SPORTS);
+					break;
+
+				case "CAMPING":
+					coupon.setType(CouponType.CAMPING);
+					break;
+
+				case "TRAVELLING":
+					coupon.setType(CouponType.TRAVELLING);
+					break;
+				default:
+					break;
+				}
+				coupon.setMessage(resultSet.getString(7));
+				coupon.setPrice(resultSet.getDouble(8));
+				coupon.setImage(resultSet.getString(9));
+
+				coupons.add(coupon);
+
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			ConnectionPool.getInstance().returnConnection(connection);
+		}
+
+		return coupons;
+	}
+
+	public ArrayList<Coupon> getCouponByPrice(double price) throws SQLException, InterruptedException {
+
+		Coupon coupon = new Coupon();
+		Connection connection = null;
+
+		connection = ConnectionPool.getInstance().getConnection();
+
+		ArrayList<Coupon> coupons = new ArrayList<>();
+		String sql = "SELECT * FROM coupon WHERE Price = ?";
+
+		try {
+			PreparedStatement preparedStatement = null;
+
+			preparedStatement = connection.prepareStatement(sql);
+			preparedStatement.setDouble(1, price);
+			ResultSet resultSet;
+			resultSet = preparedStatement.executeQuery();
+			resultSet.next();
+			while (resultSet.next()) {
+				coupon.setId(resultSet.getLong(1));
+				coupon.setTitle(resultSet.getString(2));
+				coupon.setStartDate(resultSet.getDate(3));
+				coupon.setEndDate(resultSet.getDate(4));
+				coupon.setAmount(resultSet.getInt(5));
+				String returnType = resultSet.getString(6);
+				switch (resultSet.getString(6)) {
+
+				case "Food":
+					coupon.setType(CouponType.FOOD);
+					break;
+
+				case "RESTURANS":
+					coupon.setType(CouponType.RESTURANS);
+					break;
+
+				case "ELECTRICITY":
+					coupon.setType(CouponType.ELECTRICITY);
+					break;
+
+				case "HEALTH":
+					coupon.setType(CouponType.HEALTH);
+					break;
+
+				case "SPORTS":
+					coupon.setType(CouponType.SPORTS);
+					break;
+
+				case "CAMPING":
+					coupon.setType(CouponType.CAMPING);
+					break;
+
+				case "TRAVELLING":
+					coupon.setType(CouponType.TRAVELLING);
+					break;
+				default:
+					break;
+				}
+				coupon.setMessage(resultSet.getString(7));
+				coupon.setPrice(resultSet.getDouble(8));
+				coupon.setImage(resultSet.getString(9));
+
+				coupons.add(coupon);
+
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			ConnectionPool.getInstance().returnConnection(connection);
+		}
+
+		return coupons;
+	}
+	public ArrayList<Coupon> getCouponByDate(Date date) throws SQLException, InterruptedException {
+
+		Coupon coupon = new Coupon();
+		Connection connection = null;
+
+		connection = ConnectionPool.getInstance().getConnection();
+
+		ArrayList<Coupon> coupons = new ArrayList<>();
+		String sql = "SELECT * FROM coupon WHERE End_date < ?";
+
+		try {
+			PreparedStatement preparedStatement = null;
+
+			preparedStatement = connection.prepareStatement(sql);
+			preparedStatement.setDate(1, date);
 			ResultSet resultSet;
 			resultSet = preparedStatement.executeQuery();
 			resultSet.next();

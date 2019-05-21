@@ -27,7 +27,7 @@ public class CustomerDBDAO implements CustomerDAO {
 
 		}
 
-		String query = " insert into customer (id ,CUST_NAME ,password )" + " values (?, ?, ?)";
+		String query = " insert into customer (id ,CUSTNAME ,password )" + " values (?, ?, ?)";
 
 		PreparedStatement preparedStmt;
 		try {
@@ -91,15 +91,14 @@ public class CustomerDBDAO implements CustomerDAO {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		String sql = "update customer set password = ? , set CUST_NAME = ?  where id = ? ";
+		String sql = "update customer set password = ?  where id = ? ";
 		PreparedStatement preparedStatement = null;
 
 		try {
 			preparedStatement = connection.prepareStatement(sql);
 
 			preparedStatement.setString(1, customer.getPassword());
-			preparedStatement.setString(2, customer.getCustName());
-			preparedStatement.setLong(3, customer.getId());
+			preparedStatement.setLong(2, customer.getId());
 			preparedStatement.executeUpdate();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -205,7 +204,7 @@ public class CustomerDBDAO implements CustomerDAO {
 
 		list = customerCouponDBDAO.getAllCustomerCoupons();
 		for (CustomerCouponDBDAO custCouponDBDAO : list) {
-			if (customer.getId() == custCouponDBDAO.getCust_id()) {
+			if (customer.getId() == custCouponDBDAO.getCustId()) {
 
 				coupons.add(couponDBDAO.getCoupon(customer.getId()));
 			}
@@ -227,7 +226,7 @@ public class CustomerDBDAO implements CustomerDAO {
 			e.printStackTrace();
 
 		}
-		String sql = "SELECT * FROM customer WHERE CUST_NAME = ? and  password = ?";
+		String sql = "SELECT * FROM customer WHERE CUSTNAME = ? and  password = ?";
 		PreparedStatement preparedStatement = null;
 
 		try {

@@ -1,7 +1,6 @@
 package CustomerCoupon;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -9,30 +8,33 @@ import java.util.ArrayList;
 
 import Coupon.Coupon;
 import Coupon.CouponDBDAO;
+import Coupon.CouponType;
 import DataBase.ConnectionPool;
-import DataBase.Database;
 
 public class CustomerCouponDBDAO implements CustomerCouponDAO {
 
-	private long cust_id;
-	private long coupon_id;
+	// Data members
+	private long custId;
+	private long couponId;
 
-	public long getCust_id() {
-		return cust_id;
+	public long getCustId() {
+		return custId;
 	}
 
-	public void setCust_id(long cust_id) {
-		this.cust_id = cust_id;
+	public void setCustId(long custId) {
+		this.custId = custId;
 	}
 
-	public long getCoupon_id() {
-		return coupon_id;
+	public long getCouponId() {
+		return couponId;
 	}
 
-	public void setCoupon_id(long coupon_id) {
-		this.coupon_id = coupon_id;
+	public void setCouponId(long couponId) {
+		this.couponId = couponId;
 	}
 
+	// Company Delete Coupon
+	@Override
 	public void removeCustomerCoupon(Coupon coupon) throws SQLException, InterruptedException {
 
 		Connection connection = null;
@@ -60,6 +62,8 @@ public class CustomerCouponDBDAO implements CustomerCouponDAO {
 
 	}
 
+	// Company create Coupon
+	@Override
 	public void insert(long custId, long coupId) throws SQLException, InterruptedException {
 
 		Connection connection = null;
@@ -67,7 +71,7 @@ public class CustomerCouponDBDAO implements CustomerCouponDAO {
 		try {
 			connection = ConnectionPool.getInstance().getConnection();
 
-			String query = "insert into CustomerCoupon (CUST_ID , COUPON_ID) values (?, ?)";
+			String query = "insert into CustomerCoupon (CUSTID , COUPONID) values (?, ?)";
 
 			PreparedStatement preparedStmt = null;
 
@@ -85,6 +89,8 @@ public class CustomerCouponDBDAO implements CustomerCouponDAO {
 		}
 	}
 
+	// Get table all Purchase Coupons By Customers ID
+	@Override
 	public ArrayList<CustomerCouponDBDAO> getCustomerCoupon(long l) throws SQLException, InterruptedException {
 		Connection connection = null;
 		ArrayList<CustomerCouponDBDAO> list = new ArrayList<>();
@@ -98,7 +104,7 @@ public class CustomerCouponDBDAO implements CustomerCouponDAO {
 
 		CustomerCouponDBDAO customerCouponDBDAO = new CustomerCouponDBDAO();
 		PreparedStatement preparedStatement = null;
-		String sql = "SELECT * FROM CustomerCoupon WHERE CUST_ID = ?";
+		String sql = "SELECT * FROM CustomerCoupon WHERE CUSTID = ?";
 		try {
 			preparedStatement = connection.prepareStatement(sql);
 
@@ -107,8 +113,8 @@ public class CustomerCouponDBDAO implements CustomerCouponDAO {
 			ResultSet rs = preparedStatement.executeQuery();
 			while (rs.next()) {
 
-				customerCouponDBDAO.setCust_id(rs.getLong(1));
-				customerCouponDBDAO.setCoupon_id(rs.getLong(2));
+				customerCouponDBDAO.setCustId(rs.getLong(1));
+				customerCouponDBDAO.setCouponId(rs.getLong(2));
 				list.add(customerCouponDBDAO);
 			}
 
@@ -121,6 +127,8 @@ public class CustomerCouponDBDAO implements CustomerCouponDAO {
 		return list;
 	}
 
+	// Get All Porches Coupons by Customers
+	@Override
 	public ArrayList<CustomerCouponDBDAO> getAllCustomerCoupons() throws InterruptedException, SQLException {
 		Connection connection = null;
 		ArrayList<CustomerCouponDBDAO> list = new ArrayList<>();
@@ -136,8 +144,8 @@ public class CustomerCouponDBDAO implements CustomerCouponDAO {
 			ResultSet rs = preparedStatement.executeQuery();
 			while (rs.next()) {
 
-				customerCouponDBDAO.setCust_id(rs.getLong(1));
-				customerCouponDBDAO.setCoupon_id(rs.getLong(2));
+				customerCouponDBDAO.setCustId(rs.getLong(1));
+				customerCouponDBDAO.setCouponId(rs.getLong(2));
 				list.add(customerCouponDBDAO);
 			}
 
@@ -148,5 +156,109 @@ public class CustomerCouponDBDAO implements CustomerCouponDAO {
 			ConnectionPool.getInstance().returnConnection(connection);
 		}
 		return list;
+	}
+	
+
+	public ArrayList<CustomerCouponDBDAO> getAllCustumerCoupons() throws SQLException, InterruptedException {
+		Connection connection = null;
+		ArrayList<CustomerCouponDBDAO> list = new ArrayList<>();
+
+		try {
+			connection = ConnectionPool.getInstance().getConnection();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		CustomerCouponDBDAO custumerCouponDBDAO = new CustomerCouponDBDAO();
+		PreparedStatement preparedStatement = null;
+		String sql = "SELECT * FROM CustomerCoupon ";
+		try {
+			preparedStatement = connection.prepareStatement(sql);
+
+			ResultSet rs = preparedStatement.executeQuery(sql);
+			while (rs.next()) {
+
+				custumerCouponDBDAO.setCustId(rs.getLong(1));
+				custumerCouponDBDAO.setCouponId(rs.getLong(2));
+				list.add(custumerCouponDBDAO);
+			}
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			ConnectionPool.getInstance().returnConnection(connection);
+
+		}
+
+		return list;
+
+	}
+
+	public ArrayList<Coupon> getAllpurchoiseCoupons() throws InterruptedException, SQLException {
+		ArrayList<CustomerCouponDBDAO> list = new ArrayList<>();
+		CustomerCouponDBDAO customerCouponDBDAO = new CustomerCouponDBDAO();
+		CouponDBDAO couponDBDAO = new CouponDBDAO();
+		ArrayList<Coupon> coupons = new ArrayList<Coupon>();
+
+		list = customerCouponDBDAO.getAllCustomerCoupons();
+		for (int i = 0; i < list.size(); i++) {
+			coupons.add(couponDBDAO.getCoupon(list.get(i).getCouponId()));
+
+		}
+		return coupons;
+	}
+
+	public ArrayList<Coupon> getAllPurchaiseCouponByPrice(double price) throws SQLException, InterruptedException {
+		ArrayList<Coupon> alloupons = new ArrayList<>();
+		ArrayList<Coupon> byprice = new ArrayList<>();
+		alloupons = getAllpurchoiseCoupons();
+		for (Coupon coupon : alloupons) {
+			if (coupon.getPrice() < price) {
+				byprice.add(coupon);
+			}
+		}
+		return byprice;
+
+	}
+
+	public ArrayList<Coupon> getAllPurchaiseCouponByType(CouponType type) throws SQLException, InterruptedException {
+		ArrayList<Coupon> alloupons = new ArrayList<>();
+		ArrayList<Coupon> bytype = new ArrayList<>();
+		alloupons = getAllpurchoiseCoupons();
+		for (Coupon coupon : alloupons) {
+			if (coupon.getType() == type) {
+				bytype.add(coupon);
+			}
+		}
+		return bytype;
+
+	}
+
+	public void deletefromCustcoup(long id) throws SQLException, InterruptedException {
+		Connection connection = null;
+		try {
+			connection = ConnectionPool.getInstance().getConnection();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		String sql = String.format("delete from  CustomerCoupon where custId = ?");
+		PreparedStatement preparedStatement = null;
+		try {
+			preparedStatement = connection.prepareStatement(sql);
+
+			preparedStatement.setLong(1, id);
+			preparedStatement.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			ConnectionPool.getInstance().returnConnection(connection);
+
+		}
+		System.out.println("Deleted from CustomerCoupon");
+
 	}
 }

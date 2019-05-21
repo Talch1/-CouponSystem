@@ -6,7 +6,7 @@ import Coupon.Coupon;
 
 public class Company {
 
-	//Data members
+	// Data members
 	private long id;
 
 	private String compName;
@@ -17,7 +17,7 @@ public class Company {
 
 	private ArrayList<Coupon> cupons;
 
-	//Constructor
+	// Constructor
 	public Company(long id, String compName, String password, String eamil, ArrayList<Coupon> cupons) {
 
 		setId(id);
@@ -26,11 +26,12 @@ public class Company {
 		setEmail(eamil);
 		setCupons(cupons);
 	}
-        //Getters,Setters
+
 	public Company() {
-	
+
 	}
 
+	// Getters,Setters
 	public long getId() {
 		return id;
 	}
@@ -71,7 +72,7 @@ public class Company {
 		this.cupons = cupons;
 	}
 
-	//ToString
+	// ToString
 	@Override
 	public String toString() {
 		return "Company [id=" + id + ", compName=" + compName + ", password=" + password + ", email=" + email
