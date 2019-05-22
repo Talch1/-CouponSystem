@@ -11,7 +11,6 @@ import Coupon.CouponDBDAO;
 import CustomerCoupon.CustomerCouponDBDAO;
 import DataBase.ConnectionPool;
 
-
 public class CustomerDBDAO implements CustomerDAO {
 	// create Customer(insert to Customer)
 	@Override
@@ -235,7 +234,7 @@ public class CustomerDBDAO implements CustomerDAO {
 			preparedStatement.setString(1, custName);
 			preparedStatement.setString(2, password);
 			preparedStatement.execute();
-			ResultSet rs = preparedStatement.executeQuery(sql);
+			ResultSet rs = preparedStatement.executeQuery();
 
 			while (rs.next()) {
 
@@ -247,9 +246,7 @@ public class CustomerDBDAO implements CustomerDAO {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
-
 			ConnectionPool.getInstance().returnConnection(connection);
-
 		}
 
 		if (customer.getId() == 0) {

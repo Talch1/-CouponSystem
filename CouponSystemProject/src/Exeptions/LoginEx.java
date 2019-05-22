@@ -2,8 +2,9 @@ package Exeptions;
 
 public class LoginEx extends Exception{
 
-	public LoginEx() {
-		super();
+	private String message;
+	public LoginEx(String message) {
+		super(message);
 		// TODO Auto-generated constructor stub
 	}
 
@@ -17,10 +18,7 @@ public class LoginEx extends Exception{
 		// TODO Auto-generated constructor stub
 	}
 
-	public LoginEx(String message) {
-		super(message);
-		// TODO Auto-generated constructor stub
-	}
+	
 
 	public LoginEx(Throwable cause) {
 		super(cause);

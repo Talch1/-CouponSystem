@@ -10,6 +10,7 @@ import Coupon.CouponDBDAO;
 import Coupon.CouponType;
 import Customer.Customer;
 import Customer.CustomerDBDAO;
+import Exeptions.ExistEx;
 import Exeptions.LoginEx;
 import Facade.AdminFacade;
 import Facade.CompanyFacade;
@@ -17,21 +18,21 @@ import Facade.CustomerFacade;
 
 public class Test {
 
-	public static void main(String[] args) throws SQLException, InterruptedException {
-		AdminFacade adminFacade = new AdminFacade();
-		CompanyFacade companyFacade = new CompanyFacade();
+	public static void main(String[] args) throws SQLException, InterruptedException, LoginEx, ExistEx {
+	
+	AdminFacade adminFacade = (AdminFacade) CouponSystem.getInstanse().login("Admin", "1234", ClientType.Admin);
+
+	//	CompanyFacade companyFacade = (CompanyFacade) CouponSystem.getInstanse().login("fanta","11", ClientType.Company);
 		Date date = new Date(11 - 12 - 2015);
 		CouponType couponType = CouponType.CAMPING;
-		// Company company = new Company(162, "fanta", "11", "ppk", null);
-		 Customer cust = new Customer(553, "kolya", "vvv", null);
+        // CouponSystem.getInstanse().database.createAllTables();
+		Customer cust = new Customer(553, "kolya", "vvv", null);
 		Coupon coupon = new Coupon(8888, "paa", date, date, 5, couponType, "jjj", 5.2, "http");
-		CustomerFacade customerFacade = new CustomerFacade();
+	//	CustomerFacade customerFacade = (CustomerFacade) CouponSystem.getInstanse().login(cust.getCustName(),cust.getPassword(), ClientType.Customer);
+		Company comp = new Company(162, "fnta", "111", "ppk", null);
+		//adminFacade.createCompany(comp);
 
-		//CouponSystem.getInstanse().database.createAllTables();
-
-		// adminFacade.createCompany(company);
-
-		// adminFacade.createCustomer(cust);
+		 adminFacade.createCustomer(cust);
 
 		// adminFacade.removeCompany(company);
 
@@ -49,7 +50,7 @@ public class Test {
 
 		// System.out.println(adminFacade.getAllCustomers());
 
-		//companyFacade.createCoupon(coupon);
+		// companyFacade.createCoupon(coupon, comp);
 
 		// companyFacade.removeCoupon(coupon);
 
@@ -59,19 +60,18 @@ public class Test {
 
 		// System.out.println(companyFacade.getCoupon(8888));
 
-		//System.out.println(companyFacade.getCouponByType(couponType));
+		// System.out.println(companyFacade.getCouponByType(couponType));
 
-		//customerFacade.purchaseCoupon(coupon, cust);
-	//	!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	//	customerFacade.purchaseCoupon(coupon, cust);
+		// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-		// System.out.println(customerFacade.getAllPurchisedCouponsByPrice(9.6)); 
-		 
-           
-		//System.out.println( customerFacade.getAllPurchisedCouponsByType(null));
+		//System.out.println(customerFacade.getAllPurchisedCouponsByPrice(9.6));
 
-		//System.out.println(customerFacade.getAllPurchoisedCoupons());
+		// System.out.println( customerFacade.getAllPurchisedCouponsByType(null));
 
-	
+		// System.out.println(customerFacade.getAllPurchoisedCoupons());
+
+	//	CouponSystem.getInstanse().shutdown();
 
 	}
 

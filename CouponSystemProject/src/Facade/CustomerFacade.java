@@ -2,25 +2,16 @@ package Facade;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Collection;
 
-import CompanyCoupon.CompanyCouponDBDAO;
 import Coupon.Coupon;
 import Coupon.CouponType;
 import Customer.Customer;
 import Customer.CustomerDBDAO;
 import CustomerCoupon.CustomerCouponDBDAO;
 import DataBase.ClientType;
-import Exeptions.*;
+import Exeptions.LoginEx;
 
 public class CustomerFacade implements CouponClientFasade {
-
-	ClientType clientType = ClientType.Customer;
-
-	public CustomerFacade(ClientType clientType) {
-
-		this.clientType = clientType;
-	}
 
 	public CustomerFacade() {
 
@@ -28,10 +19,10 @@ public class CustomerFacade implements CouponClientFasade {
 
 	public void purchaseCoupon(Coupon coupon, Customer custumer) throws SQLException, InterruptedException {
 
-//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-	CustomerCouponDBDAO customerCouponDBDAO = new CustomerCouponDBDAO();
-	customerCouponDBDAO.insert(custumer.getId(), coupon.getId());
-	
+		// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+		CustomerCouponDBDAO customerCouponDBDAO = new CustomerCouponDBDAO();
+		customerCouponDBDAO.insert(custumer.getId(), coupon.getId());
+
 	}
 
 	public ArrayList<Coupon> getAllPurchoisedCoupons() throws SQLException, InterruptedException {
@@ -51,13 +42,14 @@ public class CustomerFacade implements CouponClientFasade {
 
 	}
 
-	public CouponClientFasade login(String name, String password, ClientType c) throws InterruptedException {
+	public CouponClientFasade login(String name, String password, ClientType c) throws InterruptedException, LoginEx {
 		CustomerDBDAO customerDBDAO = new CustomerDBDAO();
 		if (customerDBDAO.login(name, password)) {
 			CustomerFacade customerFacade = new CustomerFacade();
 			return customerFacade;
+		} else {
+			throw new LoginEx("Invalid email or password");
 		}
-		return null;
 
 	}
 }

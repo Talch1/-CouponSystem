@@ -1,6 +1,9 @@
 package Facade;
 
 import DataBase.ClientType;
+import Exeptions.ExistEx;
+import Exeptions.LoginEx;
+
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -10,38 +13,24 @@ import CompanyCoupon.CompanyCouponDBDAO;
 import Customer.Customer;
 import Customer.CustomerDBDAO;
 import CustomerCoupon.CustomerCouponDBDAO;
-import Exeptions.*;
 
 public class AdminFacade implements CouponClientFasade {
 
-	// Data mmbers
-	ClientType clientType = ClientType.Admin;
-
-	public AdminFacade() {
-
-	}
-
-	// Constructor
-	public AdminFacade(ClientType clientType) {
-
-		this.clientType = clientType;
-	}
-
 	// insert Company to Table
-	public void createCompany(Company company) throws SQLException, InterruptedException {
+	public void createCompany(Company company) throws SQLException, InterruptedException, ExistEx {
 		CompanyDBDAO companyDBDAO = new CompanyDBDAO();
 		ArrayList<Company> allComp = new ArrayList<>();
-         allComp = companyDBDAO.getAllCompany();
-         boolean chek = false;
-		
-         for (Company company2 : allComp) {
+		allComp = companyDBDAO.getAllCompany();
+		boolean chek = false;
+
+		for (Company company2 : allComp) {
 			if (company.getCompName().equals(company2.getCompName())) {
 				chek = true;
 			}
 		}
-		
+
 		if (chek = true) {
-			System.out.print("exist");
+			throw new ExistEx("Company whis this name exist");
 		} else {
 			companyDBDAO.createCompany(company);
 		}
@@ -89,7 +78,7 @@ public class AdminFacade implements CouponClientFasade {
 	}
 
 	// insert to Customer Table
-	public void createCustomer(Customer cust) throws SQLException, InterruptedException {
+	public void createCustomer(Customer cust) throws SQLException, InterruptedException, ExistEx {
 
 		boolean chek = false;
 		CustomerDBDAO customerDBDAO = new CustomerDBDAO();
@@ -101,7 +90,7 @@ public class AdminFacade implements CouponClientFasade {
 			}
 		}
 		if (chek == true) {
-			System.out.print("exist");
+			throw new ExistEx("Customer whis this name exist");
 		} else {
 			customerDBDAO.createCustomer(cust);
 		}
@@ -139,12 +128,13 @@ public class AdminFacade implements CouponClientFasade {
 	}
 
 	// Login to AdminFacade
-	public CouponClientFasade login(String name, String password, ClientType c) {
-		if ((name.equals("admin")) && (password.equals("1234"))) {
+	public CouponClientFasade login(String name, String password, ClientType c) throws LoginEx {
+		if ((name.equals("Admin")) && (password.equals("1234"))) {
 			AdminFacade adminFacade = new AdminFacade();
 			return adminFacade;
+		} else {
+			throw new LoginEx("Invalid email or password");
 		}
-		return null;
 	}
 
 }

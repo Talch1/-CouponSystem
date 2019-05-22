@@ -202,7 +202,7 @@ public class CompanyDBDAO implements CompanyDAO {
 		try {
 			connection = ConnectionPool.getInstance().getConnection();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 
 		}
@@ -216,7 +216,7 @@ public class CompanyDBDAO implements CompanyDAO {
 			preparedStatement = connection.prepareStatement(sql);
 			preparedStatement.setString(1, compname);
 			preparedStatement.setString(2, pass);
-			ResultSet rs = preparedStatement.executeQuery(sql);
+			ResultSet rs = preparedStatement.executeQuery();
 
 			while (rs.next()) {
 

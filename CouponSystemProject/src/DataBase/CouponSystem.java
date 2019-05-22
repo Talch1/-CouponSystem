@@ -2,6 +2,7 @@ package DataBase;
 
 import java.sql.SQLException;
 
+import Exeptions.LoginEx;
 import Facade.AdminFacade;
 import Facade.CompanyFacade;
 import Facade.CouponClientFasade;
@@ -34,9 +35,10 @@ public class CouponSystem {
 
 	public void shutdown() {
 		DailyCouponExpirationTask.stopp();
+		ConnectionPool.getInstance().removeAllConnections();
 	}
 
-	public CouponClientFasade login(String name, String password, ClientType clientType) throws InterruptedException {
+	public CouponClientFasade login(String name, String password, ClientType clientType) throws LoginEx, InterruptedException {
 		AdminFacade adminFacade = new AdminFacade();
 		CompanyFacade companyFacade = new CompanyFacade();
 		CustomerFacade customerFacade = new CustomerFacade();

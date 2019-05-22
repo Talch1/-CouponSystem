@@ -11,23 +11,13 @@ import Coupon.CouponDBDAO;
 import Coupon.CouponType;
 import CustomerCoupon.CustomerCouponDBDAO;
 import DataBase.ClientType;
+import Exeptions.ExistEx;
+import Exeptions.LoginEx;
 
 public class CompanyFacade implements CouponClientFasade {
 
-	// Data members
-	ClientType clientType = ClientType.Company;
-
-	public CompanyFacade(ClientType clientType) {
-
-		this.clientType = clientType;
-	}
-
-	public CompanyFacade() {
-		
-	}
-
 	// Insert Coupon to Table
-	public void createCoupon(Coupon coupon, Company company) throws SQLException, InterruptedException {
+	public void createCoupon(Coupon coupon, Company company) throws SQLException, InterruptedException, ExistEx {
 
 		CompanyCouponDBDAO companyCouponDBDAO = new CompanyCouponDBDAO();
 		ArrayList<Coupon> allCoup = new ArrayList<>();
@@ -40,7 +30,7 @@ public class CompanyFacade implements CouponClientFasade {
 			}
 		}
 		if (chek == true) {
-			System.out.println("exist");
+			throw new ExistEx("Title whis this name exist");
 		}
 		couponDBDAO.createCoupon(coupon);
 		companyCouponDBDAO.companyCreateCoupon(company.getId(), coupon.getId());
@@ -96,15 +86,16 @@ public class CompanyFacade implements CouponClientFasade {
 
 	}
 
-	//Login to CompanyFacade
-	public CouponClientFasade login(String name, String password, ClientType c) throws InterruptedException {
+	// Login to CompanyFacade
+	public CouponClientFasade login(String name, String password, ClientType c) throws InterruptedException, LoginEx {
 		CompanyDBDAO companyDBDAO = new CompanyDBDAO();
 		{
 			if (companyDBDAO.login(name, password)) {
 				CompanyFacade companyFacade = new CompanyFacade();
 				return companyFacade;
+			} else {
+				throw new LoginEx("Invalid email or password");
 			}
-			return null;
 
 		}
 	}

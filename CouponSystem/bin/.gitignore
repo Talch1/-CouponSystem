@@ -1,4 +1,9 @@
 /Company/
+/CompanyCoupon/
 /Coupon/
-/Custumer/
+/Customer/
+/CustomerCoupon/
 /DataBase/
+/Exeptions/
+/Facade/
+/Utils/
