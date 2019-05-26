@@ -4,18 +4,20 @@ import java.sql.Date;
 import java.sql.SQLException;
 import Coupon.CouponDBDAO;
 
+
 public class DailyCouponExpirationTask implements Runnable {
 	CouponDBDAO couponDBDAO = new CouponDBDAO();
-	
-	 volatile static boolean stop = true; 
 
+	volatile static boolean stop = true;
+
+	// Run on database and delete all coupons that end date before date
 	@Override
 	public void run() {
-		
+
 		while (stop) {
 			try {
 				couponDBDAO.deleteExpirdCoup(new Date(System.currentTimeMillis()));
-				Thread.sleep( 1000*60*60*24);
+				Thread.sleep(1000 * 60 * 60 * 24);
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -23,15 +25,13 @@ public class DailyCouponExpirationTask implements Runnable {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
+
 		}
 	}
-	
-	public static void stopp(){
+
+	// stop the thread
+	public static void stopp() {
 		stop = false;
 	}
-	
 
 }
-
-

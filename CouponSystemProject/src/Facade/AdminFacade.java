@@ -102,7 +102,7 @@ public class AdminFacade implements CouponClientFasade {
 		CustomerCouponDBDAO customerCouponDBDAO = new CustomerCouponDBDAO();
 		CustomerDBDAO customerDBDAO = new CustomerDBDAO();
 		customerDBDAO.removeCustomer(cust);
-		customerCouponDBDAO.deletefromCustcoup(cust.getId());
+		customerCouponDBDAO.deletefromCustcoupByCustID(cust.getId());
 
 	}
 

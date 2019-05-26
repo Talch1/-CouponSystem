@@ -42,7 +42,7 @@ public class CompanyFacade implements CouponClientFasade {
 		CouponDBDAO couponDBDAO = new CouponDBDAO();
 		CustomerCouponDBDAO customerCouponDBDAO = new CustomerCouponDBDAO();
 		couponDBDAO.removeCoupon(coupon);
-		customerCouponDBDAO.deletefromCustcoup(coupon.getId());
+		customerCouponDBDAO.deletefromCustcoupByCustID(coupon.getId());
 	}
 
 	// Update Coupon

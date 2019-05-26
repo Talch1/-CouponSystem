@@ -157,8 +157,9 @@ public class CustomerCouponDBDAO implements CustomerCouponDAO {
 		}
 		return list;
 	}
-	
 
+	// Get all customers and they coupons
+	@Override
 	public ArrayList<CustomerCouponDBDAO> getAllCustumerCoupons() throws SQLException, InterruptedException {
 		Connection connection = null;
 		ArrayList<CustomerCouponDBDAO> list = new ArrayList<>();
@@ -195,7 +196,7 @@ public class CustomerCouponDBDAO implements CustomerCouponDAO {
 		return list;
 
 	}
-
+    //get all purchased Coupons
 	public ArrayList<Coupon> getAllpurchoiseCoupons() throws InterruptedException, SQLException {
 		ArrayList<CustomerCouponDBDAO> list = new ArrayList<>();
 		CustomerCouponDBDAO customerCouponDBDAO = new CustomerCouponDBDAO();
@@ -209,7 +210,7 @@ public class CustomerCouponDBDAO implements CustomerCouponDAO {
 		}
 		return coupons;
 	}
-
+    // Get all purchased coupons  by price
 	public ArrayList<Coupon> getAllPurchaiseCouponByPrice(double price) throws SQLException, InterruptedException {
 		ArrayList<Coupon> alloupons = new ArrayList<>();
 		ArrayList<Coupon> byprice = new ArrayList<>();
@@ -222,7 +223,7 @@ public class CustomerCouponDBDAO implements CustomerCouponDAO {
 		return byprice;
 
 	}
-
+	// Get all purchased coupons  by type
 	public ArrayList<Coupon> getAllPurchaiseCouponByType(CouponType type) throws SQLException, InterruptedException {
 		ArrayList<Coupon> alloupons = new ArrayList<>();
 		ArrayList<Coupon> bytype = new ArrayList<>();
@@ -235,8 +236,8 @@ public class CustomerCouponDBDAO implements CustomerCouponDAO {
 		return bytype;
 
 	}
-
-	public void deletefromCustcoup(long id) throws SQLException, InterruptedException {
+      //Delete from custCoup by Customer Id
+	public void deletefromCustcoupByCustID(long id) throws SQLException, InterruptedException {
 		Connection connection = null;
 		try {
 			connection = ConnectionPool.getInstance().getConnection();

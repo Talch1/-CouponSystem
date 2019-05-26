@@ -18,11 +18,12 @@ public class ConnectionPool {
 
 	// Singleton
 	private static ConnectionPool instance = new ConnectionPool();
-
+	// Get instance
 	public static ConnectionPool getInstance() {
 		return instance;
 	}
 
+	//Constructor
 	private ConnectionPool() {
 		this.instance = instance;
 	}
@@ -41,6 +42,7 @@ public class ConnectionPool {
 
 	}
 
+	// return all connections to blockingQueue
 	public void removeAllConnections() {
 
 		synchronized (blockingQueue) {

@@ -28,11 +28,11 @@ public class Test {
         // CouponSystem.getInstanse().database.createAllTables();
 		Customer cust = new Customer(553, "kolya", "vvv", null);
 		Coupon coupon = new Coupon(8888, "paa", date, date, 5, couponType, "jjj", 5.2, "http");
-	//	CustomerFacade customerFacade = (CustomerFacade) CouponSystem.getInstanse().login(cust.getCustName(),cust.getPassword(), ClientType.Customer);
+	CustomerFacade customerFacade = (CustomerFacade) CouponSystem.getInstanse().login("kolya","vvv", ClientType.Customer);
 		Company comp = new Company(162, "fnta", "111", "ppk", null);
 		//adminFacade.createCompany(comp);
 
-		 adminFacade.createCustomer(cust);
+		 //adminFacade.createCustomer(cust);
 
 		// adminFacade.removeCompany(company);
 
@@ -62,7 +62,7 @@ public class Test {
 
 		// System.out.println(companyFacade.getCouponByType(couponType));
 
-	//	customerFacade.purchaseCoupon(coupon, cust);
+	customerFacade.purchaseCoupon(coupon, cust);
 		// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 		//System.out.println(customerFacade.getAllPurchisedCouponsByPrice(9.6));
