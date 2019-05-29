@@ -101,7 +101,7 @@ public class Database {
 			connection = ConnectionPool.getInstance().getConnection();
 
 			String sql = "create table if not exists CustomerCoupon  " + "(CUSTID Bigint not null, "
-					+ "COUPONID Bigint NOT NULL, FOREIGN KEY(CUSTID) REFERENCES customer(ID), FOREIGN KEY(CUSTID) REFERENCES Coupon(ID) ,"
+					+ "COUPONID Bigint NOT NULL, FOREIGN KEY(CUSTID) REFERENCES customer(ID), FOREIGN KEY(COUPONID) REFERENCES Coupon(ID) ,"
 					+ " PRIMARY KEY (CUSTID, COUPONID) ) ";
 			PreparedStatement preparedStatement = null;
 
@@ -123,7 +123,7 @@ public class Database {
 		try {
 			connection = ConnectionPool.getInstance().getConnection();
 
-			String sql = "create table if not exists CompanyCoupon  " + "(COMPID Bigint not null, "
+			String sql = "create table if not exists CompanyCoupon (COMPID Bigint not null, "
 					+ "COUPONID Bigint NOT NULL, FOREIGN KEY(COMPID) REFERENCES Company(ID), FOREIGN KEY(COUPONID) REFERENCES Coupon(ID) ,"
 					+ " PRIMARY KEY (COMPID, COUPONID) ) ";
 			PreparedStatement preparedStatement = null;
@@ -140,28 +140,6 @@ public class Database {
 		System.out.println("Created table CompanyCoupon");
 	}
 
-	// Create table company coupon
-	public void CreateCompanyCoupon() throws SQLException, InterruptedException {
-		Connection connection = null;
-		try {
-			connection = ConnectionPool.getInstance().getConnection();
-
-			String sql = "create table if not exists CompanyCoupon  " + "(COMPID Bigint not null, "
-					+ "COUPON_ID Bigint NOT NULL, FOREIGN KEY(COMPID) REFERENCES Company(ID), FOREIGN KEY(COUPONID) REFERENCES Coupon(ID) ,"
-					+ " PRIMARY KEY (COMPID, COUPONID) ) ";
-			PreparedStatement statement = null;
-
-			statement = connection.prepareStatement(sql);
-
-			statement.executeUpdate(sql);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} finally {
-			ConnectionPool.getInstance().returnConnection(connection);
-		}
-		System.out.println("Created table CompanyCoupon");
-	}
 
 	// Create table CompanyCoupon
 	public void dropCompanyCoupon() throws SQLException, InterruptedException {

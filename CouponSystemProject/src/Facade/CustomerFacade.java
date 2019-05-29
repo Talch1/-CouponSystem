@@ -2,13 +2,16 @@ package Facade;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Set;
 
 import Coupon.Coupon;
+import Coupon.CouponDBDAO;
 import Coupon.CouponType;
 import Customer.Customer;
 import Customer.CustomerDBDAO;
 import CustomerCoupon.CustomerCouponDBDAO;
 import DataBase.ClientType;
+import Exeptions.CouponException;
 import Exeptions.LoginEx;
 
 public class CustomerFacade implements CouponClientFasade {
@@ -17,13 +20,20 @@ public class CustomerFacade implements CouponClientFasade {
 
 	}
 
-	public void purchaseCoupon(Coupon coupon, Customer custumer) throws SQLException, InterruptedException {
-
-		// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	public void buyCoupon(long couponID)throws CouponException, SQLException, InterruptedException {
+		CouponDBDAO couponDBDAO = new CouponDBDAO();
 		CustomerCouponDBDAO customerCouponDBDAO = new CustomerCouponDBDAO();
-		customerCouponDBDAO.insert(custumer.getId(), coupon.getId());
-
-	}
+        Customer customer = new Customer();
+        Coupon coupon=couponDBDAO.getCoupon(couponID);
+        if (coupon.getAmount()<=0) throw new CouponException("No more coupons for you!!");
+        ArrayList<Coupon> arrayList=this.getAllPurchoisedCoupons();
+        for (Coupon curr:arrayList){
+            if (curr.equals(coupon)){
+                throw new CouponException("Costumer "+customer.getCustName()+" already have coupon "+coupon.getTitle());
+            }
+        }
+       customerCouponDBDAO.buyCoupon(coupon,customer);
+    }
 
 	public ArrayList<Coupon> getAllPurchoisedCoupons() throws SQLException, InterruptedException {
 		CustomerCouponDBDAO customerCouponDBDAO = new CustomerCouponDBDAO();

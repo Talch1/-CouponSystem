@@ -9,7 +9,9 @@ import java.util.ArrayList;
 import Coupon.Coupon;
 import Coupon.CouponDBDAO;
 import Coupon.CouponType;
+import Customer.Customer;
 import DataBase.ConnectionPool;
+import Exeptions.CouponException;
 
 public class CustomerCouponDBDAO implements CustomerCouponDAO {
 
@@ -86,6 +88,43 @@ public class CustomerCouponDBDAO implements CustomerCouponDAO {
 			e.printStackTrace();
 		} finally {
 			ConnectionPool.getInstance().returnConnection(connection);
+		}
+	}
+
+	public void buyCoupon(Coupon coupon, Customer custmer) throws CouponException, SQLException, InterruptedException {
+
+		Connection con = null;
+		con = ConnectionPool.getInstance().getConnection();
+		String pre1 = "INSERT INTO CustomerCoupon VALUES(?,?)";
+		String pre2 = "UPDATE Coupon SET amount = ? WHERE ID = ?";
+		try (PreparedStatement pstmt1 = con.prepareStatement(pre1);
+				PreparedStatement pstm2 = con.prepareStatement(pre2)) {
+			con.setAutoCommit(false);
+			pstmt1.setLong(1, custmer.getId());
+			pstmt1.setLong(2, coupon.getId());
+			pstmt1.executeUpdate();
+			coupon.setAmount(coupon.getAmount() - 1);
+			pstm2.setInt(1, coupon.getAmount());
+			pstm2.setLong(2, coupon.getId());
+			pstm2.executeUpdate();
+			con.commit();
+			con.setAutoCommit(true);
+		} catch (SQLException e) {
+			System.out.println("hereeeeeeeeeeee");
+			e.printStackTrace();
+			System.out.println(e.getMessage());
+			System.out.println(e.getSQLState());
+			try {
+			con.rollback();
+			} catch (SQLException e1) {
+				System.out.println(e1.getMessage());
+	System.out.println(e1.getSQLState());
+				throw new CouponException("database error");
+			}
+			throw new CouponException("cannot buy coupon");
+			
+		}finally {
+			ConnectionPool.getInstance().returnConnection(con);
 		}
 	}
 
@@ -196,7 +235,8 @@ public class CustomerCouponDBDAO implements CustomerCouponDAO {
 		return list;
 
 	}
-    //get all purchased Coupons
+
+	// get all purchased Coupons
 	public ArrayList<Coupon> getAllpurchoiseCoupons() throws InterruptedException, SQLException {
 		ArrayList<CustomerCouponDBDAO> list = new ArrayList<>();
 		CustomerCouponDBDAO customerCouponDBDAO = new CustomerCouponDBDAO();
@@ -210,7 +250,8 @@ public class CustomerCouponDBDAO implements CustomerCouponDAO {
 		}
 		return coupons;
 	}
-    // Get all purchased coupons  by price
+
+	// Get all purchased coupons by price
 	public ArrayList<Coupon> getAllPurchaiseCouponByPrice(double price) throws SQLException, InterruptedException {
 		ArrayList<Coupon> alloupons = new ArrayList<>();
 		ArrayList<Coupon> byprice = new ArrayList<>();
@@ -223,7 +264,8 @@ public class CustomerCouponDBDAO implements CustomerCouponDAO {
 		return byprice;
 
 	}
-	// Get all purchased coupons  by type
+
+	// Get all purchased coupons by type
 	public ArrayList<Coupon> getAllPurchaiseCouponByType(CouponType type) throws SQLException, InterruptedException {
 		ArrayList<Coupon> alloupons = new ArrayList<>();
 		ArrayList<Coupon> bytype = new ArrayList<>();
@@ -236,7 +278,8 @@ public class CustomerCouponDBDAO implements CustomerCouponDAO {
 		return bytype;
 
 	}
-      //Delete from custCoup by Customer Id
+
+	// Delete from custCoup by Customer Id
 	public void deletefromCustcoupByCustID(long id) throws SQLException, InterruptedException {
 		Connection connection = null;
 		try {
