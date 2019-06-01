@@ -21,23 +21,17 @@ public class AdminFacade implements CouponClientFasade {
 		CompanyDBDAO companyDBDAO = new CompanyDBDAO();
 		ArrayList<Company> allComp = new ArrayList<>();
 		allComp = companyDBDAO.getAllCompany();
-		boolean chek = false;
 
-		for (Company company2 : allComp) {
-			if (company.getCompName().equals(company2.getCompName())) {
-				chek = true;
-			}
-		}
-
-		if (chek = true) {
+	for (Company company2 : allComp) {
+		if (company2.getCompName().equals(company.getCompName())) {
 			throw new ExistEx("Company whis this name exist");
-		} else {
-			companyDBDAO.createCompany(company);
-		}
-	}
+	} 
 
+	}
+	companyDBDAO.createCompany(company);
+	}
 	// delete Company from table
-	public void removeCompany(Company company) throws SQLException, InterruptedException {
+	public void removeCompany(Company company) throws SQLException, InterruptedException, ExistEx {
 		CompanyDBDAO companyDBDAO = new CompanyDBDAO();
 		CompanyCouponDBDAO companyCouponDBDAO = new CompanyCouponDBDAO();
 		try {
@@ -47,12 +41,12 @@ public class AdminFacade implements CouponClientFasade {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		companyCouponDBDAO.deletefromCompcoup(company.getId());
+		companyCouponDBDAO.deletefromCompcoupByCompID(company.getId());
 
 	}
 
 	// update Company
-	public void updateCompany(Company company) throws InterruptedException {
+	public void updateCompany(Company company) throws InterruptedException, ExistEx {
 		CompanyDBDAO companyDBDAO = new CompanyDBDAO();
 		try {
 			companyDBDAO.updateCompany(company);
@@ -98,7 +92,7 @@ public class AdminFacade implements CouponClientFasade {
 	}
 
 	// delete from Customer Table
-	public void removeCustomer(Customer cust) throws SQLException, InterruptedException {
+	public void removeCustomer(Customer cust) throws SQLException, InterruptedException, ExistEx {
 		CustomerCouponDBDAO customerCouponDBDAO = new CustomerCouponDBDAO();
 		CustomerDBDAO customerDBDAO = new CustomerDBDAO();
 		customerDBDAO.removeCustomer(cust);
@@ -107,7 +101,7 @@ public class AdminFacade implements CouponClientFasade {
 	}
 
 	// update Customer
-	public void updateCustomer(Customer cust) throws SQLException, InterruptedException {
+	public void updateCustomer(Customer cust) throws SQLException, InterruptedException, ExistEx {
 		CustomerDBDAO customerDBDAO = new CustomerDBDAO();
 		customerDBDAO.updateCustomer(cust);
 	}

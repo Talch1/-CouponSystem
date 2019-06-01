@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.Collection;
 
 import Coupon.Coupon;
+import Exeptions.ExistEx;
 
 public interface CustomerDAO {
 	
@@ -11,10 +12,10 @@ public interface CustomerDAO {
 	public void createCustomer(Customer customer) throws SQLException, InterruptedException;
 
 	//delete Customer (delete from Customer)
-	public void removeCustomer(Customer customer) throws SQLException, InterruptedException;
+	public void removeCustomer(Customer customer) throws SQLException, InterruptedException, ExistEx;
 
 	//update Customer(update Customer)
-	public void updateCustomer(Customer customer) throws SQLException, InterruptedException;
+	public void updateCustomer(Customer customer) throws SQLException, InterruptedException, ExistEx;
 
 	//get Customer By Id
 	public Customer getCustomer(long id) throws SQLException, InterruptedException;

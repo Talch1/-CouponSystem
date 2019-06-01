@@ -22,15 +22,12 @@ public class CompanyFacade implements CouponClientFasade {
 		CompanyCouponDBDAO companyCouponDBDAO = new CompanyCouponDBDAO();
 		ArrayList<Coupon> allCoup = new ArrayList<>();
 		CouponDBDAO couponDBDAO = new CouponDBDAO();
-		boolean chek = false;
+		
 		allCoup = couponDBDAO.getAllCoupons();
 		for (Coupon coupon2 : allCoup) {
 			if (coupon2.getTitle().equals(coupon.getTitle())) {
-				chek = true;
+				throw new ExistEx("Title whis this name exist");
 			}
-		}
-		if (chek == true) {
-			throw new ExistEx("Title whis this name exist");
 		}
 		couponDBDAO.createCoupon(coupon);
 		companyCouponDBDAO.companyCreateCoupon(company.getId(), coupon.getId());
@@ -38,15 +35,15 @@ public class CompanyFacade implements CouponClientFasade {
 	}
 
 	// Delete Coupon from Table
-	public void removeCoupon(Coupon coupon) throws SQLException, InterruptedException {
+	public void removeCoupon(Coupon coupon) throws SQLException, InterruptedException, ExistEx {
 		CouponDBDAO couponDBDAO = new CouponDBDAO();
-		CustomerCouponDBDAO customerCouponDBDAO = new CustomerCouponDBDAO();
+		CompanyCouponDBDAO companyCouponDBDAO = new CompanyCouponDBDAO();
+		companyCouponDBDAO.removeCompanyCoupon(coupon);
 		couponDBDAO.removeCoupon(coupon);
-		customerCouponDBDAO.deletefromCustcoupByCustID(coupon.getId());
 	}
 
 	// Update Coupon
-	public void updateCoupon(Coupon coupon) throws SQLException, InterruptedException {
+	public void updateCoupon(Coupon coupon) throws SQLException, InterruptedException, ExistEx {
 		CouponDBDAO couponDBDAO = new CouponDBDAO();
 		couponDBDAO.updateCoupon(coupon);
 
@@ -59,9 +56,15 @@ public class CompanyFacade implements CouponClientFasade {
 	}
 
 	// Get All Coupons
-	public ArrayList<Coupon> getAllCoupons() throws SQLException, InterruptedException {
+	public ArrayList<Coupon> getAllCoupons(Company company) throws SQLException, InterruptedException {
 		CouponDBDAO couponDBDAO = new CouponDBDAO();
-		return couponDBDAO.getAllCoupons();
+		CompanyCouponDBDAO companyCouponDBDAO = new CompanyCouponDBDAO();
+		ArrayList<Coupon> coupons = new ArrayList<>();
+		ArrayList<CompanyCouponDBDAO> companyCouponDBDAOs = companyCouponDBDAO.getCompanyCoupon(company.getId());
+		for (CompanyCouponDBDAO companyCouponDBDAO2 : companyCouponDBDAOs) {
+			coupons.add(couponDBDAO.getCoupon(companyCouponDBDAO2.getCouponId()));
+		}
+		return coupons;
 
 	}
 

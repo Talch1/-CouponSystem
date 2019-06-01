@@ -4,21 +4,18 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import Coupon.Coupon;
+import Customer.Customer;
+import Exeptions.CouponException;
 
 public interface CustomerCouponDAO {
-	// Get All Porches Coupons by Customers
-	public ArrayList<CustomerCouponDBDAO> getAllCustomerCoupons() throws InterruptedException, SQLException;
-
+	
 	// Get table all Purchase Coupons By Customers ID
-	public ArrayList<CustomerCouponDBDAO> getCustomerCoupon(long l) throws SQLException, InterruptedException;
+	public ArrayList<CustomerCouponDBDAO> getCustomerCouponByCustId(long l) throws SQLException, InterruptedException;
 
-	// Company create Coupon
-	public void insert(long custId, long coupId) throws SQLException, InterruptedException;
+	// Customer buy Coupon
+	public void buyCoupon(Coupon coupon, Customer custmer) throws CouponException, SQLException, InterruptedException;
 
-	// Company Delete Coupon
+	// Customer Delete coupon
 	public void removeCustomerCoupon(Coupon coupon) throws SQLException, InterruptedException;
-
-	// Get all customers and they coupons
-	ArrayList<CustomerCouponDBDAO> getAllCustumerCoupons() throws SQLException, InterruptedException;
 
 }

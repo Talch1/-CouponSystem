@@ -11,14 +11,17 @@ import java.util.Collection;
 import CompanyCoupon.CompanyCouponDBDAO;
 import Coupon.Coupon;
 import Coupon.CouponDBDAO;
+import Customer.Customer;
+import Customer.CustomerDBDAO;
 import DataBase.ConnectionPool;
+import Exeptions.ExistEx;
 
 public class CompanyDBDAO implements CompanyDAO {
 
 	// createCompany(insert to company)
 	@Override
-	public void createCompany(Company company) throws SQLException, InterruptedException {
-
+	public void createCompany(Company company) throws SQLException, InterruptedException{
+		
 		Connection connection = null;
 
 		connection = ConnectionPool.getInstance().getConnection();
@@ -49,8 +52,18 @@ public class CompanyDBDAO implements CompanyDAO {
 
 	// removeCompany(delete from company)
 	@Override
-	public void removeCompany(Company company) throws SQLException, InterruptedException {
-
+	public void removeCompany(Company company) throws SQLException, InterruptedException, ExistEx {
+		CompanyDBDAO companyDBDAO = new CompanyDBDAO();
+		ArrayList<Company> companies = companyDBDAO.getAllCompany();
+		boolean chek = false;
+		for (Company comp : companies) {
+			if (company.getId() == comp.getId()) {
+              chek = true;
+			}
+		}
+		if (chek== false) {
+			throw new ExistEx("Company doesn't exist");
+		}
 		Connection connection = null;
 		try {
 			connection = ConnectionPool.getInstance().getConnection();
@@ -74,8 +87,18 @@ public class CompanyDBDAO implements CompanyDAO {
 
 	// updateCompany(update company)
 	@Override
-	public void updateCompany(Company company) throws SQLException, InterruptedException {
-
+	public void updateCompany(Company company) throws SQLException, InterruptedException, ExistEx {
+		CompanyDBDAO companyDBDAO = new CompanyDBDAO();
+		ArrayList<Company> companies = companyDBDAO.getAllCompany();
+		boolean chek = false;
+		for (Company comp : companies) {
+			if (company.getId() == comp.getId()) {
+              chek = true;
+			}
+		}
+		if (chek== false) {
+			throw new ExistEx("Company doesn't exist");
+		}
 		Connection connection = null;
 		try {
 			connection = ConnectionPool.getInstance().getConnection();
@@ -89,7 +112,7 @@ public class CompanyDBDAO implements CompanyDAO {
 			preparedStatement.setString(2, company.getEmail());
 			preparedStatement.setLong(3, company.getId());
 
-			preparedStatement = connection.prepareStatement(sql);
+			preparedStatement.execute();
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -149,7 +172,7 @@ public class CompanyDBDAO implements CompanyDAO {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		Company company = new Company();
+
 		String sql = "SELECT * FROM Company ";
 		try {
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
@@ -158,6 +181,7 @@ public class CompanyDBDAO implements CompanyDAO {
 			resultSet = preparedStatement.executeQuery(sql);
 
 			while (resultSet.next()) {
+				Company company = new Company();
 				company.setId(resultSet.getLong(1));
 				company.setCompName(resultSet.getString(2));
 				company.setPassword(resultSet.getString(3));
@@ -202,7 +226,7 @@ public class CompanyDBDAO implements CompanyDAO {
 		try {
 			connection = ConnectionPool.getInstance().getConnection();
 		} catch (SQLException e) {
-			
+
 			e.printStackTrace();
 
 		}
@@ -223,6 +247,7 @@ public class CompanyDBDAO implements CompanyDAO {
 				company.setId(rs.getLong(1));
 				company.setCompName(rs.getString(2));
 				company.setPassword(rs.getString(3));
+
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -231,6 +256,7 @@ public class CompanyDBDAO implements CompanyDAO {
 
 			ConnectionPool.getInstance().returnConnection(connection);
 		}
+		
 		if (company.getId() == 0) {
 			return false;
 		} else

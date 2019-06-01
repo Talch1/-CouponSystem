@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.util.Collection;
 
 import Coupon.Coupon;
+import Exeptions.ExistEx;
 
 
 public interface CompanyDAO {
@@ -13,10 +14,10 @@ public interface CompanyDAO {
 	public void createCompany(Company company) throws SQLException, InterruptedException;
 
 	//removeCompany(delete from Company)
-	public void removeCompany(Company company) throws SQLException, InterruptedException;
+	public void removeCompany(Company company) throws SQLException, InterruptedException, ExistEx;
 
 	//updateCompany(update Company)
-	public void updateCompany(Company company) throws SQLException, InterruptedException;
+	public void updateCompany(Company company) throws SQLException, InterruptedException, ExistEx;
 
 	//getCompany when id is
 	public Company getCompany(long id) throws SQLException, InterruptedException;

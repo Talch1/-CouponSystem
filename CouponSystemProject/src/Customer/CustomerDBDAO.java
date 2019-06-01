@@ -6,10 +6,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
+
 import Coupon.Coupon;
 import Coupon.CouponDBDAO;
 import CustomerCoupon.CustomerCouponDBDAO;
 import DataBase.ConnectionPool;
+import Exeptions.ExistEx;
 
 public class CustomerDBDAO implements CustomerDAO {
 	// create Customer(insert to Customer)
@@ -51,8 +54,18 @@ public class CustomerDBDAO implements CustomerDAO {
 
 	// delete Customer (delete from Customer)
 	@Override
-	public void removeCustomer(Customer customer) throws SQLException, InterruptedException {
-
+	public void removeCustomer(Customer customer) throws SQLException, InterruptedException, ExistEx {
+		CustomerDBDAO customerDBDAO = new CustomerDBDAO();
+		ArrayList<Customer> customers = customerDBDAO.getAllCustomer();
+		boolean chek = false;
+		for (Customer customer2 : customers) {
+			if (customer2.getId() == customer.getId()) {
+              chek = true;
+			}
+		}
+		if (chek== false) {
+			throw new ExistEx("Customer doesn't exist");
+		}
 		Connection connection = null;
 		try {
 			connection = ConnectionPool.getInstance().getConnection();
@@ -81,8 +94,18 @@ public class CustomerDBDAO implements CustomerDAO {
 
 	// update Customer(update Customer)
 	@Override
-	public void updateCustomer(Customer customer) throws SQLException, InterruptedException {
-
+	public void updateCustomer(Customer customer) throws SQLException, InterruptedException, ExistEx {
+		CustomerDBDAO customerDBDAO = new CustomerDBDAO();
+		ArrayList<Customer> customers = customerDBDAO.getAllCustomer();
+		boolean chek = false;
+		for (Customer customer2 : customers) {
+			if (customer2.getId() == customer.getId()) {
+              chek = true;
+			}
+		}
+		if (chek== false) {
+			throw new ExistEx("Customer doesn't exist");
+		}
 		Connection connection = null;
 		try {
 			connection = ConnectionPool.getInstance().getConnection();
@@ -98,7 +121,7 @@ public class CustomerDBDAO implements CustomerDAO {
 
 			preparedStatement.setString(1, customer.getPassword());
 			preparedStatement.setLong(2, customer.getId());
-			preparedStatement.executeUpdate();
+			preparedStatement.execute();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -164,7 +187,7 @@ public class CustomerDBDAO implements CustomerDAO {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		Customer customer = new Customer();
+
 		String sql = "SELECT * FROM customer ";
 		try {
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
@@ -173,7 +196,7 @@ public class CustomerDBDAO implements CustomerDAO {
 			rs = preparedStatement.executeQuery(sql);
 
 			while (rs.next()) {
-
+				Customer customer = new Customer();
 				customer.setId(rs.getLong(1));
 				customer.setCustName(rs.getString(2));
 				customer.setPassword(rs.getString(3));
@@ -193,20 +216,14 @@ public class CustomerDBDAO implements CustomerDAO {
 
 	// get All Coupons by Customer
 	@Override
-	public Collection<Coupon> getCoupons(Customer customer) throws SQLException, InterruptedException {
-
+	public ArrayList<Coupon> getCoupons(Customer customer) throws SQLException, InterruptedException {
 		CustomerCouponDBDAO customerCouponDBDAO = new CustomerCouponDBDAO();
+		ArrayList<CustomerCouponDBDAO> list = customerCouponDBDAO.getCustomerCouponByCustId(customer.getId());
+
 		CouponDBDAO couponDBDAO = new CouponDBDAO();
-
-		ArrayList<CustomerCouponDBDAO> list = new ArrayList<>();
-		ArrayList<Coupon> coupons = new ArrayList<>();
-
-		list = customerCouponDBDAO.getAllCustomerCoupons();
-		for (CustomerCouponDBDAO custCouponDBDAO : list) {
-			if (customer.getId() == custCouponDBDAO.getCustId()) {
-
-				coupons.add(couponDBDAO.getCoupon(customer.getId()));
-			}
+		ArrayList<Coupon> coupons = new ArrayList<Coupon>();
+		for (int i = 0; i < list.size(); i++) {
+			coupons.add(couponDBDAO.getCoupon(list.get(i).getCouponId()));
 		}
 		return coupons;
 

@@ -3,6 +3,7 @@ package DataBase;
 import java.sql.Date;
 import java.sql.SQLException;
 import Coupon.CouponDBDAO;
+import Exeptions.ExistEx;
 
 
 public class DailyCouponExpirationTask implements Runnable {
@@ -22,6 +23,9 @@ public class DailyCouponExpirationTask implements Runnable {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (ExistEx e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}

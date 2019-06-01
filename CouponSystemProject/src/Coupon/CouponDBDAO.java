@@ -5,9 +5,13 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+
+import Company.Company;
+import Company.CompanyDBDAO;
+
 import java.sql.Date;
 import DataBase.ConnectionPool;
-
+import Exeptions.ExistEx;
 
 public class CouponDBDAO implements CouponDAO {
 
@@ -49,7 +53,20 @@ public class CouponDBDAO implements CouponDAO {
 	}
 
 	// remove Coupon(delete from Coupon)
-	public void removeCoupon(Coupon coupon) throws SQLException, InterruptedException {
+	public void removeCoupon(Coupon coupon) throws SQLException, InterruptedException, ExistEx {
+
+
+		CouponDBDAO cDbdao = new CouponDBDAO();
+		ArrayList<Coupon> coupons = cDbdao.getAllCoupons();
+		boolean chek = false;
+		for (Coupon coupon1 : coupons) {
+			if (coupon1.getId() == coupon.getId()) {
+				chek = true;
+			}
+		}
+		if (chek == false) {
+			throw new ExistEx("Coupon doesn't exist");
+		}
 		Connection connection = null;
 		try {
 			connection = ConnectionPool.getInstance().getConnection();
@@ -70,7 +87,7 @@ public class CouponDBDAO implements CouponDAO {
 		}
 	}
 
-	public void deleteExpirdCoup(Date date) throws SQLException, InterruptedException {
+	public void deleteExpirdCoup(Date date) throws SQLException, InterruptedException, ExistEx {
 
 		ArrayList<Coupon> list = getAllCoupons();
 
@@ -83,7 +100,21 @@ public class CouponDBDAO implements CouponDAO {
 	}
 
 	// update Coupon(all Coupon data members)
-	public void updateCoupon1(Coupon coupon) throws InterruptedException {
+	public void updateCoupon1(Coupon coupon) throws InterruptedException, ExistEx {
+		
+
+
+		CouponDBDAO cDbdao = new CouponDBDAO();
+		ArrayList<Coupon> coupons = cDbdao.getAllCoupons();
+		boolean chek = false;
+		for (Coupon coupon1 : coupons) {
+			if (coupon1.getId() == coupon.getId()) {
+				chek = true;
+			}
+		}
+		if (chek == false) {
+			throw new ExistEx("Coupon doesn't exist");
+		}
 		String sql = "update coupon set TITLE = ?, START_DATE =  ?,END_DATE = ? ,amount = ?,type = ?,price = ?, image = ?  where id =  ?";
 		Connection connection = null;
 
@@ -110,8 +141,19 @@ public class CouponDBDAO implements CouponDAO {
 	}
 
 	// update Coupon(update End date and price)
-	public void updateCoupon(Coupon coupon) throws SQLException, InterruptedException {
+	public void updateCoupon(Coupon coupon) throws SQLException, InterruptedException, ExistEx {
 
+		CouponDBDAO cDbdao = new CouponDBDAO();
+		ArrayList<Coupon> coupons = cDbdao.getAllCoupons();
+		boolean chek = false;
+		for (Coupon coupon1 : coupons) {
+			if (coupon1.getId() == coupon.getId()) {
+				chek = true;
+			}
+		}
+		if (chek == false) {
+			throw new ExistEx("Coupon doesn't exist");
+		}
 		Connection connection = null;
 		try {
 			connection = ConnectionPool.getInstance().getConnection();
@@ -146,16 +188,15 @@ public class CouponDBDAO implements CouponDAO {
 		try {
 			connection = ConnectionPool.getInstance().getConnection();
 
-			Coupon coupon = new Coupon();
 			String sql = "SELECT * FROM Coupon ";
 			PreparedStatement preparedStatement = null;
 
 			preparedStatement = connection.prepareStatement(sql);
-
-			ResultSet resultSet;
-			resultSet = preparedStatement.executeQuery(sql);
-			resultSet.next();
+			ResultSet resultSet = null;
+			resultSet = preparedStatement.executeQuery();
+	
 			while (resultSet.next()) {
+				Coupon coupon = new Coupon();
 				coupon.setId(resultSet.getLong(1));
 				coupon.setTitle(resultSet.getString(2));
 				coupon.setStartDate(resultSet.getDate(3));
@@ -200,6 +241,7 @@ public class CouponDBDAO implements CouponDAO {
 
 				coupons.add(coupon);
 			}
+			preparedStatement.execute();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -285,7 +327,7 @@ public class CouponDBDAO implements CouponDAO {
 	@Override
 	public ArrayList<Coupon> getCouponByType(CouponType type) throws SQLException, InterruptedException {
 
-		Coupon coupon = new Coupon();
+		
 		Connection connection = null;
 
 		connection = ConnectionPool.getInstance().getConnection();
@@ -300,8 +342,9 @@ public class CouponDBDAO implements CouponDAO {
 			preparedStatement.setString(1, type.name());
 			ResultSet resultSet;
 			resultSet = preparedStatement.executeQuery();
-			resultSet.next();
+
 			while (resultSet.next()) {
+				Coupon coupon = new Coupon();
 				coupon.setId(resultSet.getLong(1));
 				coupon.setTitle(resultSet.getString(2));
 				coupon.setStartDate(resultSet.getDate(3));
@@ -430,6 +473,7 @@ public class CouponDBDAO implements CouponDAO {
 
 		return coupons;
 	}
+
 	public ArrayList<Coupon> getCouponByDate(Date date) throws SQLException, InterruptedException {
 
 		Coupon coupon = new Coupon();

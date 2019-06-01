@@ -1,5 +1,6 @@
 package DataBase;
 
+import java.security.AllPermission;
 import java.sql.SQLException;
 
 import Exeptions.LoginEx;
@@ -18,20 +19,19 @@ public class CouponSystem {
 	// Constructor
 	private CouponSystem() {
 
-		try {
-			database.createAllTables();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		thread.start();
+	}
+public void createAllTables() throws SQLException, InterruptedException {
+	
+	
+		database.createAllTables();
+	
 
 	}
 
+private void start() {
+	thread.start();
+}
+	
 	// Get instance
 	public static CouponSystem getInstanse() {
 		return instanse;

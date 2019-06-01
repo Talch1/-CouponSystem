@@ -3,16 +3,18 @@ package Coupon;
 import java.sql.SQLException;
 import java.util.Collection;
 
+import Exeptions.ExistEx;
+
 public interface CouponDAO {
 
 	// create Coupon(insert to Coupon)
 	public void createCoupon(Coupon coupon) throws SQLException, InterruptedException;
 
 	// remove Coupon(delete from Coupon)
-	public void removeCoupon(Coupon coupon) throws SQLException, InterruptedException;
+	public void removeCoupon(Coupon coupon) throws SQLException, InterruptedException, ExistEx;
 
 	// update Coupon
-	public void updateCoupon(Coupon coupon) throws SQLException, InterruptedException;
+	public void updateCoupon(Coupon coupon) throws SQLException, InterruptedException, ExistEx;
 
 	// get All Coupons
 	public Collection<Coupon> getAllCoupons() throws SQLException, InterruptedException;
