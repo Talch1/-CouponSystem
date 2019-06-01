@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.util.Collection;
 
 import Coupon.Coupon;
+import Exeptions.DateProblem;
 import Exeptions.ExistEx;
 
 
@@ -26,7 +27,7 @@ public interface CompanyDAO {
 	public Collection<Company> getAllCompany() throws SQLException, InterruptedException;
 
 	// get all Coupons of this Company
-	public Collection<Coupon> getCoupons(Company company) throws SQLException, InterruptedException;
+	public Collection<Coupon> getCoupons(Company company) throws SQLException, InterruptedException, DateProblem;
 
 	//login to Company
 	public boolean login(String compname, String pass) throws SQLException, InterruptedException;

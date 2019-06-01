@@ -14,6 +14,7 @@ import Coupon.CouponDBDAO;
 import Customer.Customer;
 import Customer.CustomerDBDAO;
 import DataBase.ConnectionPool;
+import Exeptions.DateProblem;
 import Exeptions.ExistEx;
 
 public class CompanyDBDAO implements CompanyDAO {
@@ -200,7 +201,7 @@ public class CompanyDBDAO implements CompanyDAO {
 
 	// get all coupons of this company
 	@Override
-	public ArrayList<Coupon> getCoupons(Company company) throws SQLException, InterruptedException {
+	public ArrayList<Coupon> getCoupons(Company company) throws SQLException, InterruptedException, DateProblem {
 		CompanyCouponDBDAO compCoup = new CompanyCouponDBDAO();
 		CouponDBDAO couponDBDAO = new CouponDBDAO();
 

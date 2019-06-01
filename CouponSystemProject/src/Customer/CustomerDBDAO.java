@@ -12,6 +12,7 @@ import Coupon.Coupon;
 import Coupon.CouponDBDAO;
 import CustomerCoupon.CustomerCouponDBDAO;
 import DataBase.ConnectionPool;
+import Exeptions.DateProblem;
 import Exeptions.ExistEx;
 
 public class CustomerDBDAO implements CustomerDAO {
@@ -216,7 +217,7 @@ public class CustomerDBDAO implements CustomerDAO {
 
 	// get All Coupons by Customer
 	@Override
-	public ArrayList<Coupon> getCoupons(Customer customer) throws SQLException, InterruptedException {
+	public ArrayList<Coupon> getCoupons(Customer customer) throws SQLException, InterruptedException, DateProblem {
 		CustomerCouponDBDAO customerCouponDBDAO = new CustomerCouponDBDAO();
 		ArrayList<CustomerCouponDBDAO> list = customerCouponDBDAO.getCustomerCouponByCustId(customer.getId());
 

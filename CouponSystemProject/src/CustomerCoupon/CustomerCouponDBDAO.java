@@ -13,6 +13,7 @@ import Coupon.CouponType;
 import Customer.Customer;
 import DataBase.ConnectionPool;
 import Exeptions.CouponException;
+import Exeptions.DateProblem;
 
 public class CustomerCouponDBDAO implements CustomerCouponDAO {
 
@@ -47,7 +48,7 @@ public class CustomerCouponDBDAO implements CustomerCouponDAO {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		String sql = "delete from  CustomerCoupon where COUPON_ID = ?";
+		String sql = "delete from  CustomerCoupon where COUPONID = ?";
 		PreparedStatement preparedStatement = null;
 		try {
 			preparedStatement = connection.prepareStatement(sql);
@@ -88,8 +89,7 @@ public class CustomerCouponDBDAO implements CustomerCouponDAO {
 		} catch (SQLException e) {
 
 			e.printStackTrace();
-			System.out.println(e.getMessage());
-			System.out.println(e.getSQLState());
+			
 			try {
 				con.rollback();
 			} catch (SQLException e1) {
@@ -143,7 +143,7 @@ public class CustomerCouponDBDAO implements CustomerCouponDAO {
 
 	
 	// get all purchased Coupons by Customer
-	public ArrayList<Coupon> getAllpurchoiseCoupons(Customer customer) throws InterruptedException, SQLException {
+	public ArrayList<Coupon> getAllpurchoiseCoupons(Customer customer) throws InterruptedException, SQLException, DateProblem {
 		ArrayList<CustomerCouponDBDAO> list = getCustomerCouponByCustId(customer.getId());
 
 		CouponDBDAO couponDBDAO = new CouponDBDAO();
@@ -155,7 +155,7 @@ public class CustomerCouponDBDAO implements CustomerCouponDAO {
 	}
 
 	// Get all purchased coupons by price
-	public ArrayList<Coupon> getAllPurchaiseCouponByPrice(double price,Customer customer) throws SQLException, InterruptedException {
+	public ArrayList<Coupon> getAllPurchaiseCouponByPrice(double price,Customer customer) throws SQLException, InterruptedException, DateProblem {
 		ArrayList<Coupon> alloupons = new ArrayList<>();
 		ArrayList<Coupon> byprice = new ArrayList<>();
 		alloupons = getAllpurchoiseCoupons(customer);
@@ -169,7 +169,7 @@ public class CustomerCouponDBDAO implements CustomerCouponDAO {
 	}
 
 	// Get all purchased coupons by type
-	public ArrayList<Coupon> getAllPurchaiseCouponByType(CouponType type,Customer customer) throws SQLException, InterruptedException {
+	public ArrayList<Coupon> getAllPurchaiseCouponByType(CouponType type,Customer customer) throws SQLException, InterruptedException, DateProblem {
 		ArrayList<Coupon> alloupons = new ArrayList<>();
 		ArrayList<Coupon> bytype = new ArrayList<>();
 		alloupons = getAllpurchoiseCoupons(customer);

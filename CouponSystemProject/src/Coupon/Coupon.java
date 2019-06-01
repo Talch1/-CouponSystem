@@ -2,6 +2,8 @@ package Coupon;
 
 import java.sql.Date;
 
+import Exeptions.DateProblem;
+
 public class Coupon {
 
 	//Data members
@@ -17,7 +19,7 @@ public class Coupon {
 
 	//Constructor
 	public Coupon(long id, String title, Date startDate, Date endDate, int amount, CouponType couponType, String message,
-			double price, String immage) {
+			double price, String immage) throws DateProblem {
 		super();
 		setId(id);
 		setTitle(title);
@@ -71,7 +73,9 @@ public class Coupon {
 		return endDate;
 	}
 
-	public void setEndDate(Date endDate) {
+	public void setEndDate(Date endDate) throws DateProblem {
+		if(endDate.before(startDate))
+			throw new DateProblem("Date is before start date");
 		this.endDate = endDate;
 	}
 

@@ -8,9 +8,11 @@ import java.util.ArrayList;
 
 import Company.Company;
 import Company.CompanyDBDAO;
+import CustomerCoupon.CustomerCouponDBDAO;
 
 import java.sql.Date;
 import DataBase.ConnectionPool;
+import Exeptions.DateProblem;
 import Exeptions.ExistEx;
 
 public class CouponDBDAO implements CouponDAO {
@@ -53,7 +55,7 @@ public class CouponDBDAO implements CouponDAO {
 	}
 
 	// remove Coupon(delete from Coupon)
-	public void removeCoupon(Coupon coupon) throws SQLException, InterruptedException, ExistEx {
+	public void removeCoupon(Coupon coupon) throws SQLException, InterruptedException, ExistEx, DateProblem {
 
 
 		CouponDBDAO cDbdao = new CouponDBDAO();
@@ -87,12 +89,13 @@ public class CouponDBDAO implements CouponDAO {
 		}
 	}
 
-	public void deleteExpirdCoup(Date date) throws SQLException, InterruptedException, ExistEx {
+	public void deleteExpirdCoup(Date date) throws SQLException, InterruptedException, ExistEx, DateProblem {
 
 		ArrayList<Coupon> list = getAllCoupons();
-
+CustomerCouponDBDAO couponDBDAO = new CustomerCouponDBDAO();
 		for (Coupon coupon : list) {
 			if (coupon.getEndDate().before(date)) {
+				couponDBDAO.removeCustomerCoupon(coupon);
 				removeCoupon(coupon);
 			}
 
@@ -100,7 +103,7 @@ public class CouponDBDAO implements CouponDAO {
 	}
 
 	// update Coupon(all Coupon data members)
-	public void updateCoupon1(Coupon coupon) throws InterruptedException, ExistEx {
+	public void updateCoupon1(Coupon coupon) throws InterruptedException, ExistEx, DateProblem {
 		
 
 
@@ -115,7 +118,7 @@ public class CouponDBDAO implements CouponDAO {
 		if (chek == false) {
 			throw new ExistEx("Coupon doesn't exist");
 		}
-		String sql = "update coupon set TITLE = ?, START_DATE =  ?,END_DATE = ? ,amount = ?,type = ?,price = ?, image = ?  where id =  ?";
+		String sql = "update coupon set TITLE = ?, START_DATE =  ?,END_DATE = ? ,amount = ?,type = ?,message = ?,price = ?, image = ?  where id =  ?";
 		Connection connection = null;
 
 		try {
@@ -126,12 +129,13 @@ public class CouponDBDAO implements CouponDAO {
 			preparedStatement.setDate(2, (java.sql.Date) coupon.getStartDate());
 			preparedStatement.setDate(3, (java.sql.Date) coupon.getEndDate());
 			preparedStatement.setInt(4, coupon.getAmount());
-			preparedStatement.setObject(5, coupon.getType());
-			preparedStatement.setDouble(6, coupon.getPrice());
-			preparedStatement.setString(7, coupon.getImage());
-			preparedStatement.setLong(8, coupon.getId());
+			preparedStatement.setString(5, coupon.getType().toString());
+			preparedStatement.setString(6, coupon.getMessage());
+			preparedStatement.setDouble(7, coupon.getPrice());
+			preparedStatement.setString(8, coupon.getImage());
+			preparedStatement.setLong(9, coupon.getId());
 
-			preparedStatement.executeUpdate();
+			preparedStatement.execute();
 			System.out.println("Coupon Updated");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -141,7 +145,7 @@ public class CouponDBDAO implements CouponDAO {
 	}
 
 	// update Coupon(update End date and price)
-	public void updateCoupon(Coupon coupon) throws SQLException, InterruptedException, ExistEx {
+	public void updateCoupon(Coupon coupon) throws SQLException, InterruptedException, ExistEx, DateProblem {
 
 		CouponDBDAO cDbdao = new CouponDBDAO();
 		ArrayList<Coupon> coupons = cDbdao.getAllCoupons();
@@ -180,7 +184,7 @@ public class CouponDBDAO implements CouponDAO {
 
 	// get All Coupons
 	@Override
-	public ArrayList<Coupon> getAllCoupons() throws InterruptedException {
+	public ArrayList<Coupon> getAllCoupons() throws InterruptedException, DateProblem {
 		ArrayList<Coupon> coupons = new ArrayList<>();
 
 		Connection connection = null;
@@ -253,7 +257,7 @@ public class CouponDBDAO implements CouponDAO {
 	}
 
 	// get Coupon By Id
-	public Coupon getCoupon(long id) throws SQLException, InterruptedException {
+	public Coupon getCoupon(long id) throws SQLException, InterruptedException, DateProblem {
 
 		Connection connection = null;
 		Coupon coupon = new Coupon();
@@ -325,7 +329,7 @@ public class CouponDBDAO implements CouponDAO {
 
 	// get Coupon by Type
 	@Override
-	public ArrayList<Coupon> getCouponByType(CouponType type) throws SQLException, InterruptedException {
+	public ArrayList<Coupon> getCouponByType(CouponType type) throws SQLException, InterruptedException, DateProblem {
 
 		
 		Connection connection = null;
@@ -400,7 +404,7 @@ public class CouponDBDAO implements CouponDAO {
 		return coupons;
 	}
 
-	public ArrayList<Coupon> getCouponByPrice(double price) throws SQLException, InterruptedException {
+	public ArrayList<Coupon> getCouponByPrice(double price) throws SQLException, InterruptedException, DateProblem {
 
 		Coupon coupon = new Coupon();
 		Connection connection = null;
@@ -474,7 +478,7 @@ public class CouponDBDAO implements CouponDAO {
 		return coupons;
 	}
 
-	public ArrayList<Coupon> getCouponByDate(Date date) throws SQLException, InterruptedException {
+	public ArrayList<Coupon> getCouponByDate(Date date) throws SQLException, InterruptedException, DateProblem {
 
 		Coupon coupon = new Coupon();
 		Connection connection = null;

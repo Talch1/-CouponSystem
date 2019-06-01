@@ -18,20 +18,9 @@ public class CouponSystem {
 
 	// Constructor
 	private CouponSystem() {
-
-	}
-public void createAllTables() throws SQLException, InterruptedException {
-	
-	
-		database.createAllTables();
-	
-
+		
 	}
 
-private void start() {
-	thread.start();
-}
-	
 	// Get instance
 	public static CouponSystem getInstanse() {
 		return instanse;
@@ -41,6 +30,17 @@ private void start() {
 	public void shutdown() {
 		DailyCouponExpirationTask.stopp();
 		ConnectionPool.getInstance().removeAllConnections();
+	}
+
+	// Create All tables
+	public void createAllTables() throws SQLException, InterruptedException {
+
+		database.createAllTables();
+
+	}
+
+	public void start() {
+		thread.start();
 	}
 
 	// Login to Facades

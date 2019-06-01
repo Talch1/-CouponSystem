@@ -12,6 +12,7 @@ import Customer.Customer;
 import Customer.CustomerDBDAO;
 import CustomerCoupon.CustomerCouponDBDAO;
 import Exeptions.CouponException;
+import Exeptions.DateProblem;
 import Exeptions.ExistEx;
 import Exeptions.LoginEx;
 import Facade.AdminFacade;
@@ -21,23 +22,34 @@ import Facade.CustomerFacade;
 public class Test {
 
 	public static void main(String[] args)
-			throws SQLException, InterruptedException, LoginEx, ExistEx, CouponException {
-Date date1 = new Date(System.currentTimeMillis());
-		AdminFacade adminFacade = (AdminFacade) CouponSystem.getInstanse().login("Admin", "1234", ClientType.Admin);
-		CompanyFacade companyFacade = (CompanyFacade) CouponSystem.getInstanse().login("pepsi", "222",
-				ClientType.Company);
-	
-		@SuppressWarnings("deprecation")
-		Date date = new Date(1958,15,12);
-		CouponType couponType = CouponType.CAMPING;
+			throws SQLException, InterruptedException, LoginEx, ExistEx, CouponException, DateProblem {
+
 		// CouponSystem.getInstanse().database.createAllTables();
-		Customer cust = new Customer(555, "bob", "66", null);
-		Coupon coupon = new Coupon(632, "hgf", date1, date, 5, couponType, "jjj", 5.8, "http");
+
+		CouponSystem.getInstanse().start();
+
+		AdminFacade adminFacade = (AdminFacade) CouponSystem.getInstanse().login("Admin", "1234", ClientType.Admin);
+
+		CompanyFacade companyFacade = (CompanyFacade) CouponSystem.getInstanse().login("GetTAXY", "taxy",
+				ClientType.Company);
+
 		CustomerFacade customerFacade = (CustomerFacade) CouponSystem.getInstanse().login("kolya", "999",
 				ClientType.Customer);
-		Company comp = new Company(3, "kola", "666", "8", null);
-		CustomerCouponDBDAO customerCouponDBDAO = new CustomerCouponDBDAO();
 
+		Date date = new Date(System.currentTimeMillis());
+
+		Date date1 = new Date(System.currentTimeMillis() + (1000 * 24 * 60 * 60 * 7));
+
+		CouponType couponType = CouponType.RESTURANS;
+
+		Customer cust = new Customer(553, "kolya", "999", null);
+
+		Coupon coupon = new Coupon(1, "secondhalfprice", date, date1, 5, couponType, " for club card", 120.5,
+				"http:googleimage");
+
+		// Company comp = new Company(112,"Coca-cola", "sweet", "pepsi@gmail.com",
+		// null);
+		Company comp = new Company(8, "Tifytaam", "food", "tiftaam@gmail.com", null);
 		// adminFacade.createCompany(comp);
 
 		// adminFacade.createCustomer(cust);
@@ -48,7 +60,7 @@ Date date1 = new Date(System.currentTimeMillis());
 
 		// adminFacade.updateCompany(comp);
 
-		//adminFacade.updateCustomer(cust);
+		// adminFacade.updateCustomer(cust);
 
 		// System.out.println(adminFacade.getCompany(3));
 
@@ -58,23 +70,24 @@ Date date1 = new Date(System.currentTimeMillis());
 
 		// System.out.println(adminFacade.getAllCustomers());
 
-		//companyFacade.createCoupon(coupon, comp);
+		// companyFacade.createCoupon(coupon, comp);
 
 		// companyFacade.removeCoupon(coupon);
 
 		// companyFacade.updateCoupon(coupon);
 
-	//	System.out.println(companyFacade.getAllCoupons(comp));
+		// System.out.println(companyFacade.getAllCoupons(comp));
 
 		// System.out.println(companyFacade.getCoupon(632));
 
 		// System.out.println(companyFacade.getCouponByType(couponType));
 
-		 //customerFacade.buyCoupon(632,cust);
+		// customerFacade.buyCoupon(1,cust);
 
 		// System.out.println(customerFacade.getAllPurchisedCouponsByPrice(3.6, cust));
 
-		// System.out.println( customerFacade.getAllPurchisedCouponsByType(couponType, cust));
+		// System.out.println( customerFacade.getAllPurchisedCouponsByType(couponType,
+		// cust));
 
 		// System.out.println(customerFacade.getAllPurchoisedCoupons(cust));
 
