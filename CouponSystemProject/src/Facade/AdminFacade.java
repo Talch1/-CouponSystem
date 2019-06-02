@@ -58,7 +58,7 @@ public class AdminFacade implements CouponClientFasade {
 	}
 
 	// get Company By Id
-	public Company getCompany(int id) throws SQLException, InterruptedException {
+	public Company getCompany(int id) throws SQLException, InterruptedException, ExistEx {
 		CompanyDBDAO companyDBDAO = new CompanyDBDAO();
 		return companyDBDAO.getCompany(id);
 
@@ -107,7 +107,7 @@ public class AdminFacade implements CouponClientFasade {
 	}
 
 	// get Customer By ID
-	public Customer getCustomer(int id) throws SQLException, InterruptedException {
+	public Customer getCustomer(int id) throws SQLException, InterruptedException, ExistEx {
 		CustomerDBDAO customerDBDAO = new CustomerDBDAO();
 		return customerDBDAO.getCustomer(id);
 

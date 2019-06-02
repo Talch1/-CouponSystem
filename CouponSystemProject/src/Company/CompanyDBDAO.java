@@ -21,8 +21,8 @@ public class CompanyDBDAO implements CompanyDAO {
 
 	// createCompany(insert to company)
 	@Override
-	public void createCompany(Company company) throws SQLException, InterruptedException{
-		
+	public void createCompany(Company company) throws SQLException, InterruptedException {
+
 		Connection connection = null;
 
 		connection = ConnectionPool.getInstance().getConnection();
@@ -59,10 +59,10 @@ public class CompanyDBDAO implements CompanyDAO {
 		boolean chek = false;
 		for (Company comp : companies) {
 			if (company.getId() == comp.getId()) {
-              chek = true;
+				chek = true;
 			}
 		}
-		if (chek== false) {
+		if (chek == false) {
 			throw new ExistEx("Company doesn't exist");
 		}
 		Connection connection = null;
@@ -94,10 +94,10 @@ public class CompanyDBDAO implements CompanyDAO {
 		boolean chek = false;
 		for (Company comp : companies) {
 			if (company.getId() == comp.getId()) {
-              chek = true;
+				chek = true;
 			}
 		}
-		if (chek== false) {
+		if (chek == false) {
 			throw new ExistEx("Company doesn't exist");
 		}
 		Connection connection = null;
@@ -127,7 +127,18 @@ public class CompanyDBDAO implements CompanyDAO {
 
 	// getCompany when id is
 	@Override
-	public Company getCompany(long id) throws SQLException, InterruptedException {
+	public Company getCompany(long id) throws SQLException, InterruptedException, ExistEx {
+		CompanyDBDAO companyDBDAO = new CompanyDBDAO();
+		ArrayList<Company> companies = companyDBDAO.getAllCompany();
+		boolean chek = false;
+		for (Company comp : companies) {
+			if (id == comp.getId()) {
+				chek = true;
+			}
+		}
+		if (chek == false) {
+			throw new ExistEx("Company doesn't exist");
+		}
 		Connection connection = null;
 
 		connection = ConnectionPool.getInstance().getConnection();
@@ -201,8 +212,25 @@ public class CompanyDBDAO implements CompanyDAO {
 
 	// get all coupons of this company
 	@Override
-	public ArrayList<Coupon> getCoupons(Company company) throws SQLException, InterruptedException, DateProblem {
+	public ArrayList<Coupon> getCoupons(Company company)
+			throws SQLException, InterruptedException, DateProblem, ExistEx {
+		
+		CompanyDBDAO companyDBDAO = new CompanyDBDAO();
+		
+		ArrayList<Company> companies = companyDBDAO.getAllCompany();
+		
+		boolean chek = false;
+		
+		for (Company comp : companies) {
+			if (company.getId() == comp.getId()) {
+				chek = true;
+			}
+		}
+		if (chek == false) {
+			throw new ExistEx("Company doesn't exist");
+		}
 		CompanyCouponDBDAO compCoup = new CompanyCouponDBDAO();
+
 		CouponDBDAO couponDBDAO = new CouponDBDAO();
 
 		ArrayList<CompanyCouponDBDAO> list = new ArrayList<>();
@@ -257,7 +285,7 @@ public class CompanyDBDAO implements CompanyDAO {
 
 			ConnectionPool.getInstance().returnConnection(connection);
 		}
-		
+
 		if (company.getId() == 0) {
 			return false;
 		} else

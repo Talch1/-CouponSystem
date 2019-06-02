@@ -21,13 +21,13 @@ public interface CompanyDAO {
 	public void updateCompany(Company company) throws SQLException, InterruptedException, ExistEx;
 
 	//getCompany when id is
-	public Company getCompany(long id) throws SQLException, InterruptedException;
+	public Company getCompany(long id) throws SQLException, InterruptedException, ExistEx;
 
 	// get all Company's 
 	public Collection<Company> getAllCompany() throws SQLException, InterruptedException;
 
 	// get all Coupons of this Company
-	public Collection<Coupon> getCoupons(Company company) throws SQLException, InterruptedException, DateProblem;
+	public Collection<Coupon> getCoupons(Company company) throws SQLException, InterruptedException, DateProblem, ExistEx;
 
 	//login to Company
 	public boolean login(String compname, String pass) throws SQLException, InterruptedException;

@@ -13,6 +13,7 @@ import Coupon.Coupon;
 import Coupon.CouponDBDAO;
 import DataBase.ConnectionPool;
 import Exeptions.DateProblem;
+import Exeptions.ExistEx;
 
 public class CompanyCouponDBDAO implements CompanyCouponDAO {
 
@@ -242,7 +243,7 @@ public class CompanyCouponDBDAO implements CompanyCouponDAO {
 
 	}
 
-	public ArrayList<Coupon> allCouponsOfCompany() throws SQLException, InterruptedException, DateProblem {
+	public ArrayList<Coupon> allCouponsOfCompany() throws SQLException, InterruptedException, DateProblem, ExistEx {
 		CouponDBDAO coupon = new CouponDBDAO();
 		ArrayList<Coupon> allCoupons = new ArrayList<>();
 		ArrayList<Long> ids = new ArrayList<>();

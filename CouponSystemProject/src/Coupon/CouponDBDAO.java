@@ -257,8 +257,18 @@ CustomerCouponDBDAO couponDBDAO = new CustomerCouponDBDAO();
 	}
 
 	// get Coupon By Id
-	public Coupon getCoupon(long id) throws SQLException, InterruptedException, DateProblem {
-
+	public Coupon getCoupon(long id) throws SQLException, InterruptedException, DateProblem, ExistEx {
+		CouponDBDAO cDbdao = new CouponDBDAO();
+		ArrayList<Coupon> coupons = cDbdao.getAllCoupons();
+		boolean chek = false;
+		for (Coupon coupon1 : coupons) {
+			if (coupon1.getId() == id) {
+				chek = true;
+			}
+		}
+		if (chek == false) {
+			throw new ExistEx("Coupon doesn't exist");
+		}
 		Connection connection = null;
 		Coupon coupon = new Coupon();
 
@@ -329,9 +339,20 @@ CustomerCouponDBDAO couponDBDAO = new CustomerCouponDBDAO();
 
 	// get Coupon by Type
 	@Override
-	public ArrayList<Coupon> getCouponByType(CouponType type) throws SQLException, InterruptedException, DateProblem {
+	public ArrayList<Coupon> getCouponByType(CouponType type) throws SQLException, InterruptedException, DateProblem, ExistEx {
 
-		
+
+		CouponDBDAO cDbdao = new CouponDBDAO();
+		ArrayList<Coupon> coupons1 = cDbdao.getAllCoupons();
+		boolean chek = false;
+		for (Coupon coupon1 : coupons1) {
+			if (coupon1.getType().equals(type)) {
+				chek = true;
+			}
+		}
+		if (chek == false) {
+			throw new ExistEx("Coupon whis this type doesn't exist");
+		}
 		Connection connection = null;
 
 		connection = ConnectionPool.getInstance().getConnection();
@@ -404,8 +425,19 @@ CustomerCouponDBDAO couponDBDAO = new CustomerCouponDBDAO();
 		return coupons;
 	}
 
-	public ArrayList<Coupon> getCouponByPrice(double price) throws SQLException, InterruptedException, DateProblem {
+	public ArrayList<Coupon> getCouponByPrice(double price) throws SQLException, InterruptedException, DateProblem, ExistEx {
 
+		CouponDBDAO cDbdao = new CouponDBDAO();
+		ArrayList<Coupon> coupons1 = cDbdao.getAllCoupons();
+		boolean chek = false;
+		for (Coupon coupon1 : coupons1) {
+			if (coupon1.getPrice() == price) {
+				chek = true;
+			}
+		}
+		if (chek == false) {
+			throw new ExistEx("Coupon whis this price doesn't exist");
+		}
 		Coupon coupon = new Coupon();
 		Connection connection = null;
 
@@ -478,8 +510,19 @@ CustomerCouponDBDAO couponDBDAO = new CustomerCouponDBDAO();
 		return coupons;
 	}
 
-	public ArrayList<Coupon> getCouponByDate(Date date) throws SQLException, InterruptedException, DateProblem {
+	public ArrayList<Coupon> getCouponByDate(Date date) throws SQLException, InterruptedException, DateProblem, ExistEx {
 
+		CouponDBDAO cDbdao = new CouponDBDAO();
+		ArrayList<Coupon> coupons1 = cDbdao.getAllCoupons();
+		boolean chek = false;
+		for (Coupon coupon1 : coupons1) {
+			if (coupon1.getEndDate().before(date))  {
+				chek = true;
+			}
+		}
+		if (chek == false) {
+			throw new ExistEx("Coupon whis experate date before "+ date +" doesn't exist");
+		}
 		Coupon coupon = new Coupon();
 		Connection connection = null;
 

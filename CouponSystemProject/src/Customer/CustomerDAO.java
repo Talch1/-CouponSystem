@@ -19,13 +19,13 @@ public interface CustomerDAO {
 	public void updateCustomer(Customer customer) throws SQLException, InterruptedException, ExistEx;
 
 	//get Customer By Id
-	public Customer getCustomer(long id) throws SQLException, InterruptedException;
+	public Customer getCustomer(long id) throws SQLException, InterruptedException, ExistEx;
 
 	//get All Customers
 	public Collection<Customer> getAllCustomer() throws SQLException, InterruptedException;
 
 	//get All Coupons by Customer
-	public Collection<Coupon> getCoupons(Customer customer) throws SQLException, InterruptedException, DateProblem;
+	public Collection<Coupon> getCoupons(Customer customer) throws SQLException, InterruptedException, DateProblem, ExistEx;
 
 	//Login to Customer
 	public boolean login(String custName, String password) throws InterruptedException;

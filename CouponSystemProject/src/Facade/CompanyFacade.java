@@ -51,13 +51,13 @@ public class CompanyFacade implements CouponClientFasade {
 	}
 
 	// Get Coupon by id
-	public Coupon getCoupon(int id) throws SQLException, InterruptedException, DateProblem {
+	public Coupon getCoupon(int id) throws SQLException, InterruptedException, DateProblem, ExistEx {
 		CouponDBDAO couponDBDAO = new CouponDBDAO();
 		return couponDBDAO.getCoupon(id);
 	}
 
 	// Get All Coupons
-	public ArrayList<Coupon> getAllCoupons(Company company) throws SQLException, InterruptedException, DateProblem {
+	public ArrayList<Coupon> getAllCoupons(Company company) throws SQLException, InterruptedException, DateProblem, ExistEx {
 		CouponDBDAO couponDBDAO = new CouponDBDAO();
 		CompanyCouponDBDAO companyCouponDBDAO = new CompanyCouponDBDAO();
 		ArrayList<Coupon> coupons = new ArrayList<>();
@@ -70,23 +70,36 @@ public class CompanyFacade implements CouponClientFasade {
 	}
 
 	// Get All Coupons By Type
-	public ArrayList<Coupon> getCouponByType(CouponType type) throws SQLException, InterruptedException, DateProblem {
+	public ArrayList<Coupon> getCouponByType(CouponType type) throws SQLException, InterruptedException, DateProblem, ExistEx {
 		CouponDBDAO couponDBDAO = new CouponDBDAO();
 		return couponDBDAO.getCouponByType(type);
 
 	}
 
 	// Get All Coupons By Price
-	public ArrayList<Coupon> getCouponByPrice(double price) throws SQLException, InterruptedException, DateProblem {
+	public ArrayList<Coupon> getCouponByPrice(double price) throws SQLException, InterruptedException, DateProblem, ExistEx {
 		CouponDBDAO couponDBDAO = new CouponDBDAO();
-		return couponDBDAO.getCouponByPrice(price);
+		
+		try {
+			return couponDBDAO.getCouponByPrice(price);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 
 	}
 
 	// Get All Coupon Before Date
-	public ArrayList<Coupon> getCouponByDate(Date date) throws SQLException, InterruptedException, DateProblem {
+	public ArrayList<Coupon> getCouponByDate(Date date) throws SQLException, InterruptedException, DateProblem, ExistEx {
 		CouponDBDAO couponDBDAO = new CouponDBDAO();
-		return couponDBDAO.getCouponByDate(date);
+		try {
+			return couponDBDAO.getCouponByDate(date);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 
 	}
 

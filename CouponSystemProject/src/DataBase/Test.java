@@ -38,19 +38,19 @@ public class Test {
 
 		Date date = new Date(System.currentTimeMillis());
 
-		Date date1 = new Date(System.currentTimeMillis() + (1000 * 24 * 60 * 60 * 7));
+		Date date1 = new Date(System.currentTimeMillis() +(1000*24*5*60*60));
 
-		CouponType couponType = CouponType.RESTURANS;
+		CouponType couponType = CouponType.FOOD;
 
 		Customer cust = new Customer(553, "kolya", "999", null);
 
-		Coupon coupon = new Coupon(1, "secondhalfprice", date, date1, 5, couponType, " for club card", 120.5,
+		Coupon coupon = new Coupon(255, "woow", date, date1, 5, couponType, " for club card", 15.5,
 				"http:googleimage");
 
 		// Company comp = new Company(112,"Coca-cola", "sweet", "pepsi@gmail.com",
 		// null);
-		Company comp = new Company(8, "Tifytaam", "food", "tiftaam@gmail.com", null);
-		// adminFacade.createCompany(comp);
+		Company comp = new Company(15, "rakevetIsrael", "Travel whis us", "rakevet@gmail.com", null);
+		 adminFacade.createCompany(comp);
 
 		// adminFacade.createCustomer(cust);
 
@@ -82,7 +82,7 @@ public class Test {
 
 		// System.out.println(companyFacade.getCouponByType(couponType));
 
-		// customerFacade.buyCoupon(1,cust);
+		// customerFacade.buyCoupon(255,cust);
 
 		// System.out.println(customerFacade.getAllPurchisedCouponsByPrice(3.6, cust));
 
@@ -93,6 +93,8 @@ public class Test {
 
 		// CouponSystem.getInstanse().shutdown();
 
+		CouponDBDAO couponDBDAO = new CouponDBDAO();
+		couponDBDAO.getCouponByDate(date1);
 	}
 
 }

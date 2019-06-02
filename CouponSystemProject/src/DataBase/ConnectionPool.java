@@ -18,12 +18,13 @@ public class ConnectionPool {
 
 	// Singleton
 	private static ConnectionPool instance = new ConnectionPool();
+
 	// Get instance
 	public static ConnectionPool getInstance() {
 		return instance;
 	}
 
-	//Constructor
+	// Constructor
 	private ConnectionPool() {
 		this.instance = instance;
 	}
@@ -46,23 +47,15 @@ public class ConnectionPool {
 	public void removeAllConnections() {
 
 		synchronized (blockingQueue) {
-			while (blockingQueue.size() < MAX) {
-				try {
-					wait();
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-
-			}
-
 			for (Connection connection : blockingQueue) {
+
 				try {
 					connection.close();
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
+
 			}
 
 		}

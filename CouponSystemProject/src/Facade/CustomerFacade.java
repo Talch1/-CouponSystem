@@ -40,7 +40,7 @@ public class CustomerFacade implements CouponClientFasade {
 
 	// Get All purchased coupons by Customer
 	public ArrayList<Coupon> getAllPurchasedCoupons(Customer customer)
-			throws SQLException, InterruptedException, DateProblem {
+			throws SQLException, InterruptedException, DateProblem, ExistEx {
 		CustomerCouponDBDAO customerCouponDBDAO = new CustomerCouponDBDAO();
 		return customerCouponDBDAO.getAllpurchoiseCoupons(customer);
 
@@ -60,14 +60,14 @@ public class CustomerFacade implements CouponClientFasade {
 
 	// Get All purchased coupons by Customer by type
 	public ArrayList<Coupon> getAllPurchisedCouponsByType(CouponType type, Customer customer)
-			throws SQLException, InterruptedException, DateProblem {
+			throws SQLException, InterruptedException, DateProblem, ExistEx {
 		CustomerCouponDBDAO customerCouponDBDAO = new CustomerCouponDBDAO();
 		return customerCouponDBDAO.getAllPurchaiseCouponByType(type, customer);
 	}
 
 	// Get All purchased coupons by Customer before price
 	public ArrayList<Coupon> getAllPurchisedCouponsByPrice(double price, Customer customer)
-			throws SQLException, InterruptedException, DateProblem {
+			throws SQLException, InterruptedException, DateProblem, ExistEx {
 		CustomerCouponDBDAO customerCouponDBDAO = new CustomerCouponDBDAO();
 		return customerCouponDBDAO.getAllPurchaiseCouponByPrice(price, customer);
 

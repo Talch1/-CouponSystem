@@ -61,10 +61,10 @@ public class CustomerDBDAO implements CustomerDAO {
 		boolean chek = false;
 		for (Customer customer2 : customers) {
 			if (customer2.getId() == customer.getId()) {
-              chek = true;
+				chek = true;
 			}
 		}
-		if (chek== false) {
+		if (chek == false) {
 			throw new ExistEx("Customer doesn't exist");
 		}
 		Connection connection = null;
@@ -101,10 +101,10 @@ public class CustomerDBDAO implements CustomerDAO {
 		boolean chek = false;
 		for (Customer customer2 : customers) {
 			if (customer2.getId() == customer.getId()) {
-              chek = true;
+				chek = true;
 			}
 		}
-		if (chek== false) {
+		if (chek == false) {
 			throw new ExistEx("Customer doesn't exist");
 		}
 		Connection connection = null;
@@ -137,7 +137,18 @@ public class CustomerDBDAO implements CustomerDAO {
 
 	// get Customer By Id
 	@Override
-	public Customer getCustomer(long id) throws SQLException, InterruptedException {
+	public Customer getCustomer(long id) throws SQLException, InterruptedException, ExistEx {
+		CustomerDBDAO customerDBDAO = new CustomerDBDAO();
+		ArrayList<Customer> customers = customerDBDAO.getAllCustomer();
+		boolean chek = false;
+		for (Customer customer2 : customers) {
+			if (customer2.getId() == id) {
+				chek = true;
+			}
+		}
+		if (chek == false) {
+			throw new ExistEx("Customer doesn't exist");
+		}
 		Customer customer = new Customer();
 		Connection connection = null;
 		try {
@@ -217,7 +228,22 @@ public class CustomerDBDAO implements CustomerDAO {
 
 	// get All Coupons by Customer
 	@Override
-	public ArrayList<Coupon> getCoupons(Customer customer) throws SQLException, InterruptedException, DateProblem {
+	public ArrayList<Coupon> getCoupons(Customer customer)
+			throws SQLException, InterruptedException, DateProblem, ExistEx {
+		CustomerDBDAO customerDBDAO = new CustomerDBDAO();
+		
+		ArrayList<Customer> customers = customerDBDAO.getAllCustomer();
+		
+		boolean chek = false;
+		
+		for (Customer customer2 : customers) {
+			if (customer2.getId() == customer.getId()) {
+				chek = true;
+			}
+		}
+		if (chek == false) {
+			throw new ExistEx("Customer doesn't exist");
+		}
 		CustomerCouponDBDAO customerCouponDBDAO = new CustomerCouponDBDAO();
 		ArrayList<CustomerCouponDBDAO> list = customerCouponDBDAO.getCustomerCouponByCustId(customer.getId());
 

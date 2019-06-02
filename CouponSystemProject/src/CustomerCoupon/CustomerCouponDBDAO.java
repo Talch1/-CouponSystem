@@ -14,6 +14,7 @@ import Customer.Customer;
 import DataBase.ConnectionPool;
 import Exeptions.CouponException;
 import Exeptions.DateProblem;
+import Exeptions.ExistEx;
 
 public class CustomerCouponDBDAO implements CustomerCouponDAO {
 
@@ -143,7 +144,7 @@ public class CustomerCouponDBDAO implements CustomerCouponDAO {
 
 	
 	// get all purchased Coupons by Customer
-	public ArrayList<Coupon> getAllpurchoiseCoupons(Customer customer) throws InterruptedException, SQLException, DateProblem {
+	public ArrayList<Coupon> getAllpurchoiseCoupons(Customer customer) throws InterruptedException, SQLException, DateProblem, ExistEx {
 		ArrayList<CustomerCouponDBDAO> list = getCustomerCouponByCustId(customer.getId());
 
 		CouponDBDAO couponDBDAO = new CouponDBDAO();
@@ -155,7 +156,7 @@ public class CustomerCouponDBDAO implements CustomerCouponDAO {
 	}
 
 	// Get all purchased coupons by price
-	public ArrayList<Coupon> getAllPurchaiseCouponByPrice(double price,Customer customer) throws SQLException, InterruptedException, DateProblem {
+	public ArrayList<Coupon> getAllPurchaiseCouponByPrice(double price,Customer customer) throws SQLException, InterruptedException, DateProblem, ExistEx {
 		ArrayList<Coupon> alloupons = new ArrayList<>();
 		ArrayList<Coupon> byprice = new ArrayList<>();
 		alloupons = getAllpurchoiseCoupons(customer);
@@ -169,7 +170,7 @@ public class CustomerCouponDBDAO implements CustomerCouponDAO {
 	}
 
 	// Get all purchased coupons by type
-	public ArrayList<Coupon> getAllPurchaiseCouponByType(CouponType type,Customer customer) throws SQLException, InterruptedException, DateProblem {
+	public ArrayList<Coupon> getAllPurchaiseCouponByType(CouponType type,Customer customer) throws SQLException, InterruptedException, DateProblem, ExistEx {
 		ArrayList<Coupon> alloupons = new ArrayList<>();
 		ArrayList<Coupon> bytype = new ArrayList<>();
 		alloupons = getAllpurchoiseCoupons(customer);

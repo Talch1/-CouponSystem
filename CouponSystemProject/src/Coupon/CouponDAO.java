@@ -21,9 +21,9 @@ public interface CouponDAO {
 	public Collection<Coupon> getAllCoupons() throws SQLException, InterruptedException, DateProblem;
 
 	// get Coupon By Id
-	public Coupon getCoupon(long id) throws SQLException, InterruptedException, DateProblem;
+	public Coupon getCoupon(long id) throws SQLException, InterruptedException, DateProblem, ExistEx;
 
 	// get Coupon by Type
-	public Collection<Coupon> getCouponByType(CouponType type) throws SQLException, InterruptedException, DateProblem;
+	public Collection<Coupon> getCouponByType(CouponType type) throws SQLException, InterruptedException, DateProblem, ExistEx;
 
 }
