@@ -31,7 +31,10 @@ public class CouponSystem {
 		DailyCouponExpirationTask.stopp();
 		ConnectionPool.getInstance().removeAllConnections();
 	}
-
+//Delete all tables
+	public void name() throws SQLException, InterruptedException {
+		database.dropAllTables();
+	}
 	// Create All tables
 	public void createAllTables() throws SQLException, InterruptedException {
 

@@ -24,8 +24,9 @@ public class CompanyDBDAO implements CompanyDAO {
 	public void createCompany(Company company) throws SQLException, InterruptedException {
 
 		Connection connection = null;
-
+		System.out.println("hhh");
 		connection = ConnectionPool.getInstance().getConnection();
+
 
 		String query = " insert into company (id ,COMPNAME ,password , email)" + " values (?, ?, ?, ?)";
 

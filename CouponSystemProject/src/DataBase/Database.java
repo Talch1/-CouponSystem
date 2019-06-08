@@ -22,11 +22,12 @@ public class Database {
 
 	// Drop all Tables
 	public void dropAllTables() throws SQLException, InterruptedException {
+		dropCustomerCoupon();
+		dropCompanyCoupon();
 		dropCompany();
 		dropCoupon();
 		dropCustomer();
-		dropCustomerCoupon();
-		dropCompanyCoupon();
+		
 	}
 
 	// Create table company
@@ -159,7 +160,7 @@ public class Database {
 		} finally {
 			ConnectionPool.getInstance().returnConnection(connection);
 		}
-		System.out.println("Table companyCoupon dropet");
+		System.out.println("Table CompanyCoupon dropet");
 	}
 
 	// Drop table CustumerCoupon
@@ -243,6 +244,6 @@ public class Database {
 		} finally {
 			ConnectionPool.getInstance().returnConnection(connection);
 		}
-		System.out.println("Table company dropet");
+		System.out.println("Table Company dropet");
 	}
 }

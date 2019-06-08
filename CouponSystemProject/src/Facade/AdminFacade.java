@@ -20,14 +20,9 @@ public class AdminFacade implements CouponClientFasade {
 	public void createCompany(Company company) throws SQLException, InterruptedException, ExistEx {
 		CompanyDBDAO companyDBDAO = new CompanyDBDAO();
 		ArrayList<Company> allComp = new ArrayList<>();
-		allComp = companyDBDAO.getAllCompany();
+	
 
-	for (Company company2 : allComp) {
-		if (company2.getCompName().equals(company.getCompName())) {
-			throw new ExistEx("Company whis this name exist");
-	} 
-
-	}
+System.out.println("g");
 	companyDBDAO.createCompany(company);
 	}
 	// delete Company from table
