@@ -12,6 +12,7 @@ import CustomerCoupon.CustomerCouponDBDAO;
 
 import java.sql.Date;
 import DataBase.ConnectionPool;
+import DataBase.CouponSystem;
 import Exeptions.DateProblem;
 import Exeptions.ExistEx;
 
@@ -343,25 +344,13 @@ CustomerCouponDBDAO couponDBDAO = new CustomerCouponDBDAO();
 	@Override
 	public ArrayList<Coupon> getCouponByType(CouponType type) throws SQLException, InterruptedException, DateProblem, ExistEx {
 
-
-		CouponDBDAO cDbdao = new CouponDBDAO();
-		ArrayList<Coupon> coupons1 = cDbdao.getAllCoupons();
-		boolean chek = false;
-		for (Coupon coupon1 : coupons1) {
-			if (coupon1.getType().equals(type)) {
-				chek = true;
-			}
-		}
-		if (chek == false) {
-			throw new ExistEx("Coupon whis this type doesn't exist");
-		}
+	
 		Connection connection = null;
-
 		connection = ConnectionPool.getInstance().getConnection();
-
+		
 		ArrayList<Coupon> coupons = new ArrayList<>();
 		String sql = "SELECT * FROM coupon WHERE Type = ?";
-
+	
 		try {
 			PreparedStatement preparedStatement = null;
 
@@ -415,6 +404,7 @@ CustomerCouponDBDAO couponDBDAO = new CustomerCouponDBDAO();
 				coupon.setImage(resultSet.getString(9));
 
 				coupons.add(coupon);
+				
 
 			}
 		} catch (SQLException e) {

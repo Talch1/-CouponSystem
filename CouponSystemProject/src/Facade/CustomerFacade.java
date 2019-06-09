@@ -63,6 +63,8 @@ public class CustomerFacade implements CouponClientFasade {
 	public ArrayList<Coupon> getAllPurchisedCouponsByType(CouponType type, Customer customer)
 			throws SQLException, InterruptedException, DateProblem, ExistEx {
 		CustomerCouponDBDAO customerCouponDBDAO = new CustomerCouponDBDAO();
+
+		
 		return customerCouponDBDAO.getAllPurchaiseCouponByType(type, customer);
 	}
 

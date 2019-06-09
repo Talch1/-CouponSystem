@@ -98,11 +98,11 @@ public class Test {
 		Date date = new Date(System.currentTimeMillis());
 		Date date1 = new Date(System.currentTimeMillis() + (1000 * 24 * 5 * 60 * 60));
 		CouponType couponType = CouponType.ELECTRICITY;
-		CouponType couponType2 = CouponType.FOOD;
+		CouponType couponType2 = CouponType.HEALTH;
 
 		Coupon coupon = new Coupon(1, "woow", date, date1, 5, couponType, " for club card", 15.5, "http:googleimage");
 		Coupon coupon2 = new Coupon(2, "1+1", date, date1, 5, couponType, "new", 112.3, "http:googleimage");
-		Coupon coupon3 = new Coupon(3, "new", date, date1, 5, couponType, "to weeks only", 222.3, "http:googleimage");
+		Coupon coupon3 = new Coupon(3, "new", date, date1, 5, couponType2, "to weeks only", 222.3, "http:googleimage");
 
 		Company comp = new Company(3, "Canon", "takephoto", "canon1234@gmail.com", null);
 
@@ -137,13 +137,13 @@ public class Test {
         CouponType couponType2 = CouponType.FOOD;
 		Coupon coupon = new Coupon(1, "woow", date, date1, 5, couponType, " for club card", 15.5, "http:googleimage");
 		Coupon coupon3 = new Coupon(3, "new", date, date1, 5, couponType2, "to weeks only", 222.3, "http:googleimage");
-		customerFacade.buyCoupon(1, cust);
 		customerFacade.buyCoupon(3, cust);
-
-		System.out.println(customerFacade.getAllPurchisedCouponsByPrice(333.3, cust));
-		System.out.println();
+		customerFacade.buyCoupon(1, cust);
+		System.out.println("");
+		System.out.println(customerFacade.getAllPurchisedCouponsByPrice(22.5, cust));
+		System.out.println("");
 		System.out.println(customerFacade.getAllPurchisedCouponsByType(couponType, cust));
-		System.out.println();
+		System.out.println("");
 		System.out.println(customerFacade.getAllPurchasedCoupons(cust));
 		System.out.println();
 		System.out.println(customerFacade.getAllPurchisedCouponByDate(date2, cust));

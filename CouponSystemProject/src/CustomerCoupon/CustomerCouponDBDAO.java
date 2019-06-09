@@ -114,9 +114,6 @@ public class CustomerCouponDBDAO implements CustomerCouponDAO {
 
 		try {
 			connection = ConnectionPool.getInstance().getConnection();
-		
-
-		CustomerCouponDBDAO customerCouponDBDAO = new CustomerCouponDBDAO();
 		PreparedStatement preparedStatement = null;
 		String sql = "SELECT * FROM CustomerCoupon WHERE CUSTID = ?";
 
@@ -127,10 +124,10 @@ public class CustomerCouponDBDAO implements CustomerCouponDAO {
 		
 			ResultSet rs = preparedStatement.executeQuery();
 			while (rs.next()) {
-
-				customerCouponDBDAO.setCustId(rs.getLong(1));
-				customerCouponDBDAO.setCouponId(rs.getLong(2));
-				list.add(customerCouponDBDAO);
+				CustomerCouponDBDAO customerCouponDBDAO1 = new CustomerCouponDBDAO();
+				customerCouponDBDAO1.setCustId(rs.getLong(1));
+				customerCouponDBDAO1.setCouponId(rs.getLong(2));
+				list.add(customerCouponDBDAO1);
 			}
 
 		} catch (SQLException e) {
@@ -139,7 +136,7 @@ public class CustomerCouponDBDAO implements CustomerCouponDAO {
 		} finally {
 			ConnectionPool.getInstance().returnConnection(connection);
 		}
-		
+	
 		return list;
 	}
 
@@ -150,8 +147,9 @@ public class CustomerCouponDBDAO implements CustomerCouponDAO {
 
 		CouponDBDAO couponDBDAO = new CouponDBDAO();
 		ArrayList<Coupon> coupons = new ArrayList<Coupon>();
-		for (int i = 0; i < list.size(); i++) {
-			coupons.add(couponDBDAO.getCoupon(list.get(i).getCouponId()));
+		for (CustomerCouponDBDAO c : list) {
+			coupons.add(couponDBDAO.getCoupon(c.couponId));
+	
 		}
 		return coupons;
 	}
@@ -163,6 +161,7 @@ public class CustomerCouponDBDAO implements CustomerCouponDAO {
 		alloupons = getAllpurchoiseCoupons(customer);
 		for (Coupon coupon : alloupons) {
 			if (coupon.getPrice() < price) {
+				
 				byprice.add(coupon);
 			}
 		}
@@ -188,9 +187,13 @@ public class CustomerCouponDBDAO implements CustomerCouponDAO {
 		ArrayList<Coupon> alloupons = new ArrayList<>();
 		ArrayList<Coupon> bytype = new ArrayList<>();
 		alloupons = getAllpurchoiseCoupons(customer);
+		
 		for (Coupon coupon : alloupons) {
-			if (coupon.getType() == type) {
+			if (coupon.getType().equals(type)) {
+				
+			
 				bytype.add(coupon);
+				
 			}
 		}
 		return bytype;

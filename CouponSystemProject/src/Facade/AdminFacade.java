@@ -21,8 +21,6 @@ public class AdminFacade implements CouponClientFasade {
 		CompanyDBDAO companyDBDAO = new CompanyDBDAO();
 		ArrayList<Company> allComp = new ArrayList<>();
 	
-
-System.out.println("g");
 	companyDBDAO.createCompany(company);
 	}
 	// delete Company from table
