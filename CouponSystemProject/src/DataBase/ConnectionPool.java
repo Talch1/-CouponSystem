@@ -3,13 +3,15 @@ package DataBase;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-
+import java.util.Iterator;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
+import Exeptions.SizeEx;
+
 public class ConnectionPool {
 	// Data members
-	private final int MAX = 10;
+	private final int MAX = 15;;
 
 	BlockingQueue<Connection> blockingQueue = new LinkedBlockingQueue<Connection>(MAX);
 	String sql = "jdbc:mysql://localhost:3306/new?autoReconnect=true&useSSL=false";
@@ -38,8 +40,13 @@ public class ConnectionPool {
 	}
 
 	// return connection
-	public synchronized void returnConnection(Connection connection) throws InterruptedException {
-		blockingQueue.offer(connection);
+	public synchronized void returnConnection(Connection connection) throws InterruptedException, SizeEx {
+		if (blockingQueue.size() >13 ) {
+throw new SizeEx("full");
+
+		} else {
+			blockingQueue.offer(connection);
+		}
 
 	}
 

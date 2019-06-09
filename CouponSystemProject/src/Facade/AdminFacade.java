@@ -3,6 +3,7 @@ package Facade;
 import DataBase.ClientType;
 import Exeptions.ExistEx;
 import Exeptions.LoginEx;
+import Exeptions.SizeEx;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -17,7 +18,7 @@ import CustomerCoupon.CustomerCouponDBDAO;
 public class AdminFacade implements CouponClientFasade {
 
 	// insert Company to Table
-	public void createCompany(Company company) throws SQLException, InterruptedException, ExistEx {
+	public void createCompany(Company company) throws SQLException, InterruptedException, ExistEx, SizeEx {
 		CompanyDBDAO companyDBDAO = new CompanyDBDAO();
 		ArrayList<Company> allComp = new ArrayList<>();
 	
@@ -26,7 +27,7 @@ System.out.println("g");
 	companyDBDAO.createCompany(company);
 	}
 	// delete Company from table
-	public void removeCompany(Company company) throws SQLException, InterruptedException, ExistEx {
+	public void removeCompany(Company company) throws SQLException, InterruptedException, ExistEx, SizeEx {
 		CompanyDBDAO companyDBDAO = new CompanyDBDAO();
 		CompanyCouponDBDAO companyCouponDBDAO = new CompanyCouponDBDAO();
 		try {
@@ -41,7 +42,7 @@ System.out.println("g");
 	}
 
 	// update Company
-	public void updateCompany(Company company) throws InterruptedException, ExistEx {
+	public void updateCompany(Company company) throws InterruptedException, ExistEx, SizeEx {
 		CompanyDBDAO companyDBDAO = new CompanyDBDAO();
 		try {
 			companyDBDAO.updateCompany(company);
@@ -53,21 +54,21 @@ System.out.println("g");
 	}
 
 	// get Company By Id
-	public Company getCompany(int id) throws SQLException, InterruptedException, ExistEx {
+	public Company getCompany(int id) throws SQLException, InterruptedException, ExistEx, SizeEx {
 		CompanyDBDAO companyDBDAO = new CompanyDBDAO();
 		return companyDBDAO.getCompany(id);
 
 	}
 
 	// get All Company's
-	public Collection<Company> getAllCompanyes() throws SQLException, InterruptedException {
+	public Collection<Company> getAllCompanyes() throws SQLException, InterruptedException, SizeEx {
 		CompanyDBDAO companyDBDAO = new CompanyDBDAO();
 		return companyDBDAO.getAllCompany();
 
 	}
 
 	// insert to Customer Table
-	public void createCustomer(Customer cust) throws SQLException, InterruptedException, ExistEx {
+	public void createCustomer(Customer cust) throws SQLException, InterruptedException, ExistEx, SizeEx {
 
 		boolean chek = false;
 		CustomerDBDAO customerDBDAO = new CustomerDBDAO();
@@ -87,7 +88,7 @@ System.out.println("g");
 	}
 
 	// delete from Customer Table
-	public void removeCustomer(Customer cust) throws SQLException, InterruptedException, ExistEx {
+	public void removeCustomer(Customer cust) throws SQLException, InterruptedException, ExistEx, SizeEx {
 		CustomerCouponDBDAO customerCouponDBDAO = new CustomerCouponDBDAO();
 		CustomerDBDAO customerDBDAO = new CustomerDBDAO();
 		customerDBDAO.removeCustomer(cust);
@@ -96,20 +97,20 @@ System.out.println("g");
 	}
 
 	// update Customer
-	public void updateCustomer(Customer cust) throws SQLException, InterruptedException, ExistEx {
+	public void updateCustomer(Customer cust) throws SQLException, InterruptedException, ExistEx, SizeEx {
 		CustomerDBDAO customerDBDAO = new CustomerDBDAO();
 		customerDBDAO.updateCustomer(cust);
 	}
 
 	// get Customer By ID
-	public Customer getCustomer(int id) throws SQLException, InterruptedException, ExistEx {
+	public Customer getCustomer(int id) throws SQLException, InterruptedException, ExistEx, SizeEx {
 		CustomerDBDAO customerDBDAO = new CustomerDBDAO();
 		return customerDBDAO.getCustomer(id);
 
 	}
 
 	// get All Customers
-	public Collection<Customer> getAllCustomers() throws SQLException, InterruptedException {
+	public Collection<Customer> getAllCustomers() throws SQLException, InterruptedException, SizeEx {
 		CustomerDBDAO customerDBDAO = new CustomerDBDAO();
 		ArrayList<Customer> list = customerDBDAO.getAllCustomer();
 		return list;

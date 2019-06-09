@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import Coupon.CouponDBDAO;
 import Exeptions.DateProblem;
 import Exeptions.ExistEx;
+import Exeptions.SizeEx;
 
 
 public class DailyCouponExpirationTask implements Runnable {
@@ -30,6 +31,9 @@ public class DailyCouponExpirationTask implements Runnable {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (DateProblem e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (SizeEx e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}

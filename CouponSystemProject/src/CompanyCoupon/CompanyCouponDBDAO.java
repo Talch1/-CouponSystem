@@ -14,6 +14,7 @@ import Coupon.CouponDBDAO;
 import DataBase.ConnectionPool;
 import Exeptions.DateProblem;
 import Exeptions.ExistEx;
+import Exeptions.SizeEx;
 
 public class CompanyCouponDBDAO implements CompanyCouponDAO {
 
@@ -61,7 +62,12 @@ public class CompanyCouponDBDAO implements CompanyCouponDAO {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
-			ConnectionPool.getInstance().returnConnection(connection);
+			try {
+				ConnectionPool.getInstance().returnConnection(connection);
+			} catch (SizeEx e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		System.out.println("Dfeleted from table CompanyCoupon");
 
@@ -69,7 +75,7 @@ public class CompanyCouponDBDAO implements CompanyCouponDAO {
 
 	// Get coupon in Companys by id
 	@Override
-	public ArrayList<CompanyCouponDBDAO> getCompanyCoupon(long compid) throws InterruptedException, SQLException {
+	public ArrayList<CompanyCouponDBDAO> getCompanyCoupon(long compid) throws InterruptedException, SQLException, SizeEx {
 		ArrayList<CompanyCouponDBDAO> list = new ArrayList<>();
 		Connection connection = null;
 
@@ -101,7 +107,7 @@ public class CompanyCouponDBDAO implements CompanyCouponDAO {
 
 	}
 
-	public ArrayList<CompanyCouponDAO> getCompanyCoupon() throws InterruptedException, SQLException {
+	public ArrayList<CompanyCouponDAO> getCompanyCoupon() throws InterruptedException, SQLException, SizeEx {
 		ArrayList<CompanyCouponDAO> list = new ArrayList<>();
 		Connection connection = null;
 
@@ -133,7 +139,7 @@ public class CompanyCouponDBDAO implements CompanyCouponDAO {
 
 	// get all coupons in Company
 	@Override
-	public ArrayList<CompanyCouponDBDAO> getAllCompanyCoupon() throws SQLException, InterruptedException {
+	public ArrayList<CompanyCouponDBDAO> getAllCompanyCoupon() throws SQLException, InterruptedException, SizeEx {
 		ArrayList<CompanyCouponDBDAO> companyCouponDBDAOs = new ArrayList<>();
 		Connection connection = null;
 
@@ -172,7 +178,7 @@ public class CompanyCouponDBDAO implements CompanyCouponDAO {
 
 	// Company delete all Coupons
 	@Override
-	public void deletefromCompcoupByCompID(long id) throws SQLException, InterruptedException {
+	public void deletefromCompcoupByCompID(long id) throws SQLException, InterruptedException, SizeEx {
 		Connection connection = null;
 		try {
 			connection = ConnectionPool.getInstance().getConnection();
@@ -204,7 +210,7 @@ public class CompanyCouponDBDAO implements CompanyCouponDAO {
 		return "CompanyCouponDBDAO [compId=" + compId + ", couponId=" + couponId + "]";
 	}
 
-	public void companyCreateCoupon(long compId, long coupId) throws SQLException, InterruptedException {
+	public void companyCreateCoupon(long compId, long coupId) throws SQLException, InterruptedException, SizeEx {
 
 		Connection connection = null;
 
@@ -243,7 +249,7 @@ public class CompanyCouponDBDAO implements CompanyCouponDAO {
 
 	}
 
-	public ArrayList<Coupon> allCouponsOfCompany() throws SQLException, InterruptedException, DateProblem, ExistEx {
+	public ArrayList<Coupon> allCouponsOfCompany() throws SQLException, InterruptedException, DateProblem, ExistEx, SizeEx {
 		CouponDBDAO coupon = new CouponDBDAO();
 		ArrayList<Coupon> allCoupons = new ArrayList<>();
 		ArrayList<Long> ids = new ArrayList<>();

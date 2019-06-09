@@ -14,11 +14,12 @@ import DataBase.ClientType;
 import Exeptions.DateProblem;
 import Exeptions.ExistEx;
 import Exeptions.LoginEx;
+import Exeptions.SizeEx;
 
 public class CompanyFacade implements CouponClientFasade {
 
 	// Insert Coupon to Table
-	public void createCoupon(Coupon coupon, Company company) throws SQLException, InterruptedException, ExistEx, DateProblem {
+	public void createCoupon(Coupon coupon, Company company) throws SQLException, InterruptedException, ExistEx, DateProblem, SizeEx {
 
 		CompanyCouponDBDAO companyCouponDBDAO = new CompanyCouponDBDAO();
 		ArrayList<Coupon> allCoup = new ArrayList<>();
@@ -36,7 +37,7 @@ public class CompanyFacade implements CouponClientFasade {
 	}
 
 	// Delete Coupon from Table
-	public void removeCoupon(Coupon coupon) throws SQLException, InterruptedException, ExistEx, DateProblem {
+	public void removeCoupon(Coupon coupon) throws SQLException, InterruptedException, ExistEx, DateProblem, SizeEx {
 		CouponDBDAO couponDBDAO = new CouponDBDAO();
 		CompanyCouponDBDAO companyCouponDBDAO = new CompanyCouponDBDAO();
 		companyCouponDBDAO.removeCompanyCoupon(coupon);
@@ -44,20 +45,20 @@ public class CompanyFacade implements CouponClientFasade {
 	}
 
 	// Update Coupon
-	public void updateCoupon(Coupon coupon) throws SQLException, InterruptedException, ExistEx, DateProblem {
+	public void updateCoupon(Coupon coupon) throws SQLException, InterruptedException, ExistEx, DateProblem, SizeEx {
 		CouponDBDAO couponDBDAO = new CouponDBDAO();
 		couponDBDAO.updateCoupon(coupon);
 
 	}
 
 	// Get Coupon by id
-	public Coupon getCoupon(int id) throws SQLException, InterruptedException, DateProblem, ExistEx {
+	public Coupon getCoupon(int id) throws SQLException, InterruptedException, DateProblem, ExistEx, SizeEx {
 		CouponDBDAO couponDBDAO = new CouponDBDAO();
 		return couponDBDAO.getCoupon(id);
 	}
 
 	// Get All Coupons
-	public ArrayList<Coupon> getAllCoupons(Company company) throws SQLException, InterruptedException, DateProblem, ExistEx {
+	public ArrayList<Coupon> getAllCoupons(Company company) throws SQLException, InterruptedException, DateProblem, ExistEx, SizeEx {
 		CouponDBDAO couponDBDAO = new CouponDBDAO();
 		CompanyCouponDBDAO companyCouponDBDAO = new CompanyCouponDBDAO();
 		ArrayList<Coupon> coupons = new ArrayList<>();
@@ -70,7 +71,7 @@ public class CompanyFacade implements CouponClientFasade {
 	}
 
 	// Get All Coupons By Type
-	public ArrayList<Coupon> getCouponByType(CouponType type) throws SQLException, InterruptedException, DateProblem, ExistEx {
+	public ArrayList<Coupon> getCouponByType(CouponType type) throws SQLException, InterruptedException, DateProblem, ExistEx, SizeEx {
 		CouponDBDAO couponDBDAO = new CouponDBDAO();
 		return couponDBDAO.getCouponByType(type);
 
@@ -104,7 +105,7 @@ public class CompanyFacade implements CouponClientFasade {
 	}
 
 	// Login to CompanyFacade
-	public CouponClientFasade login(String name, String password, ClientType c) throws InterruptedException, LoginEx {
+	public CouponClientFasade login(String name, String password, ClientType c) throws InterruptedException, LoginEx, SizeEx {
 		CompanyDBDAO companyDBDAO = new CompanyDBDAO();
 		{
 			if (companyDBDAO.login(name, password)) {

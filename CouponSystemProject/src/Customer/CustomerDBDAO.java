@@ -14,11 +14,12 @@ import CustomerCoupon.CustomerCouponDBDAO;
 import DataBase.ConnectionPool;
 import Exeptions.DateProblem;
 import Exeptions.ExistEx;
+import Exeptions.SizeEx;
 
 public class CustomerDBDAO implements CustomerDAO {
 	// create Customer(insert to Customer)
 	@Override
-	public void createCustomer(Customer customer) throws SQLException, InterruptedException {
+	public void createCustomer(Customer customer) throws SQLException, InterruptedException, SizeEx {
 
 		Connection connection = null;
 		try {
@@ -55,7 +56,7 @@ public class CustomerDBDAO implements CustomerDAO {
 
 	// delete Customer (delete from Customer)
 	@Override
-	public void removeCustomer(Customer customer) throws SQLException, InterruptedException, ExistEx {
+	public void removeCustomer(Customer customer) throws SQLException, InterruptedException, ExistEx, SizeEx {
 		CustomerDBDAO customerDBDAO = new CustomerDBDAO();
 		ArrayList<Customer> customers = customerDBDAO.getAllCustomer();
 		boolean chek = false;
@@ -95,7 +96,7 @@ public class CustomerDBDAO implements CustomerDAO {
 
 	// update Customer(update Customer)
 	@Override
-	public void updateCustomer(Customer customer) throws SQLException, InterruptedException, ExistEx {
+	public void updateCustomer(Customer customer) throws SQLException, InterruptedException, ExistEx, SizeEx {
 		CustomerDBDAO customerDBDAO = new CustomerDBDAO();
 		ArrayList<Customer> customers = customerDBDAO.getAllCustomer();
 		boolean chek = false;
@@ -137,7 +138,7 @@ public class CustomerDBDAO implements CustomerDAO {
 
 	// get Customer By Id
 	@Override
-	public Customer getCustomer(long id) throws SQLException, InterruptedException, ExistEx {
+	public Customer getCustomer(long id) throws SQLException, InterruptedException, ExistEx, SizeEx {
 		CustomerDBDAO customerDBDAO = new CustomerDBDAO();
 		ArrayList<Customer> customers = customerDBDAO.getAllCustomer();
 		boolean chek = false;
@@ -187,7 +188,7 @@ public class CustomerDBDAO implements CustomerDAO {
 
 	// get All Customers
 	@Override
-	public ArrayList<Customer> getAllCustomer() throws SQLException, InterruptedException {
+	public ArrayList<Customer> getAllCustomer() throws SQLException, InterruptedException, SizeEx {
 
 		ArrayList<Customer> customers = new ArrayList<>();
 
@@ -229,7 +230,7 @@ public class CustomerDBDAO implements CustomerDAO {
 	// get All Coupons by Customer
 	@Override
 	public ArrayList<Coupon> getCoupons(Customer customer)
-			throws SQLException, InterruptedException, DateProblem, ExistEx {
+			throws SQLException, InterruptedException, DateProblem, ExistEx, SizeEx {
 		CustomerDBDAO customerDBDAO = new CustomerDBDAO();
 		
 		ArrayList<Customer> customers = customerDBDAO.getAllCustomer();
@@ -258,7 +259,7 @@ public class CustomerDBDAO implements CustomerDAO {
 
 	// Login to Customer
 	@Override
-	public boolean login(String custName, String password) throws InterruptedException {
+	public boolean login(String custName, String password) throws InterruptedException, SizeEx {
 
 		Customer customer = new Customer();
 		Connection connection = null;

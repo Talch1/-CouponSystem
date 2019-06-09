@@ -5,13 +5,15 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
+import Exeptions.SizeEx;
+
 public class Database {
 
 	public String getDriverData() {
 		return "com.mysql.jdbc.Driver";
 	}
 
-	public void createAllTables() throws SQLException, InterruptedException {
+	public void createAllTables() throws SQLException, InterruptedException, SizeEx {
 		createCustomer();
 		createCompany();
 		createCoupon();
@@ -21,7 +23,7 @@ public class Database {
 	}
 
 	// Drop all Tables
-	public void dropAllTables() throws SQLException, InterruptedException {
+	public void dropAllTables() throws SQLException, InterruptedException, SizeEx {
 		dropCustomerCoupon();
 		dropCompanyCoupon();
 		dropCompany();
@@ -31,7 +33,7 @@ public class Database {
 	}
 
 	// Create table company
-	public void createCompany() throws SQLException, InterruptedException {
+	public void createCompany() throws SQLException, InterruptedException, SizeEx {
 		Connection connection = null;
 		try {
 			connection = ConnectionPool.getInstance().getConnection();
@@ -51,7 +53,7 @@ public class Database {
 	}
 
 	// Create table customer
-	public void createCustomer() throws SQLException, InterruptedException {
+	public void createCustomer() throws SQLException, InterruptedException, SizeEx {
 		Connection connection = null;
 		try {
 			connection = ConnectionPool.getInstance().getConnection();
@@ -70,7 +72,7 @@ public class Database {
 	}
 
 	// Create table coupon
-	public void createCoupon() throws SQLException, InterruptedException {
+	public void createCoupon() throws SQLException, InterruptedException, SizeEx {
 		Connection connection = null;
 		try {
 			connection = ConnectionPool.getInstance().getConnection();
@@ -96,7 +98,7 @@ public class Database {
 	}
 
 	// Create CustomerCoupon
-	public void createCustomerCoupon() throws SQLException, InterruptedException {
+	public void createCustomerCoupon() throws SQLException, InterruptedException, SizeEx {
 		Connection connection = null;
 		try {
 			connection = ConnectionPool.getInstance().getConnection();
@@ -119,7 +121,7 @@ public class Database {
 	}
 
 	// Create table company coupon
-	public void createCompanyCoupon() throws SQLException, InterruptedException {
+	public void createCompanyCoupon() throws SQLException, InterruptedException, SizeEx {
 		Connection connection = null;
 		try {
 			connection = ConnectionPool.getInstance().getConnection();
@@ -143,7 +145,7 @@ public class Database {
 
 
 	// Create table CompanyCoupon
-	public void dropCompanyCoupon() throws SQLException, InterruptedException {
+	public void dropCompanyCoupon() throws SQLException, InterruptedException, SizeEx {
 		Connection connection = null;
 		try {
 			connection = ConnectionPool.getInstance().getConnection();
@@ -164,7 +166,7 @@ public class Database {
 	}
 
 	// Drop table CustumerCoupon
-	public void dropCustomerCoupon() throws SQLException, InterruptedException {
+	public void dropCustomerCoupon() throws SQLException, InterruptedException, SizeEx {
 		Connection connection = null;
 		try {
 			connection = ConnectionPool.getInstance().getConnection();
@@ -185,7 +187,7 @@ public class Database {
 	}
 
 	// Drop table Coupon
-	public void dropCoupon() throws SQLException, InterruptedException {
+	public void dropCoupon() throws SQLException, InterruptedException, SizeEx {
 		Connection connection = null;
 		try {
 			connection = ConnectionPool.getInstance().getConnection();
@@ -206,7 +208,7 @@ public class Database {
 	}
 
 	// Drop table Customer
-	public void dropCustomer() throws SQLException, InterruptedException {
+	public void dropCustomer() throws SQLException, InterruptedException, SizeEx {
 		Connection connection = null;
 		try {
 			connection = ConnectionPool.getInstance().getConnection();
@@ -227,7 +229,7 @@ public class Database {
 	}
 
 	// Drop table Company
-	public void dropCompany() throws SQLException, InterruptedException {
+	public void dropCompany() throws SQLException, InterruptedException, SizeEx {
 		Connection connection = null;
 		try {
 			connection = ConnectionPool.getInstance().getConnection();

@@ -14,11 +14,12 @@ import java.sql.Date;
 import DataBase.ConnectionPool;
 import Exeptions.DateProblem;
 import Exeptions.ExistEx;
+import Exeptions.SizeEx;
 
 public class CouponDBDAO implements CouponDAO {
 
 	// create Coupon(insert to Coupon)
-	public void createCoupon(Coupon coupon) throws SQLException, InterruptedException {
+	public void createCoupon(Coupon coupon) throws SQLException, InterruptedException, SizeEx {
 
 		Connection connection = null;
 
@@ -55,7 +56,7 @@ public class CouponDBDAO implements CouponDAO {
 	}
 
 	// remove Coupon(delete from Coupon)
-	public void removeCoupon(Coupon coupon) throws SQLException, InterruptedException, ExistEx, DateProblem {
+	public void removeCoupon(Coupon coupon) throws SQLException, InterruptedException, ExistEx, DateProblem, SizeEx {
 
 
 		CouponDBDAO cDbdao = new CouponDBDAO();
@@ -89,7 +90,7 @@ public class CouponDBDAO implements CouponDAO {
 		}
 	}
 
-	public void deleteExpirdCoup(Date date) throws SQLException, InterruptedException, ExistEx, DateProblem {
+	public void deleteExpirdCoup(Date date) throws SQLException, InterruptedException, ExistEx, DateProblem, SizeEx {
 
 		ArrayList<Coupon> list = getAllCoupons();
 CustomerCouponDBDAO couponDBDAO = new CustomerCouponDBDAO();
@@ -103,7 +104,7 @@ CustomerCouponDBDAO couponDBDAO = new CustomerCouponDBDAO();
 	}
 
 	// update Coupon(all Coupon data members)
-	public void updateCoupon1(Coupon coupon) throws InterruptedException, ExistEx, DateProblem {
+	public void updateCoupon1(Coupon coupon) throws InterruptedException, ExistEx, DateProblem, SizeEx {
 		
 
 
@@ -145,7 +146,7 @@ CustomerCouponDBDAO couponDBDAO = new CustomerCouponDBDAO();
 	}
 
 	// update Coupon(update End date and price)
-	public void updateCoupon(Coupon coupon) throws SQLException, InterruptedException, ExistEx, DateProblem {
+	public void updateCoupon(Coupon coupon) throws SQLException, InterruptedException, ExistEx, DateProblem, SizeEx {
 
 		CouponDBDAO cDbdao = new CouponDBDAO();
 		ArrayList<Coupon> coupons = cDbdao.getAllCoupons();
@@ -184,7 +185,7 @@ CustomerCouponDBDAO couponDBDAO = new CustomerCouponDBDAO();
 
 	// get All Coupons
 	@Override
-	public ArrayList<Coupon> getAllCoupons() throws InterruptedException, DateProblem {
+	public ArrayList<Coupon> getAllCoupons() throws InterruptedException, DateProblem, SizeEx {
 		ArrayList<Coupon> coupons = new ArrayList<>();
 
 		Connection connection = null;
@@ -257,7 +258,7 @@ CustomerCouponDBDAO couponDBDAO = new CustomerCouponDBDAO();
 	}
 
 	// get Coupon By Id
-	public Coupon getCoupon(long id) throws SQLException, InterruptedException, DateProblem, ExistEx {
+	public Coupon getCoupon(long id) throws SQLException, InterruptedException, DateProblem, ExistEx, SizeEx {
 		CouponDBDAO cDbdao = new CouponDBDAO();
 		ArrayList<Coupon> coupons = cDbdao.getAllCoupons();
 		boolean chek = false;
@@ -339,7 +340,7 @@ CustomerCouponDBDAO couponDBDAO = new CustomerCouponDBDAO();
 
 	// get Coupon by Type
 	@Override
-	public ArrayList<Coupon> getCouponByType(CouponType type) throws SQLException, InterruptedException, DateProblem, ExistEx {
+	public ArrayList<Coupon> getCouponByType(CouponType type) throws SQLException, InterruptedException, DateProblem, ExistEx, SizeEx {
 
 
 		CouponDBDAO cDbdao = new CouponDBDAO();
@@ -425,7 +426,7 @@ CustomerCouponDBDAO couponDBDAO = new CustomerCouponDBDAO();
 		return coupons;
 	}
 
-	public ArrayList<Coupon> getCouponByPrice(double price) throws SQLException, InterruptedException, DateProblem, ExistEx {
+	public ArrayList<Coupon> getCouponByPrice(double price) throws SQLException, InterruptedException, DateProblem, ExistEx, SizeEx {
 
 		CouponDBDAO cDbdao = new CouponDBDAO();
 		ArrayList<Coupon> coupons1 = cDbdao.getAllCoupons();
@@ -510,7 +511,7 @@ CustomerCouponDBDAO couponDBDAO = new CustomerCouponDBDAO();
 		return coupons;
 	}
 
-	public ArrayList<Coupon> getCouponByDate(Date date) throws SQLException, InterruptedException, DateProblem, ExistEx {
+	public ArrayList<Coupon> getCouponByDate(Date date) throws SQLException, InterruptedException, DateProblem, ExistEx, SizeEx {
 
 		CouponDBDAO cDbdao = new CouponDBDAO();
 		ArrayList<Coupon> coupons1 = cDbdao.getAllCoupons();

@@ -4,6 +4,7 @@ import java.security.AllPermission;
 import java.sql.SQLException;
 
 import Exeptions.LoginEx;
+import Exeptions.SizeEx;
 import Facade.AdminFacade;
 import Facade.CompanyFacade;
 import Facade.CouponClientFasade;
@@ -32,11 +33,11 @@ public class CouponSystem {
 		ConnectionPool.getInstance().removeAllConnections();
 	}
 //Delete all tables
-	public void name() throws SQLException, InterruptedException {
+	public void name() throws SQLException, InterruptedException, SizeEx {
 		database.dropAllTables();
 	}
 	// Create All tables
-	public void createAllTables() throws SQLException, InterruptedException {
+	public void createAllTables() throws SQLException, InterruptedException, SizeEx {
 
 		database.createAllTables();
 
@@ -48,7 +49,7 @@ public class CouponSystem {
 
 	// Login to Facades
 	public CouponClientFasade login(String name, String password, ClientType clientType)
-			throws LoginEx, InterruptedException {
+			throws LoginEx, InterruptedException, SizeEx {
 		AdminFacade adminFacade = new AdminFacade();
 		CompanyFacade companyFacade = new CompanyFacade();
 		CustomerFacade customerFacade = new CustomerFacade();

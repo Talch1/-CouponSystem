@@ -16,17 +16,16 @@ import Customer.CustomerDBDAO;
 import DataBase.ConnectionPool;
 import Exeptions.DateProblem;
 import Exeptions.ExistEx;
+import Exeptions.SizeEx;
 
 public class CompanyDBDAO implements CompanyDAO {
 
 	// createCompany(insert to company)
 	@Override
-	public void createCompany(Company company) throws SQLException, InterruptedException {
+	public void createCompany(Company company) throws SQLException, InterruptedException, SizeEx {
 
-		Connection connection = null;
 		System.out.println("hhh");
-		connection = ConnectionPool.getInstance().getConnection();
-
+		Connection connection = ConnectionPool.getInstance().getConnection();
 
 		String query = " insert into company (id ,COMPNAME ,password , email)" + " values (?, ?, ?, ?)";
 
@@ -54,7 +53,7 @@ public class CompanyDBDAO implements CompanyDAO {
 
 	// removeCompany(delete from company)
 	@Override
-	public void removeCompany(Company company) throws SQLException, InterruptedException, ExistEx {
+	public void removeCompany(Company company) throws SQLException, InterruptedException, ExistEx, SizeEx {
 		CompanyDBDAO companyDBDAO = new CompanyDBDAO();
 		ArrayList<Company> companies = companyDBDAO.getAllCompany();
 		boolean chek = false;
@@ -66,10 +65,10 @@ public class CompanyDBDAO implements CompanyDAO {
 		if (chek == false) {
 			throw new ExistEx("Company doesn't exist");
 		}
-		Connection connection = null;
-		try {
-			connection = ConnectionPool.getInstance().getConnection();
-
+	
+		
+			Connection connection = ConnectionPool.getInstance().getConnection();
+			try {
 			String sql = String.format("delete from  Company where id = ?");
 			PreparedStatement preparedStatement = null;
 
@@ -89,7 +88,7 @@ public class CompanyDBDAO implements CompanyDAO {
 
 	// updateCompany(update company)
 	@Override
-	public void updateCompany(Company company) throws SQLException, InterruptedException, ExistEx {
+	public void updateCompany(Company company) throws SQLException, InterruptedException, ExistEx, SizeEx {
 		CompanyDBDAO companyDBDAO = new CompanyDBDAO();
 		ArrayList<Company> companies = companyDBDAO.getAllCompany();
 		boolean chek = false;
@@ -128,7 +127,7 @@ public class CompanyDBDAO implements CompanyDAO {
 
 	// getCompany when id is
 	@Override
-	public Company getCompany(long id) throws SQLException, InterruptedException, ExistEx {
+	public Company getCompany(long id) throws SQLException, InterruptedException, ExistEx, SizeEx {
 		CompanyDBDAO companyDBDAO = new CompanyDBDAO();
 		ArrayList<Company> companies = companyDBDAO.getAllCompany();
 		boolean chek = false;
@@ -173,7 +172,7 @@ public class CompanyDBDAO implements CompanyDAO {
 
 	// get all companys to Arraylist
 	@Override
-	public ArrayList<Company> getAllCompany() throws SQLException, InterruptedException {
+	public ArrayList<Company> getAllCompany() throws SQLException, InterruptedException, SizeEx {
 
 		ArrayList<Company> companies = new ArrayList<>();
 
@@ -214,14 +213,14 @@ public class CompanyDBDAO implements CompanyDAO {
 	// get all coupons of this company
 	@Override
 	public ArrayList<Coupon> getCoupons(Company company)
-			throws SQLException, InterruptedException, DateProblem, ExistEx {
-		
+			throws SQLException, InterruptedException, DateProblem, ExistEx, SizeEx {
+
 		CompanyDBDAO companyDBDAO = new CompanyDBDAO();
-		
+
 		ArrayList<Company> companies = companyDBDAO.getAllCompany();
-		
+
 		boolean chek = false;
-		
+
 		for (Company comp : companies) {
 			if (company.getId() == comp.getId()) {
 				chek = true;
@@ -250,7 +249,7 @@ public class CompanyDBDAO implements CompanyDAO {
 
 	// login to Company
 	@Override
-	public boolean login(String compname, String pass) throws InterruptedException {
+	public boolean login(String compname, String pass) throws InterruptedException, SizeEx {
 		Company company = new Company();
 		Connection connection = null;
 		try {
