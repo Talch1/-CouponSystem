@@ -1,6 +1,7 @@
 package Facade;
 
 import java.awt.List;
+import java.sql.Date;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import Coupon.Coupon;
@@ -72,6 +73,14 @@ public class CustomerFacade implements CouponClientFasade {
 		return customerCouponDBDAO.getAllPurchaiseCouponByPrice(price, customer);
 
 	}
+
+	// Get All purchased coupons by Customer before Date Expiration
+		public ArrayList<Coupon> getAllPurchisedCouponByDate(Date date, Customer customer)
+				throws SQLException, InterruptedException, DateProblem, ExistEx {
+			CustomerCouponDBDAO customerCouponDBDAO = new CustomerCouponDBDAO();
+			return customerCouponDBDAO.getAllPurchaiseCouponByDate(date, customer);
+
+		}
 
 	// Login
 	public CouponClientFasade login(String name, String password, ClientType c) throws InterruptedException, LoginEx {

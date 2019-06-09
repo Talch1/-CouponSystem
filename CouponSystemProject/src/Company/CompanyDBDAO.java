@@ -24,9 +24,7 @@ public class CompanyDBDAO implements CompanyDAO {
 	public void createCompany(Company company) throws SQLException, InterruptedException {
 
 		Connection connection = null;
-		System.out.println("hhh");
 		connection = ConnectionPool.getInstance().getConnection();
-
 
 		String query = " insert into company (id ,COMPNAME ,password , email)" + " values (?, ?, ?, ?)";
 
@@ -215,13 +213,13 @@ public class CompanyDBDAO implements CompanyDAO {
 	@Override
 	public ArrayList<Coupon> getCoupons(Company company)
 			throws SQLException, InterruptedException, DateProblem, ExistEx {
-		
+
 		CompanyDBDAO companyDBDAO = new CompanyDBDAO();
-		
+
 		ArrayList<Company> companies = companyDBDAO.getAllCompany();
-		
+
 		boolean chek = false;
-		
+
 		for (Company comp : companies) {
 			if (company.getId() == comp.getId()) {
 				chek = true;

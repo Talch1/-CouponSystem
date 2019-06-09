@@ -9,7 +9,8 @@ import java.util.concurrent.LinkedBlockingQueue;
 
 public class ConnectionPool {
 	// Data members
-	private final int MAX = 10;
+	private final int MAX = 15;
+	
 
 	BlockingQueue<Connection> blockingQueue = new LinkedBlockingQueue<Connection>(MAX);
 	String sql = "jdbc:mysql://localhost:3306/new?autoReconnect=true&useSSL=false";
@@ -31,22 +32,24 @@ public class ConnectionPool {
 
 	// Get Connection
 	public Connection getConnection() throws SQLException, InterruptedException {
-
+		if(blockingQueue.size() < MAX)
 		blockingQueue.put(DriverManager.getConnection(sql, user, pasword));
-
+	
 		return blockingQueue.poll();
+	
+		
 	}
 
 	// return connection
 	public synchronized void returnConnection(Connection connection) throws InterruptedException {
+	
 		blockingQueue.offer(connection);
-
 	}
 
 	// return all connections to blockingQueue
-	public void removeAllConnections() {
+	public synchronized void removeAllConnections() {
 
-		synchronized (blockingQueue) {
+		
 			for (Connection connection : blockingQueue) {
 
 				try {
@@ -62,4 +65,4 @@ public class ConnectionPool {
 
 	}
 
-}
+

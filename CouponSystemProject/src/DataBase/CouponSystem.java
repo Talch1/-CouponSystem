@@ -30,6 +30,7 @@ public class CouponSystem {
 	public void shutdown() {
 		DailyCouponExpirationTask.stopp();
 		ConnectionPool.getInstance().removeAllConnections();
+		System.out.println("Shuted down");
 	}
 //Delete all tables
 	public void name() throws SQLException, InterruptedException {

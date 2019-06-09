@@ -140,6 +140,8 @@ CustomerCouponDBDAO couponDBDAO = new CustomerCouponDBDAO();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}finally {
+			ConnectionPool.getInstance().returnConnection(connection);
 		}
 
 	}

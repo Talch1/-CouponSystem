@@ -1,6 +1,7 @@
 package CustomerCoupon;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -169,6 +170,19 @@ public class CustomerCouponDBDAO implements CustomerCouponDAO {
 
 	}
 
+	// Get all purchased coupons by date
+		public ArrayList<Coupon> getAllPurchaiseCouponByDate(Date date,Customer customer) throws SQLException, InterruptedException, DateProblem, ExistEx {
+			ArrayList<Coupon> alloupons = new ArrayList<>();
+			ArrayList<Coupon> bydate = new ArrayList<>();
+			alloupons = getAllpurchoiseCoupons(customer);
+			for (Coupon coupon : alloupons) {
+				if (coupon.getEndDate().before(date)) {
+					bydate.add(coupon);
+				}
+			}
+			return bydate;
+
+		}
 	// Get all purchased coupons by type
 	public ArrayList<Coupon> getAllPurchaiseCouponByType(CouponType type,Customer customer) throws SQLException, InterruptedException, DateProblem, ExistEx {
 		ArrayList<Coupon> alloupons = new ArrayList<>();
