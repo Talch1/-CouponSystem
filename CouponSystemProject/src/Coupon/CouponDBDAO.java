@@ -45,7 +45,7 @@ public class CouponDBDAO implements CouponDAO {
 			preparedStmt.setString(9, coupon.getImage());
 
 			preparedStmt.execute();
-			System.out.println(" Coupon created");
+			System.out.println("Coupon Created");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -55,7 +55,7 @@ public class CouponDBDAO implements CouponDAO {
 
 	}
 
-	// remove Coupon(delete from Coupon)
+	// remove Coupon(Delete from Coupon)
 	public void removeCoupon(Coupon coupon) throws SQLException, InterruptedException, ExistEx, DateProblem {
 
 
@@ -81,7 +81,7 @@ public class CouponDBDAO implements CouponDAO {
 
 			preparedStatement.setLong(1, coupon.getId());
 			preparedStatement.executeUpdate();
-			System.out.println("deleted from Coupon");
+			System.out.println("Coupon Deleted  ");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -46,7 +46,8 @@ public class CompanyDBDAO implements CompanyDAO {
 		} finally {
 			ConnectionPool.getInstance().returnConnection(connection);
 		}
-		System.out.printf("Inserted to Company");
+		System.out.println("Company Created");
+	
 
 	}
 

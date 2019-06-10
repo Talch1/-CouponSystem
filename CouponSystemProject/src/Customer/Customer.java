@@ -3,27 +3,28 @@ package Customer;
 import java.sql.Connection;
 import java.util.ArrayList;
 
+import Coupon.Coupon;
+
 public class Customer {
 	// Data members
 	private long id;
 	private String custName;
 	private String password;
-	private ArrayList<Connection> connections;
+	private ArrayList<Coupon> coupons;
 
 	// Constructor
-	public Customer(int id, String custName, String password, ArrayList<Connection> connections) {
+	public Customer(int id, String custName, String password, ArrayList<Coupon> coupons) {
 
 		setId(id);
 		setCustName(custName);
 		setPassword(password);
-		setConnections(connections);
+		setCoupons(coupons);
 	}
-
 	public Customer() {
-
+	
 	}
-
-	// Getters and Setters
+	
+//getters and setters
 	public long getId() {
 		return id;
 	}
@@ -48,19 +49,18 @@ public class Customer {
 		this.password = password;
 	}
 
-	public ArrayList<Connection> getConnections() {
-		return connections;
+	public ArrayList<Coupon> getCoupons() {
+		return coupons;
 	}
 
-	public void setConnections(ArrayList<Connection> connections) {
-		this.connections = connections;
+	public void setCoupons(ArrayList<Coupon> coupons) {
+		this.coupons = coupons;
 	}
-
-	// ToString
 	@Override
 	public String toString() {
-		return "Custumer [id=" + id + ", custName=" + custName + ", password=" + password + ", connections="
-				+ connections + "]";
+		return "Customer [id=" + id + ", custName=" + custName + ", password=" + password + ", coupons=" + coupons
+				+ "]";
 	}
+	
 
 }

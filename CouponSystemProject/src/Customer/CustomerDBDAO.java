@@ -49,7 +49,7 @@ public class CustomerDBDAO implements CustomerDAO {
 			ConnectionPool.getInstance().returnConnection(connection);
 
 		}
-		System.out.println("customer Created");
+		System.out.println("Customer Created");
 
 	}
 
@@ -89,7 +89,7 @@ public class CustomerDBDAO implements CustomerDAO {
 
 			ConnectionPool.getInstance().returnConnection(connection);
 		}
-		System.out.println("deleted from customer");
+		System.out.println("Deleted from Customer");
 
 	}
 
@@ -131,7 +131,7 @@ public class CustomerDBDAO implements CustomerDAO {
 			ConnectionPool.getInstance().returnConnection(connection);
 
 		}
-		System.out.println("customer Updatet");
+		System.out.println("Customer Updatet");
 
 	}
 

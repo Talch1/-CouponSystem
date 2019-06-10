@@ -63,7 +63,7 @@ public class CompanyCouponDBDAO implements CompanyCouponDAO {
 		} finally {
 			ConnectionPool.getInstance().returnConnection(connection);
 		}
-		System.out.println("Dfeleted from table CompanyCoupon");
+		System.out.println("Deleted from CompanyCoupon");
 
 	}
 
@@ -227,7 +227,7 @@ public class CompanyCouponDBDAO implements CompanyCouponDAO {
 		} finally {
 			ConnectionPool.getInstance().returnConnection(connection);
 		}
-		System.out.println("CompanyCoupon created");
+		System.out.println("CompanyCoupon Created");
 	}
 
 	public static ArrayList<Long> getInCompanycouponCouponsId() {
