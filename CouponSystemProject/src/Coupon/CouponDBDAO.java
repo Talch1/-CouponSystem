@@ -8,7 +8,6 @@ import java.util.ArrayList;
 
 import Company.Company;
 import Company.CompanyDBDAO;
-import CompanyCoupon.CompanyCouponDBDAO;
 import CustomerCoupon.CustomerCouponDBDAO;
 
 import java.sql.Date;
@@ -75,13 +74,13 @@ public class CouponDBDAO implements CouponDAO {
 		try {
 			connection = ConnectionPool.getInstance().getConnection();
 
-			String sql = "delete from coupon where id = ?";
+			String sql = "delete from  Coupon where id = ?";
 			PreparedStatement preparedStatement;
 
 			preparedStatement = connection.prepareStatement(sql);
 
 			preparedStatement.setLong(1, coupon.getId());
-			preparedStatement.execute();
+			preparedStatement.executeUpdate();
 			System.out.println("Coupon Deleted  ");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -94,16 +93,14 @@ public class CouponDBDAO implements CouponDAO {
 	public void deleteExpirdCoup(Date date) throws SQLException, InterruptedException, ExistEx, DateProblem {
 
 		ArrayList<Coupon> list = getAllCoupons();
-		CouponDBDAO couponDBDAO = new CouponDBDAO();
-		CompanyCouponDBDAO companyCouponDBDAO = new CompanyCouponDBDAO();
+CustomerCouponDBDAO couponDBDAO = new CustomerCouponDBDAO();
 		for (Coupon coupon : list) {
 			if (coupon.getEndDate().before(date)) {
-				System.out.println("removeeeedddddd*************************************************");
-				
-				companyCouponDBDAO.removeCompanyCoupon(coupon);
-				couponDBDAO.removeCoupon(coupon);
+				couponDBDAO.removeCustomerCoupon(coupon);
+				removeCoupon(coupon);
 			}
-			}
+
+		}
 	}
 
 	// update Coupon(all Coupon data members)
