@@ -8,18 +8,18 @@ import Exeptions.ExistEx;
 
 
 public class DailyCouponExpirationTask implements Runnable {
-	CouponDBDAO couponDBDAO = new CouponDBDAO();
+
 
 	volatile static boolean stop = true;
 
 	// Run on database and delete all coupons that end date before date
 	@Override
 	public void run() {
-
+		CouponDBDAO couponDBDAO = new CouponDBDAO();
 		while (stop) {
 			try {
 				couponDBDAO.deleteExpirdCoup(new Date(System.currentTimeMillis()));
-				Thread.sleep(1000 * 60 * 60 * 24);
+				Thread.sleep(1000);
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
