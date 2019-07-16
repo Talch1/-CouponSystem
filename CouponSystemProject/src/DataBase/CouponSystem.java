@@ -13,7 +13,7 @@ public class CouponSystem {
 
 	// Singleton
 	private static CouponSystem instanse = new CouponSystem();
-	Thread thread = new Thread(new DailyCouponExpirationTask());
+	
 	Database database = new Database();
 
 	// Constructor
@@ -44,6 +44,7 @@ public class CouponSystem {
 	}
 
 	public void start() {
+		Thread thread = new Thread(new DailyCouponExpirationTask());
 		thread.start();
 	}
 
